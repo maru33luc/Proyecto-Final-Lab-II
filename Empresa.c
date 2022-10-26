@@ -116,3 +116,121 @@ int cantidadRegistrosArchivoGenerica (char nombreArchivo[], int sizeofDato)
 
     return cant;
 }
+
+void mostrarUnaEmpresa(Empresa a)
+{
+    printf("\n---------------------------------------------------------\n");
+    printf("\nNombre de la empresa: %s\n", a.nombre);
+    printf("\nId de la Empresa: %d\n", a.id_empresa);
+    printf("\nNumero de CUIT de la Empresa: %s\n", a.cuit);
+    printf("\nCodigo de IVA: %s\n", a.codIVA);
+    printf("\n---------------------------------------------------------\n");
+}
+
+int verificarPresenciaEmpresaBase (char nombreArchEmpresa[],char cuit[])
+{
+    int flag=0;
+    FILE *buf=fopen(nombreArchEmpresa,"rb");
+    Empresa e;
+
+    if (buf!=NULL)
+    {
+        while(fread(&e,sizeof(Empresa),1,buf)>0&&flag==0)
+        {
+            if (strcmp(e.cuit,cuit)==0)
+            {
+                flag=1;
+            }
+        }
+     fclose(buf);
+    }
+    else
+    {
+        printf("\nError en la lectura del archivo");
+    }
+    return flag;
+}
+
+void mostrarArchivoEmpresas (char nombreArchEmpresas[])
+{
+    FILE *buf=fopen(nombreArchEmpresas,"rb");
+    Empresa e;
+    int cant=0;
+
+    if (buf!=NULL)
+    {
+        while (fread(&e,sizeof(Empresa),1,buf)>0)
+        {
+            mostrarUnaEmpresa(e);
+            cant=ftell(buf)/sizeof(Empresa);
+            if (cant%2==0)
+                system("pause");
+        }
+
+       fclose(buf);
+    }
+    else
+    {
+        printf("\nError de lectura de datos\n");
+    }
+}
+
+int buscarIdEmpresaXCUIT (char nombreArchEmpresa[], char num[])
+{
+    FILE *buf=fopen(nombreArchEmpresa,"rb");
+    Empresa e;
+    int flag=0,cant=0;
+
+    if(buf!=NULL)
+    {
+        while(flag==0 &&fread(&e,sizeof(Empresa),1,buf)>0)
+            {
+                if (strcmp(e.cuit,num)==0)
+                {
+                    cant=e.id_empresa;
+                    flag=1;
+                }
+            }
+        if(flag==0)
+                {
+                    printf("\nEse numero de CUIT no figura en la base de empresas\n");
+                }
+
+        fclose(buf);
+    }
+    else
+    {
+        printf("\nError en la apertura del archivo\n");
+    }
+    return cant;
+}
+
+void mostrarRegistroEmpresaXIdEmpresa (char nombreArchEmpresa [],int id)
+{
+    FILE *buf=fopen(nombreArchEmpresa,"rb");
+    Empresa e;
+    int flag=0, cant=0;
+
+    if (buf!=NULL)
+    {
+      while(flag==0 && fread(&e,sizeof(Empresa),1,buf)>0)
+            {
+                if(e.id_empresa==id)
+                {
+                    mostrarUnaEmpresa(e);
+                    flag=1;
+                }
+
+            }
+            if(flag==0)
+                {
+                    printf("\nIdEmpresa inexistente\n");
+                }
+
+        fclose(buf);
+    }
+    else
+    {
+        printf("\nError de lectura del archivo\n");
+    }
+}

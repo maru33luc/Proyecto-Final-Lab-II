@@ -11,9 +11,11 @@ typedef struct Empresa//Para revisar
 
 void PersistirEmpresas (char nombreArch[]);
 int cantidadRegistrosArchivoGenerica (char nombreArchivo[], int sizeofDato);
-
-
-
+void mostrarUnaEmpresa(Empresa a);
+int verificarPresenciaEmpresaBase (char nombreArchEmpresa[],char cuit[]) ;
+void mostrarArchivoEmpresas (char nombreArchEmpresas[]) ;
+int buscarIdEmpresaXCUIT (char nombreArchEmpresa[], char num[]);
+void mostrarRegistroEmpresaXIdEmpresa (char nombreArchEmpresa [],int id) ;
 
 
 

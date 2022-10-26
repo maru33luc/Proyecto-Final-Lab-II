@@ -69,5 +69,53 @@ void persistirFacturasCompras(char nombreArchivoCompras[])
             else
                 printf("\nError de datos - El archivo no pudo ser abierto\n");
     }
-
 }
+
+int verificarPresenciaFacturaBase (char nombreArchFactura[],char comprobante[])
+{
+    int flag=0;
+    FILE *buf=fopen(nombreArchFactura,"rb");
+    Factura e;
+
+    if (buf!=NULL)
+    {
+        while(fread(&e,sizeof(Factura),1,buf)>0&&flag==0)
+        {
+            if (strcmp(e.comprobante,comprobante)==0)
+            {
+                flag=1;
+            }
+        }
+     fclose(buf);
+    }
+    else
+    {
+        printf("\nError en la lectura del archivo");
+    }
+    return flag;
+}
+
+void mostrarArchivoCompras (char nombreArchCompras[])
+{
+    FILE *buf=fopen(nombreArchCompras,"rb");
+    Factura e;
+    int cant=0;
+
+    if (buf!=NULL)
+    {
+        while (fread(&e,sizeof(Factura),1,buf)>0)
+        {
+            mostrarUnaFactura(e);
+            cant=ftell(buf)/sizeof(Factura);
+            if (cant%2==0)
+                system("pause");
+        }
+
+       fclose(buf);
+    }
+    else
+    {
+        printf("\nError de lectura de datos\n");
+    }
+}
+
