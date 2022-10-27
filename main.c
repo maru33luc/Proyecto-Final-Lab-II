@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "nodoSimple.h"
 
 int main()
 {
-    printf("Hello world!\n");
+  testLibreriaNodoSimple();
     return 0;
 }

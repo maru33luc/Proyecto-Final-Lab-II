@@ -1,0 +1,34 @@
+# depslib dependency file v1.0
+1666756446 source:d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\compras.c
+
+1666760404 source:d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\empresa.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Compras.h"
+	"Empresa.h"
+	"Ventas.h"
+
+1666756446 d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\compras.h
+
+1666760632 d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\empresa.h
+
+1666756446 d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\ventas.h
+
+1666759206 source:d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\main.c
+	<stdio.h>
+	<stdlib.h>
+	"nodoSimple.h"
+
+1666756446 source:d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\ventas.c
+
+1666911857 source:d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\nodosimple.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	"nodoSimple.h"
+	"Empresa.h"
+
+1666911719 d:\trabajo practico laboratorio 2\proyecto-final-lab-ii\nodosimple.h
+	"Empresa.h"
+
