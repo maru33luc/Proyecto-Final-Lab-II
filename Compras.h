@@ -2,6 +2,13 @@
 #define COMPRAS_H_INCLUDED
 
 
+typedef struct Fecha
+{
+    int dia;
+    int mes;
+    int anio;
+}Fecha;
+
 typedef struct Factura
 {
     char cliente_proveedor[50];
@@ -27,14 +34,9 @@ typedef struct Cliente_Proveedor
   char mail[50];
   char telefono[12];
   char direccion[50];
-}Cliente_Proveedor
+}Cliente_Proveedor;
 
-typedef struct
-{
-    int dia;
-    int mes;
-    int anio;
-}Fecha;
+
 
 void persistirFacturasCompras(char nombreArchivoCompras[]) ;
 int verificarPresenciaFacturaBase (char nombreArchFactura[],char comprobante[]) ;

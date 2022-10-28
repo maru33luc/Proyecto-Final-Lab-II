@@ -7,6 +7,7 @@ typedef struct Empresa//Para revisar
     char nombre[50];
     char cuit[10];
     char codIVA[2];//CF RI MT EX
+    int activa;
 } Empresa;
 
 void PersistirEmpresas (char nombreArch[]);
@@ -16,7 +17,5 @@ int verificarPresenciaEmpresaBase (char nombreArchEmpresa[],char cuit[]) ;
 void mostrarArchivoEmpresas (char nombreArchEmpresas[]) ;
 int buscarIdEmpresaXCUIT (char nombreArchEmpresa[], char num[]);
 void mostrarRegistroEmpresaXIdEmpresa (char nombreArchEmpresa [],int id) ;
-
-
 
 #endif // EMPRESA_H_INCLUDED
