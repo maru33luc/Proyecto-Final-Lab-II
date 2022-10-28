@@ -31,9 +31,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="main.c">
-		<Option compilerVar="CC"/>
-		</Unit>
 		<Unit filename="Compras.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -42,6 +39,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Empresa.h" />
+		<Unit filename="NodoSimpleEmpresa.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="NodoSimpleEmpresa.h" />
 		<Unit filename="Resumenes.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -50,6 +51,9 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Ventas.h" />
+		<Unit filename="main.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />
