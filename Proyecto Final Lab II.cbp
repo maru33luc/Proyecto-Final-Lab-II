@@ -39,6 +39,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Empresa.h" />
+		<Unit filename="NodoDobleFactura.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="NodoDobleFactura.h" />
 		<Unit filename="NodoSimpleEmpresa.c">
 			<Option compilerVar="CC" />
 		</Unit>

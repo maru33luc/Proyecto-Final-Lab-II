@@ -1,18 +1,20 @@
 #ifndef NODOSIMPLEEMPRESA_H_INCLUDED
 #define NODOSIMPLEEMPRESA_H_INCLUDED
 
+#include "Empresa.h"
+
 typedef struct NodoSimpleEmpresa
 {
     Empresa dato;
-    NodoSimpleEmpresa* sig;
+    struct NodoSimpleEmpresa* sig;
 } NodoSimpleEmpresa;
 
-NodoSimpleEmpresaSimpleEmpresa* inicListaSimple();
-NodoSimpleEmpresaSimpleEmpresa* crearNodoSimple(Empresa e);
-NodoSimpleEmpresaSimpleEmpresa* agregarAlPrincipioSimple(NodoSimpleEmpresaSimpleEmpresa*, NodoSimpleEmpresaSimpleEmpresa*);
-NodoSimpleEmpresaSimpleEmpresa* buscarUltimoSimple(NodoSimpleEmpresaSimpleEmpresa*);
-NodoSimpleEmpresaSimpleEmpresa* buscarXCuitSimple(NodoSimpleEmpresaSimpleEmpresa*,char[]);
-NodoSimpleEmpresaSimpleEmpresa* agregarAlFinalSimple(NodoSimpleEmpresaSimpleEmpresa*,NodoSimpleEmpresaSimpleEmpresa*);
-NodoSimpleEmpresaSimpleEmpresa* borrarXCuitSimple(NodoSimpleEmpresaSimpleEmpresa*, char[]);
+NodoSimpleEmpresa* inicListaSimple();
+NodoSimpleEmpresa* crearNodoSimple(Empresa e);
+NodoSimpleEmpresa* agregarNodoAlPrincipio(NodoSimpleEmpresa* lista, NodoSimpleEmpresa* nuevoNodo);
+NodoSimpleEmpresa* buscarUltimo(NodoSimpleEmpresa* lista);
+NodoSimpleEmpresa* buscarNodoXCuitSimple(NodoSimpleEmpresa* lista,char cuit[]);
+NodoSimpleEmpresa* agregarNodoAlFinalSimple(NodoSimpleEmpresa* lista,NodoSimpleEmpresa* nuevoNodo);
+NodoSimpleEmpresa* borrarXCuitSimple(NodoSimpleEmpresa* lista, char cuit[]);
 
 #endif

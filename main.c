@@ -4,51 +4,40 @@
 #include "Empresa.h"
 #include "Ventas.h"
 #include "Resumenes.h"
-
-
-typedef struct Factura
-{
-    char cliente_proveedor[50];
-    char comprobante[30];
-    char tipo;
-    char puntoVenta[5];
-    char numComprobante[8];
-    int idFactura;
-    char fecha_contabilizacion[8];
-    char descripcion[100];
-    float neto;
-    float iva;
-    float total;
-    int activa; // 0 inactiva 1 activa
-    int id_empresa;
-} Factura;
-
-typedef struct Cliente_Proveedor
-{
-  char nombre[50];
-  char cuit[10];
-  char mail[50];
-  char telefono[12];
-  char direccion[50];
-}
-
-
-typedef struct
-{
-    int dia;
-    int mes;
-    int anio;
-}Fecha;
-
-void persistirFacturasCompras(char nombreArchivoCompras[]) ;
-
-
-
+#include "NodoDobleFactura.h"
 
 
 
 int main()
 {
+char control='s';
+Factura a;
+NodoDobleFactura *lista=inicListaDoble();
+
+while(control=='s')
+{
+    a=cargarUnaFactura(a);
+    NodoDobleFactura *aux=crearNodoDoble(a);
+    lista=insertarOrdenadoDobleXNumComprob(lista,aux);
+    printf("\nDesea seguir ingresando Facturas? s/n\n");
+    fflush(stdin);
+    scanf("%c",&control);
+}
+mostrarListaDoble(lista);
+
+/*
+lista=borrarNodoDobleFacturaXNumComprobante(lista,"123");
+printf("Mostrando lista doble de Facturas sin el comprob 123\n");
+mostrarListaDoble(lista);
+*/
+
+NodoDobleFactura *aux=buscarFacturaDobleXNumComprob(lista,"123");
+if(aux!=NULL)
+{
+    printf("Mostrando la factura numero 123\n");
+    mostrarUnaFactura(aux->dato);
+}
+
 
 
 
@@ -65,7 +54,7 @@ int main()
 
 
 ///---------------------VALIDACIONES-----------------------------
-
+/*
 int validarMail (char Mail[]) /// Funcion para validar la carga de datos que correspondan al mail conteniendo el caracter @
 {
     int i=0;
@@ -151,6 +140,6 @@ do
             }
         }while(flag==0);
 }
-
+*/
 
 

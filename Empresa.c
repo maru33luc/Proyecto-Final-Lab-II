@@ -4,8 +4,9 @@
 #include "Empresa.h"
 #include "Ventas.h"
 #include "Resumenes.h"
+#include "NodoDobleFactura.h"
 
-
+/*
 void PersistirEmpresas (char nombreArchEmpresas[])
 {
     FILE *buf= fopen(nombreArchEmpresas,"rb");
@@ -115,7 +116,7 @@ int cantidadRegistrosArchivoGenerica (char nombreArchivo[], int sizeofDato)
     }
 
     return cant;
-}
+}*/
 
 void mostrarUnaEmpresa(Empresa a)
 {
@@ -126,7 +127,7 @@ void mostrarUnaEmpresa(Empresa a)
     printf("\nCodigo de IVA: %s\n", a.codIVA);
     printf("\n---------------------------------------------------------\n");
 }
-
+/*
 int verificarPresenciaEmpresaBase (char nombreArchEmpresa[],char cuit[])
 {
     int flag=0;
@@ -234,3 +235,4 @@ void mostrarRegistroEmpresaXIdEmpresa (char nombreArchEmpresa [],int id)
         printf("\nError de lectura del archivo\n");
     }
 }
+*/

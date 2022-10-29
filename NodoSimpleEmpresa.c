@@ -1,8 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
-#include "NodoSimpleEmpresaSimpleEmpresa.h"
+#include "NodoSimpleEmpresa.h"
 #include "Empresa.h"
+
 
 NodoSimpleEmpresa* inicListaSimple()
 {
@@ -20,7 +21,7 @@ NodoSimpleEmpresa* crearNodoSimple(Empresa e)
 
 NodoSimpleEmpresa* agregarNodoAlPrincipio(NodoSimpleEmpresa* lista, NodoSimpleEmpresa* nuevoNodo)
 {
-    if(list != NULL)
+    if(lista != NULL)
     {
         nuevoNodo->sig = lista;
     }
@@ -29,7 +30,7 @@ NodoSimpleEmpresa* agregarNodoAlPrincipio(NodoSimpleEmpresa* lista, NodoSimpleEm
     return lista;
 }
 
-NodoSimpleEmpresa* buscarUltimo(Nodo* lista)
+NodoSimpleEmpresa* buscarUltimo(NodoSimpleEmpresa* lista)
 {
     NodoSimpleEmpresa* seg = lista;
 
@@ -82,7 +83,7 @@ NodoSimpleEmpresa* borrarXCuitSimple(NodoSimpleEmpresa* lista, char cuit[])
       NodoSimpleEmpresa* ante = NULL;
       NodoSimpleEmpresa* seg = NULL;
         seg = lista;
-        while(seg != NULL && strcmp(seg->dato.cuit,nombre)!=0)
+        while(seg != NULL && strcmp(seg->dato.cuit,cuit)!=0)
         {
             ante = seg;
             seg = seg->sig;

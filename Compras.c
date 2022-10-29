@@ -5,9 +5,9 @@
 #include "Empresa.h"
 #include "Ventas.h"
 #include "Resumenes.h"
+#include "NodoDobleFactura.h"
 
-
-
+/*
 void persistirFacturasCompras(char nombreArchivoCompras[])
 {
     FILE*buf1=fopen(nombreArchivoCompras,"rb");
@@ -119,4 +119,4 @@ void mostrarArchivoCompras (char nombreArchCompras[])
         printf("\nError de lectura de datos\n");
     }
 }
-
+*/

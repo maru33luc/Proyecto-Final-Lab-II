@@ -4,5 +4,5 @@
 #include "Empresa.h"
 #include "Ventas.h"
 #include "Resumenes.h"
-
+#include "NodoDobleFactura.h"
 

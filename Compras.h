@@ -1,13 +1,13 @@
 #ifndef COMPRAS_H_INCLUDED
 #define COMPRAS_H_INCLUDED
 
-
 typedef struct Fecha
 {
     int dia;
     int mes;
     int anio;
 }Fecha;
+
 
 typedef struct Factura
 {
@@ -18,7 +18,7 @@ typedef struct Factura
     char puntoVenta[5];
     char numComprobante[8];
     int idFactura;
-    Fecha fecha_contabilizacion;
+    Fecha datoFecha;
     char descripcion[100];
     float neto;
     float iva;
@@ -37,10 +37,10 @@ typedef struct Cliente_Proveedor
 }Cliente_Proveedor;
 
 
-
+/*
 void persistirFacturasCompras(char nombreArchivoCompras[]) ;
 int verificarPresenciaFacturaBase (char nombreArchFactura[],char comprobante[]) ;
 void mostrarArchivoCompras (char nombreArchCompras[]) ;
-
+*/
 
 #endif // COMPRAS_H_INCLUDED
