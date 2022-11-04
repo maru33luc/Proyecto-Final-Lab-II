@@ -3,11 +3,15 @@
 
 #include "Empresa.h"
 
-typedef struct NodoSimpleEmpresa
-{
-    Empresa dato;
-    struct NodoSimpleEmpresa* sig;
-} NodoSimpleEmpresa;
+typedef struct nodoSimpleEmpresa {
+Empresa dato;
+struct nodoSimpleProveedor* prov;
+struct nodoSimpleCliente* cli;
+struct nodoSimpleEmpresa*  sig;
+}nodoSimpleEmpresa;
+
+
+
 
 NodoSimpleEmpresa* inicListaSimple();
 NodoSimpleEmpresa* crearNodoSimple(Empresa e);

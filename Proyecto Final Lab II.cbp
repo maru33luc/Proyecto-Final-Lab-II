@@ -31,14 +31,18 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Compras.c">
+		<Unit filename="Cliente.c">
 			<Option compilerVar="CC" />
 		</Unit>
-		<Unit filename="Compras.h" />
+		<Unit filename="Cliente.h" />
 		<Unit filename="Empresa.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Empresa.h" />
+		<Unit filename="Facturas.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Facturas.h" />
 		<Unit filename="NodoDobleFactura.c">
 			<Option compilerVar="CC" />
 		</Unit>
@@ -47,14 +51,14 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="NodoSimpleEmpresa.h" />
+		<Unit filename="Proveedor.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="Proveedor.h" />
 		<Unit filename="Resumenes.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="Resumenes.h" />
-		<Unit filename="Ventas.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Ventas.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

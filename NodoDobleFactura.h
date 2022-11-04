@@ -1,12 +1,12 @@
 #ifndef NODODOBLEFACTURA_H_INCLUDED
 #define NODODOBLEFACTURA_H_INCLUDED
 
-typedef struct NodoDobleFactura
-{
-    Factura dato;
-    struct NodoDobleFactura *ant;
-    struct NodoDobleFactura * sig;
-} NodoDobleFactura;
+typedef struct  nodoDobleFactura{
+Factura dato;
+struct nodoDobleFactura* sig;
+struct nodoDobleFactura* ante;
+}nodoDobleFactura;
+
 
 NodoDobleFactura *inicListaDoble ();
 NodoDobleFactura *crearNodoDoble (Factura a);
