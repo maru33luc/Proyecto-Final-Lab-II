@@ -13,12 +13,13 @@ struct nodoSimpleEmpresa*  sig;
 
 
 
-NodoSimpleEmpresa* inicListaSimple();
-NodoSimpleEmpresa* crearNodoSimple(Empresa e);
-NodoSimpleEmpresa* agregarNodoAlPrincipio(NodoSimpleEmpresa* lista, NodoSimpleEmpresa* nuevoNodo);
-NodoSimpleEmpresa* buscarUltimo(NodoSimpleEmpresa* lista);
-NodoSimpleEmpresa* buscarNodoXCuitSimple(NodoSimpleEmpresa* lista,char cuit[]);
-NodoSimpleEmpresa* agregarNodoAlFinalSimple(NodoSimpleEmpresa* lista,NodoSimpleEmpresa* nuevoNodo);
-NodoSimpleEmpresa* borrarXCuitSimple(NodoSimpleEmpresa* lista, char cuit[]);
+nodoSimpleEmpresa* inicListaSimple();
+nodoSimpleEmpresa* crearNodoSimple(Empresa e);
+nodoSimpleEmpresa* agregarNodoAlPrincipioSimple(nodoSimpleEmpresa* lista, nodoSimpleEmpresa* nuevoNodo);
+nodoSimpleEmpresa* buscarUltimoSimple(nodoSimpleEmpresa* lista);
+nodoSimpleEmpresa* buscarNodoXCuitSimple(nodoSimpleEmpresa* lista,char cuit[]);
+nodoSimpleEmpresa* agregarNodoAlFinalSimple(nodoSimpleEmpresa* lista,nodoSimpleEmpresa* nuevoNodo);
+nodoSimpleEmpresa* borrarXCuitSimple(nodoSimpleEmpresa* lista, char cuit[]);
+void mostrarListaSimpleEmpresa(nodoSimpleEmpresa*);
 
 #endif

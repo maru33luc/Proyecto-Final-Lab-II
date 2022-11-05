@@ -9,12 +9,23 @@
 #include "NodoDobleFactura.h"
 
 
+///Hice estos mockeos(Funciones falsas) que son las dos funciones que estan abajo para que compile, que es necesario rearmarlas con los datos nuevos de factura.
+/// El tipo de carga manual de facturas no es necesaria, solo necesitamos una funcion de "Factura crearFacturas(numComprobante,cuit cliente_proveedor, etc...)" que retorne una nueva factura.
+Factura cargarUnaFactura(Factura a){
+  Factura FacturaFalsa;
+
+return  FacturaFalsa;
+}
+
+void mostrarUnaFactura(Factura a){
+printf("Mostrando una factura...\n");
+}
+
+/*
+REFACTORIZAR ESTAS 2 FUNCIONES CON ESTRUCTURAS ACTUALES
 
 Factura cargarUnaFactura (Factura a)
 {
-    printf("\nIngrese el nombre del cliente/proveedor:\n");
-    fflush(stdin);
-    gets(a.cliente_proveedor);
     printf("\nIngrese el CUIT del cliente/proveedor:\n");
     fflush(stdin);
     gets(a.cuit_cliente_proveedor);
@@ -31,7 +42,7 @@ Factura cargarUnaFactura (Factura a)
     fflush(stdin);
     scanf("\n%c",&a.tipo);
     printf("\nIngrese el id de la Factura:\n");
-    scanf("%d",&a.idFactura);
+    scanf("%d",&a.id_interno);
     printf("\nIngrese el año de la Factura:\n");
     scanf("%d",&a.datoFecha.anio);
     printf("\nIngrese el mes de la Factura:\n");
@@ -55,6 +66,7 @@ Factura cargarUnaFactura (Factura a)
     return a;
 }
 
+
 void mostrarUnaFactura (Factura a)
 {
     printf("\n------------------------------------------------------\n");
@@ -74,6 +86,7 @@ void mostrarUnaFactura (Factura a)
     printf("\nId de la Empresa: %d\n",a.id_empresa);
     printf("\n------------------------------------------------------\n");
 }
+*/
 
 
 /*

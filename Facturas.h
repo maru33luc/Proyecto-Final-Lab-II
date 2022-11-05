@@ -30,7 +30,7 @@ char nombre_cliente_proveedor[50];
 char cp; //Cliente o proveedor
 char cuit_cliente_proveedor[12];
 
-}Registro_Factura
+}Registro_Factura;
 
 
 typedef struct Factura

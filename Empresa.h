@@ -4,7 +4,8 @@
 typedef struct Empresa
 {
     char nombre[50];
-    char cuit[10];
+    char cuit[11];
+    int activa_emp;
 } Empresa;
 
 
@@ -16,5 +17,7 @@ int verificarPresenciaEmpresaBase (char nombreArchEmpresa[],char cuit[]) ;
 void mostrarArchivoEmpresas (char nombreArchEmpresas[]) ;
 int buscarIdEmpresaXCUIT (char nombreArchEmpresa[], char num[]);
 void mostrarRegistroEmpresaXIdEmpresa (char nombreArchEmpresa [],int id) ;
+Empresa crearEmpresa(char nombre[],char cuit[]);
+void TestLibreriaEmpresa();
 
 #endif // EMPRESA_H_INCLUDED

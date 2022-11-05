@@ -8,15 +8,15 @@ struct nodoDobleFactura* ante;
 }nodoDobleFactura;
 
 
-NodoDobleFactura *inicListaDoble ();
-NodoDobleFactura *crearNodoDoble (Factura a);
-NodoDobleFactura *agregarAlPrincipioDoble (NodoDobleFactura *lista,NodoDobleFactura *nuevo);
-NodoDobleFactura *buscarUltimoDoble (NodoDobleFactura *lista);
-NodoDobleFactura *agregarAlFinalDoble (NodoDobleFactura *lista,NodoDobleFactura *nuevo);
-void mostrarListaDoble (NodoDobleFactura *lista);
-NodoDobleFactura *borrarNodoDobleFacturaXNumComprobante (NodoDobleFactura *lista,char numComprob []);
-NodoDobleFactura *insertarOrdenadoDobleXNumComprob (NodoDobleFactura *lista,NodoDobleFactura *nuevo);
-NodoDobleFactura *buscarFacturaDobleXNumComprob (NodoDobleFactura *lista,char numComprob[]);
+nodoDobleFactura *inicListaDoble ();
+nodoDobleFactura *crearNodoDoble (Factura a);
+nodoDobleFactura *agregarAlPrincipioDoble (nodoDobleFactura *lista,nodoDobleFactura *nuevo);
+nodoDobleFactura *buscarUltimoDoble (nodoDobleFactura *lista);
+nodoDobleFactura *agregarAlFinalDoble (nodoDobleFactura *lista,nodoDobleFactura *nuevo);
+void mostrarListaDoble (nodoDobleFactura *lista);
+nodoDobleFactura *borrarnodoDobleFacturaXNumComprobante (nodoDobleFactura *lista,char numComprob []);
+nodoDobleFactura *insertarOrdenadoDobleXNumComprob (nodoDobleFactura *lista,nodoDobleFactura *nuevo);
+nodoDobleFactura *buscarFacturaDobleXNumComprob (nodoDobleFactura *lista,char numComprob[]);
 
 
 #endif // NODODOBLEFACTURA_H_INCLUDED

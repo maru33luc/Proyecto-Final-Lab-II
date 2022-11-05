@@ -12,14 +12,15 @@
 
 int main()
 {
+  /*
 char control='s';
 Factura a;
-NodoDobleFactura *lista=inicListaDoble();
+nodoDobleFactura *lista=inicListaDoble();
 
 while(control=='s')
 {
     a=cargarUnaFactura(a);
-    NodoDobleFactura *aux=crearNodoDoble(a);
+    nodoDobleFactura *aux=crearNodoDoble(a);
     lista=insertarOrdenadoDobleXNumComprob(lista,aux);
     printf("\nDesea seguir ingresando Facturas? s/n\n");
     fflush(stdin);
@@ -27,22 +28,22 @@ while(control=='s')
 }
 mostrarListaDoble(lista);
 
-/*
-lista=borrarNodoDobleFacturaXNumComprobante(lista,"123");
+
+lista=borrarnodoDobleFacturaXNumComprobante(lista,"123");
 printf("Mostrando lista doble de Facturas sin el comprob 123\n");
 mostrarListaDoble(lista);
-*/
 
-NodoDobleFactura *aux=buscarFacturaDobleXNumComprob(lista,"123");
+
+nodoDobleFactura *aux=buscarFacturaDobleXNumComprob(lista,"123");
 if(aux!=NULL)
 {
     printf("Mostrando la factura numero 123\n");
     mostrarUnaFactura(aux->dato);
-}
+}*/
 
+printf("El proyecto compila correctamente.");
 
-
-
+TestLibreriaEmpresa();
 
 
 

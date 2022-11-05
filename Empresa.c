@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Empresa.h"
 #include "Cliente.h"
 #include "Proveedor.h"
@@ -125,9 +126,7 @@ void mostrarUnaEmpresa(Empresa a)
 {
     printf("\n---------------------------------------------------------\n");
     printf("\nNombre de la empresa: %s\n", a.nombre);
-    printf("\nId de la Empresa: %d\n", a.id_empresa);
     printf("\nNumero de CUIT de la Empresa: %s\n", a.cuit);
-    printf("\nCodigo de IVA: %s\n", a.codIVA);
     printf("\n---------------------------------------------------------\n");
 }
 /*
@@ -239,3 +238,13 @@ void mostrarRegistroEmpresaXIdEmpresa (char nombreArchEmpresa [],int id)
     }
 }
 */
+
+Empresa crearEmpresa(char nombre[],char cuit[]){
+  Empresa emp;
+  strcpy(emp.nombre,nombre);
+  strcpy(emp.cuit,cuit);
+  emp.activa_emp = 1;
+  return emp;
+}
+
+

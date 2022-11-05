@@ -1,45 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Empresa.h"
 #include "Cliente.h"
 #include "Proveedor.h"
 #include "Facturas.h"
 #include "Resumenes.h"
-#include "NodoSimpleEmpresa.h"
-#include "NodoDobleFactura.h"
+#include "nodoSimpleEmpresa.h"
+#include "nodoDobleFactura.h"
 
-
-
-
-NodoDobleFactura *inicListaDoble ()
+nodoDobleFactura *inicListaDoble ()
 {
     return NULL;
 }
 
-NodoDobleFactura *crearNodoDoble (Factura a)
+nodoDobleFactura *crearNodoDoble (Factura a)
 {
-    NodoDobleFactura *aux=malloc(sizeof(NodoDobleFactura));
+    nodoDobleFactura *aux=malloc(sizeof(nodoDobleFactura));
 
     aux->dato=a;
-    aux->ant=NULL;
+    aux->ante=NULL;
     aux->sig=NULL;
 
     return aux;
 }
 
-NodoDobleFactura *agregarAlPrincipioDoble (NodoDobleFactura *lista,NodoDobleFactura *nuevo)
+nodoDobleFactura *agregarAlPrincipioDoble (nodoDobleFactura *lista,nodoDobleFactura *nuevo)
 {
     if(lista!=NULL)
     {
         nuevo->sig=lista;
-        lista->ant=nuevo;
+        lista->ante=nuevo;
     }
     return nuevo;
 }
 
-NodoDobleFactura *buscarUltimoDoble (NodoDobleFactura *lista)
+nodoDobleFactura *buscarUltimoDoble (nodoDobleFactura *lista)
 {
-    NodoDobleFactura *seg=lista;
+    nodoDobleFactura *seg=lista;
 
     if(seg!=NULL)
     {
@@ -51,20 +49,20 @@ NodoDobleFactura *buscarUltimoDoble (NodoDobleFactura *lista)
     return seg;
 }
 
-NodoDobleFactura *agregarAlFinalDoble (NodoDobleFactura *lista,NodoDobleFactura *nuevo)
+nodoDobleFactura *agregarAlFinalDoble (nodoDobleFactura *lista,nodoDobleFactura *nuevo)
 {
     if(lista==NULL)
         lista=nuevo;
     else
     {
-        NodoDobleFactura *ult=buscarUltimoDoble(lista);
-        nuevo->ant=ult;
+        nodoDobleFactura *ult=buscarUltimoDoble(lista);
+        nuevo->ante=ult;
         ult->sig=nuevo;
     }
     return lista;
 }
 
-void mostrarListaDoble (NodoDobleFactura *lista)
+void mostrarListaDoble (nodoDobleFactura *lista)
 {
     while(lista!=NULL)
     {
@@ -73,21 +71,21 @@ void mostrarListaDoble (NodoDobleFactura *lista)
     }
 }
 
-NodoDobleFactura *borrarNodoDobleFacturaXNumComprobante (NodoDobleFactura *lista,char numComprob [])
+nodoDobleFactura *borrarnodoDobleFacturaXNumComprobantee (nodoDobleFactura *lista,char numComprob [])
 {
     if(lista!=NULL)
     {
-        if(strcmpi(lista->dato.numComprobante,numComprob)==0)
+        if(strcmp(lista->dato.numComprobante,numComprob)==0)
         {
-            NodoDobleFactura *aux=lista;
+            nodoDobleFactura *aux=lista;
             lista=lista->sig;
-            lista->ant=NULL;
+            lista->ante=NULL;
             free(aux);
         }
         else
         {
-            NodoDobleFactura*seg=lista;
-            NodoDobleFactura *ant;
+            nodoDobleFactura*seg=lista;
+            nodoDobleFactura *ante;
 
             while(seg!=NULL&&strcmpi(lista->dato.numComprobante,numComprob)!=0)
             {
@@ -95,10 +93,10 @@ NodoDobleFactura *borrarNodoDobleFacturaXNumComprobante (NodoDobleFactura *lista
             }
             if(seg!=NULL)
             {
-                ant=seg->ant;
-                ant->sig=seg->sig;
+                ante=seg->ante;
+                ante->sig=seg->sig;
                 if(seg->sig!=NULL)
-                    seg->sig->ant=ant;
+                    seg->sig->ante=ante;
                 free(seg);
             }
         }
@@ -106,7 +104,7 @@ NodoDobleFactura *borrarNodoDobleFacturaXNumComprobante (NodoDobleFactura *lista
     return lista;
 }
 
-NodoDobleFactura *insertarOrdenadoDobleXNumComprob (NodoDobleFactura *lista,NodoDobleFactura *nuevo)
+nodoDobleFactura *insertarOrdenadoDobleXNumComprob (nodoDobleFactura *lista,nodoDobleFactura *nuevo)
 {
     if(lista==NULL)
         lista=nuevo;
@@ -116,7 +114,7 @@ NodoDobleFactura *insertarOrdenadoDobleXNumComprob (NodoDobleFactura *lista,Nodo
             lista=agregarAlPrincipioDoble(lista,nuevo);
         else
         {
-            NodoDobleFactura *seg=lista;
+            nodoDobleFactura *seg=lista;
             while(seg!=NULL&&strcmpi(lista->dato.numComprobante,nuevo->dato.numComprobante)<0)
                 seg=seg->sig;
             if(seg==NULL)
@@ -124,18 +122,18 @@ NodoDobleFactura *insertarOrdenadoDobleXNumComprob (NodoDobleFactura *lista,Nodo
             else
             {
                 nuevo->sig=seg;
-                nuevo->ant=seg->ant;
-                seg->ant->sig=nuevo;
-                seg->ant=nuevo;
+                nuevo->ante=seg->ante;
+                seg->ante->sig=nuevo;
+                seg->ante=nuevo;
             }
         }
     }
     return lista;
 }
 
-NodoDobleFactura *buscarFacturaDobleXNumComprob (NodoDobleFactura *lista,char numComprob[])
+nodoDobleFactura *buscarFacturaDobleXNumComprob (nodoDobleFactura *lista,char numComprob[])
 {
-    NodoDobleFactura *seg=lista;
+    nodoDobleFactura *seg=lista;
 
     while(seg!=NULL&&strcmpi(seg->dato.numComprobante,numComprob)!=0)
         seg=seg->sig;

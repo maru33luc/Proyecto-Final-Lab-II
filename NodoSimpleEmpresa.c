@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Empresa.h"
 #include "Cliente.h"
 #include "Proveedor.h"
@@ -9,21 +10,21 @@
 #include "NodoDobleFactura.h"
 
 
-NodoSimpleEmpresa* inicListaSimple()
+nodoSimpleEmpresa* inicListaSimple()
 {
     return NULL;
 }
 
-NodoSimpleEmpresa* crearNodoSimple(Empresa e)
+nodoSimpleEmpresa* crearNodoSimple(Empresa e)
 {
-    NodoSimpleEmpresa* aux = malloc(sizeof(NodoSimpleEmpresa));
+    nodoSimpleEmpresa* aux = malloc(sizeof(nodoSimpleEmpresa));
     aux->dato = e;
     aux->sig = NULL;
 
     return aux;
 }
 
-NodoSimpleEmpresa* agregarNodoAlPrincipio(NodoSimpleEmpresa* lista, NodoSimpleEmpresa* nuevoNodo)
+nodoSimpleEmpresa* agregarNodoAlPrincipioSimple(nodoSimpleEmpresa* lista, nodoSimpleEmpresa* nuevoNodo)
 {
     if(lista != NULL)
     {
@@ -34,9 +35,9 @@ NodoSimpleEmpresa* agregarNodoAlPrincipio(NodoSimpleEmpresa* lista, NodoSimpleEm
     return lista;
 }
 
-NodoSimpleEmpresa* buscarUltimo(NodoSimpleEmpresa* lista)
+nodoSimpleEmpresa* buscarUltimoSimple(nodoSimpleEmpresa* lista)
 {
-    NodoSimpleEmpresa* seg = lista;
+    nodoSimpleEmpresa* seg = lista;
 
     if(seg !=NULL)
     {
@@ -48,22 +49,22 @@ NodoSimpleEmpresa* buscarUltimo(NodoSimpleEmpresa* lista)
     return seg;
 }
 
-NodoSimpleEmpresa* buscarNodoXCuitSimple(NodoSimpleEmpresa* lista,char cuit[])
+nodoSimpleEmpresa* buscarNodoXCuitSimple(nodoSimpleEmpresa* lista,char cuit[])
 {
-    NodoSimpleEmpresa* seg;
+    nodoSimpleEmpresa* seg;
     seg = lista;
-    while(seg !=NULL && strcmpi(seg->dato.cuit,cuit) != 0)
+    while(seg !=NULL && strcmp(seg->dato.cuit,cuit) != 0)
     {
         seg = seg->sig;
     }
     return seg;
 }
 
-NodoSimpleEmpresa* agregarNodoAlFinalSimple(NodoSimpleEmpresa* lista,NodoSimpleEmpresa* nuevoNodo)
+nodoSimpleEmpresa* agregarNodoAlFinalSimple(nodoSimpleEmpresa* lista,nodoSimpleEmpresa* nuevoNodo)
 {
     if(lista != NULL)
     {
-        NodoSimpleEmpresa* ultimo = buscarUltimo(lista);
+        nodoSimpleEmpresa* ultimo = buscarUltimoSimple(lista);
         ultimo->sig = nuevoNodo;
     }
     else
@@ -73,19 +74,19 @@ NodoSimpleEmpresa* agregarNodoAlFinalSimple(NodoSimpleEmpresa* lista,NodoSimpleE
     return lista;
 }
 
-NodoSimpleEmpresa* borrarXCuitSimple(NodoSimpleEmpresa* lista, char cuit[])
+nodoSimpleEmpresa* borrarXCuitSimple(nodoSimpleEmpresa* lista, char cuit[])
 {
 
     if(lista != NULL && strcmp(lista->dato.cuit,cuit)==0)
     {
-        NodoSimpleEmpresa* aux = lista;
+        nodoSimpleEmpresa* aux = lista;
         lista = lista->sig;
         free(aux);
     }
     else
     {
-      NodoSimpleEmpresa* ante = NULL;
-      NodoSimpleEmpresa* seg = NULL;
+        nodoSimpleEmpresa* ante = NULL;
+        nodoSimpleEmpresa* seg = NULL;
         seg = lista;
         while(seg != NULL && strcmp(seg->dato.cuit,cuit)!=0)
         {
@@ -100,4 +101,36 @@ NodoSimpleEmpresa* borrarXCuitSimple(NodoSimpleEmpresa* lista, char cuit[])
         }
     }
     return lista;
+}
+
+void mostrarListaSimpleEmpresa(nodoSimpleEmpresa* lista)
+{
+    while(lista)
+    {
+        mostrarUnaEmpresa(lista->dato);
+        lista = lista->sig;
+    }
+}
+
+void TestLibreriaEmpresa()
+{
+    nodoSimpleEmpresa* lista = inicListaSimple();
+    lista = agregarNodoAlPrincipioSimple(lista,crearNodoSimple(crearEmpresa("Coca Cola","45459875674")));
+    lista = agregarNodoAlPrincipioSimple(lista,crearNodoSimple(crearEmpresa("Pepsi","46459875674")));
+    lista = agregarNodoAlPrincipioSimple(lista,crearNodoSimple(crearEmpresa("Manaos","47459875674")));
+    lista = agregarNodoAlPrincipioSimple(lista,crearNodoSimple(crearEmpresa("Chori Champion","42459875674")));
+    lista = agregarNodoAlFinalSimple(lista,crearNodoSimple(crearEmpresa("Cuatro Cabezas","42455555554")));
+      mostrarListaSimpleEmpresa(lista);
+
+    lista = borrarXCuitSimple(lista,"42459875674");
+    printf("Eliminando empresa con el CUIT: 42459875674 - Nombre: Chori Champion\n");
+    system("pause");
+    system("cls");
+    mostrarListaSimpleEmpresa(lista);
+    system("pause");
+    system("cls");
+    printf("*******************************\n");
+    printf("\nBuscando ultimo - Se espera: CUATRO CABEZAS\n");
+    printf("Se encontro: %s\n",buscarUltimoSimple(lista)->dato.nombre);
+
 }
