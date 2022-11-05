@@ -4,7 +4,7 @@
 typedef struct Empresa
 {
     char nombre[50];
-    char cuit[11];
+    char cuit[12];
     int activa_emp;
 } Empresa;
 

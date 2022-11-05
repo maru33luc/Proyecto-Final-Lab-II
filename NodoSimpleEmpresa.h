@@ -5,9 +5,9 @@
 
 typedef struct nodoSimpleEmpresa {
 Empresa dato;
-struct nodoSimpleProveedor* prov;
-struct nodoSimpleCliente* cli;
-struct nodoSimpleEmpresa*  sig;
+struct nodoSimpleCP* prov;
+struct nodoSimpleCP* cli;
+struct nodoSimpleEmpresa* sig;
 }nodoSimpleEmpresa;
 
 

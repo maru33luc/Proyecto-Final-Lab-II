@@ -20,6 +20,8 @@ nodoSimpleEmpresa* crearNodoSimple(Empresa e)
     nodoSimpleEmpresa* aux = malloc(sizeof(nodoSimpleEmpresa));
     aux->dato = e;
     aux->sig = NULL;
+    aux->prov = inicListaSimpleCP();
+    aux->cli = inicListaSimpleCP();
 
     return aux;
 }
