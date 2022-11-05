@@ -8,8 +8,6 @@
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
 
-
-
 int main()
 {
   /*
