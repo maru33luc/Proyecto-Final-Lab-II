@@ -8,4 +8,6 @@ typedef struct Cliente_Proveedor
   char cp;
 }Cliente_Proveedor;
 
+void mostrarUnCP(Cliente_Proveedor);
+
 #endif // CLIENTE_PROVEEDOR_H_INCLUDED

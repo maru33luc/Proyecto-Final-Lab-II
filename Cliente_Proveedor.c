@@ -4,6 +4,23 @@
 #include "Cliente_Proveedor.h"
 
 //LIBRERIA ESTRUCTURA CLIENTE_PROVEEDOR
+Cliente_Proveedor crearCP(char nombre[],char cuit_cp[],char cp)
+{
+    Cliente_Proveedor nuevo_cp;
+    strcpy(nuevo_cp.nombre,nombre);
+    strcpy(nuevo_cp.cuit_cliente_proveedor,cuit_cp);
+    nuevo_cp.cp = cp;
+
+    return nuevo_cp;
+}
+
+void mostrarUnCP(Cliente_Proveedor CP)
+{
+    printf("----------------------------\n");
+    printf("Nombre: %s\n",CP.nombre);
+    printf("CP: %c\n",CP.cp);
+    printf("CUIT: %s\n",CP.cuit_cliente_proveedor);
+}
 
 
 
