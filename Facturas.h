@@ -56,8 +56,8 @@ void mostrarUnaFactura (Factura a);
 
 
 
-Factura cargarUnaFactura (Factura a);
-void mostrarUnaFactura (Factura a);
+//Factura cargarUnaFactura (Factura a);
+//void mostrarUnaFactura (Factura a);
 
 
 

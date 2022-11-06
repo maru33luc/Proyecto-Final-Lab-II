@@ -14,9 +14,10 @@ int main()
 
 printf("El proyecto compila correctamente.");
 
-TestLibreriaEmpresa();
+//TestLibreriaEmpresa();
 
 
+TestLibreriaFactura();
 
     return 0;
 }

@@ -71,7 +71,7 @@ void mostrarListaDoble (nodoDobleFactura *lista)
     }
 }
 
-nodoDobleFactura *borrarnodoDobleFacturaXNumComprobantee (nodoDobleFactura *lista,char numComprob [])
+nodoDobleFactura *borrarnodoDobleFacturaXNumComprobante (nodoDobleFactura *lista,char numComprob [])
 {
     if(lista!=NULL)
     {
@@ -79,15 +79,16 @@ nodoDobleFactura *borrarnodoDobleFacturaXNumComprobantee (nodoDobleFactura *list
         {
             nodoDobleFactura *aux=lista;
             lista=lista->sig;
-            lista->ante=NULL;
             free(aux);
+            lista->ante=NULL;
+
         }
         else
         {
             nodoDobleFactura*seg=lista;
-            nodoDobleFactura *ante;
+            nodoDobleFactura *ante=NULL;
 
-            while(seg!=NULL&&strcmpi(lista->dato.numComprobante,numComprob)!=0)
+            while(seg!=NULL&&strcmpi(seg->dato.numComprobante,numComprob)!=0)
             {
                 seg=seg->sig;
             }
@@ -95,8 +96,9 @@ nodoDobleFactura *borrarnodoDobleFacturaXNumComprobantee (nodoDobleFactura *list
             {
                 ante=seg->ante;
                 ante->sig=seg->sig;
+                nodoDobleFactura *aux1=seg->sig;
                 if(seg->sig!=NULL)
-                    seg->sig->ante=ante;
+                    aux1->ante=ante;
                 free(seg);
             }
         }
@@ -139,4 +141,33 @@ nodoDobleFactura *buscarFacturaDobleXNumComprob (nodoDobleFactura *lista,char nu
         seg=seg->sig;
 
     return seg;
+}
+
+
+void TestLibreriaFactura()
+{
+    Fecha dato;
+    dato.anio=2022;
+    dato.mes=5;
+    dato.dia=10;
+
+    nodoDobleFactura* lista = inicListaDoble();
+    lista = agregarAlPrincipioDoble(lista,crearNodoDoble(cargarUnaFactura("1111111","0","1","0","a",0,dato,"",0,0,0,0)));
+     lista = agregarAlPrincipioDoble(lista,crearNodoDoble(cargarUnaFactura("2222222","0","2","0","a",0,dato,"",0,0,0,0)));
+     lista = agregarAlPrincipioDoble(lista,crearNodoDoble(cargarUnaFactura("3333333","0","3","0","a",0,dato,"",0,0,0,0)));
+    lista = agregarAlFinalDoble(lista,crearNodoDoble(cargarUnaFactura("4444444","0","4","0","a",0,dato,"",0,0,0,0)));
+
+    mostrarListaDoble(lista);
+
+    lista = borrarnodoDobleFacturaXNumComprobante(lista,"1");
+    printf("Eliminando Factura con el numero de comprob '1' y cuit 11111111\n");
+    system("pause");
+    system("cls");
+    mostrarListaDoble(lista);
+    system("pause");
+    system("cls");
+    printf("*******************************\n");
+    printf("\nBuscando ultimo - Se espera: cuit 44444444\n");
+    printf("Se encontro: %s\n",buscarUltimoDoble(lista)->dato.cuit_cliente_proveedor);
+
 }
