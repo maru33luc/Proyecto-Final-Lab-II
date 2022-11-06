@@ -8,6 +8,7 @@ typedef struct Cliente_Proveedor
   char cp;
 }Cliente_Proveedor;
 
+Cliente_Proveedor crearCP(char nombre[],char cuit_cp[],char cp);
 void mostrarUnCP(Cliente_Proveedor);
 
 #endif // CLIENTE_PROVEEDOR_H_INCLUDED

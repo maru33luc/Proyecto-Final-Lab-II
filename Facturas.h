@@ -50,16 +50,8 @@ typedef struct Factura
 } Factura;
 
 
-
-
-
 Factura cargarUnaFactura (Factura a);
 void mostrarUnaFactura (Factura a);
-
-
-
-
-//void mostrarArchivoVentas (char nombreArchVentas[]);
 
 
 

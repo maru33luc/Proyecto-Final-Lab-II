@@ -1,43 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Empresa.h"
-#include "Cliente.h"
-#include "Proveedor.h"
 #include "Facturas.h"
 #include "Resumenes.h"
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
+#include "Cliente_Proveedor.h"
+#include "NodoSimpleCP.h"
 
 int main()
 {
-  /*
-char control='s';
-Factura a;
-nodoDobleFactura *lista=inicListaDoble();
-
-while(control=='s')
-{
-    a=cargarUnaFactura(a);
-    nodoDobleFactura *aux=crearNodoDoble(a);
-    lista=insertarOrdenadoDobleXNumComprob(lista,aux);
-    printf("\nDesea seguir ingresando Facturas? s/n\n");
-    fflush(stdin);
-    scanf("%c",&control);
-}
-mostrarListaDoble(lista);
-
-
-lista=borrarnodoDobleFacturaXNumComprobante(lista,"123");
-printf("Mostrando lista doble de Facturas sin el comprob 123\n");
-mostrarListaDoble(lista);
-
-
-nodoDobleFactura *aux=buscarFacturaDobleXNumComprob(lista,"123");
-if(aux!=NULL)
-{
-    printf("Mostrando la factura numero 123\n");
-    mostrarUnaFactura(aux->dato);
-}*/
 
 printf("El proyecto compila correctamente.");
 
