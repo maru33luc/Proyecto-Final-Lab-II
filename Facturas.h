@@ -49,6 +49,12 @@ typedef struct Factura
    int id_interno;
 } Factura;
 
+Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int activaEmp,char tipo,char comprobante[],char puntoVenta[],char numComprob[],int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact,char nombreCliProv[],char cp,char cuitCliProv[]);
+void mostrarUnRegistroFactura (Registro_Factura a);
+Factura cargarUnaFactura (char cuitCliProv[],char comprobante[],char numComprob[],char puntoVenta[],char tipo,int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact);
+void mostrarUnaFactura (Factura a);
+
+
 
 Factura cargarUnaFactura (Factura a);
 void mostrarUnaFactura (Factura a);
