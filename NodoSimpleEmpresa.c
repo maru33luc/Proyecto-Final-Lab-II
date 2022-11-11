@@ -215,8 +215,6 @@ nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Pr
 
 void mostrarTDACompleto (nodoSimpleEmpresa *lista)
 {
-
-
     while(lista!=NULL)
     {
         mostrarUnaEmpresa(lista->dato);
@@ -236,7 +234,6 @@ void mostrarTDACompleto (nodoSimpleEmpresa *lista)
         }
         lista=lista->sig;
     }
-
 }
 
 void TestPersistenciaYDespersistenciaEnTDA()
