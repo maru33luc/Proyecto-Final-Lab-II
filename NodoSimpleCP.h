@@ -1,6 +1,10 @@
 #ifndef NODOSIMPLECP_H_INCLUDED
 #define NODOSIMPLECP_H_INCLUDED
-#include "Cliente_Proveedor.h"
+
+
+
+
+
 
 typedef struct nodoSimpleCP{
 Cliente_Proveedor dato_cp;

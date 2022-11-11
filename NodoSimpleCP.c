@@ -53,6 +53,7 @@ nodoSimpleCP* buscarNodoXCuitSimpleCP(nodoSimpleCP* lista,char cuit[])
 {
     nodoSimpleCP* seg;
     seg = lista;
+
     while(seg !=NULL && strcmp(seg->dato_cp.cuit_cliente_proveedor,cuit) != 0)
     {
         seg = seg->sig;
@@ -111,3 +112,5 @@ void mostrarListaSimpleCP(nodoSimpleCP* lista)
         lista = lista->sig;
     }
 }
+
+

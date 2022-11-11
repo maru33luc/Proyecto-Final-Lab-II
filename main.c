@@ -3,10 +3,10 @@
 #include <string.h>
 #include "Empresa.h"
 #include "Facturas.h"
+#include "Cliente_Proveedor.h"
 #include "Resumenes.h"
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
-#include "Cliente_Proveedor.h"
 #include "NodoSimpleCP.h"
 
 int main()
@@ -17,7 +17,11 @@ printf("El proyecto compila correctamente.");
 //TestLibreriaEmpresa();
 
 
-TestLibreriaFactura();
+//TestLibreriaFactura();
+
+TestPersistenciaYDespersistenciaEnTDA();
+
+
 
     return 0;
 }

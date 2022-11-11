@@ -12,6 +12,7 @@
 
 void mostrarUnaEmpresa(Empresa a)
 {
+
     printf("\n---------------------------------------------------------\n");
     printf("\nNombre de la empresa: %s\n", a.nombre);
     printf("\nNumero de CUIT de la Empresa: %s\n", a.cuit);

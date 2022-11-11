@@ -35,7 +35,7 @@ char cuit_cliente_proveedor[12];
 
 typedef struct Factura
 {
-    char cuit_cliente_proveedor[12];
+    //char cuit_cliente_proveedor[12];
     char comprobante[30];
     char tipo;
     char puntoVenta[5];
@@ -51,10 +51,13 @@ typedef struct Factura
 
 Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int activaEmp,char tipo,char comprobante[],char puntoVenta[],char numComprob[],int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact,char nombreCliProv[],char cp,char cuitCliProv[]);
 void mostrarUnRegistroFactura (Registro_Factura a);
+void persistirRegistrosFactura (char nombreArch[],Registro_Factura a);
 Factura cargarUnaFactura (char cuitCliProv[],char comprobante[],char numComprob[],char puntoVenta[],char tipo,int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact);
 void mostrarUnaFactura (Factura a);
+Factura pasarDatosRegistroAUnaFactura(Registro_Factura a);
+void mostrarArchivoRegistros (char nombreArch[]);
 
-
+Empresa pasarDatosRegistroAUnaEmpresa(Registro_Factura a);
 
 //Factura cargarUnaFactura (Factura a);
 //void mostrarUnaFactura (Factura a);

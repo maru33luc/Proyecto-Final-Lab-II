@@ -10,23 +10,6 @@
 #include "NodoSimpleCP.h"
 
 
-
-
-///Hice estos mockeos(Funciones falsas) que son las dos funciones que estan abajo para que compile, que es necesario rearmarlas con los datos nuevos de factura.
-/// El tipo de carga manual de facturas no es necesaria, solo necesitamos una funcion de "Factura crearFacturas(numComprobante,cuit cliente_proveedor, etc...)" que retorne una nueva factura.
-/*
-Factura cargarUnaFactura(Factura a)
-{
-    Factura FacturaFalsa;
-
-    return  FacturaFalsa;
-}
-
-void mostrarUnaFactura(Factura a)
-{
-    printf("Mostrando una factura...\n");
-}
-*/
 Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int activaEmp,char tipo,char comprobante[],char puntoVenta[],char numComprob[],int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact,char nombreCliProv[],char cp,char cuitCliProv[])
 {
     Registro_Factura a;
@@ -50,7 +33,6 @@ Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int ac
     strcpy(a.cuit_cliente_proveedor,cuitCliProv);
 
     return a;
-
 }
 
 void mostrarUnRegistroFactura (Registro_Factura a)
@@ -74,20 +56,38 @@ void mostrarUnRegistroFactura (Registro_Factura a)
     printf("\nValor total: %.2f\n",a.total);
     printf("\nEstado de la Factura: activa (1) o inactiva (0): %d\n",a.activa_fact);
     printf("\n------------------------------------------------------\n");
-
 }
 
-//void persistirRegistrosFactura (char nombreArch[])
+void persistirRegistrosFactura (char nombreArch[],Registro_Factura a)
+{
+    FILE *buf=fopen(nombreArch,"ab");
 
+    if(buf)
+    {
+        fwrite(&a,sizeof(Registro_Factura),1,buf);
+        fclose(buf);
+    }
+}
 
+void mostrarArchivoRegistros (char nombreArch[])
+{
+    Registro_Factura a;
 
+    FILE *buf=fopen(nombreArch,"rb");
 
+    if(buf)
+    {
+        while(fread(&a,sizeof(Registro_Factura),1,buf)>0)
+            mostrarUnRegistroFactura(a);
+        fclose(buf);
+    }
+}
 
 Factura cargarUnaFactura (char cuitCliProv[],char comprobante[],char numComprob[],char puntoVenta[],char tipo,int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact)
 {
 Factura a;
 
-    strcpy(a.cuit_cliente_proveedor,cuitCliProv);
+    //strcpy(a.cuit_cliente_proveedor,cuitCliProv); // REVISAR SI QUEDA O NO ESTE CAMPO
     strcpy(a.comprobante,comprobante);
     strcpy(a.numComprobante,numComprob);
     strcpy(a.puntoVenta,puntoVenta);
@@ -105,8 +105,8 @@ Factura a;
 
 void mostrarUnaFactura (Factura a)
 {
-    printf("\n------------------------------------------------------\n");
-    printf("\nCUIT del cliente/proveedor: %s\n",a.cuit_cliente_proveedor);
+    printf("\n-----------------FACTURA NUMERO %s--------------------\n",a.numComprobante);
+//    printf("\nCUIT del cliente/proveedor: %s\n",a.cuit_cliente_proveedor);
     printf("\nTipo de comprobante: %s\n",a.comprobante);
     printf("\nNumero de comprobante: %s\n",a.numComprobante);
     printf("\nPunto de venta: %s\n",a.puntoVenta);
@@ -121,5 +121,32 @@ void mostrarUnaFactura (Factura a)
     printf("\n------------------------------------------------------\n");
 }
 
+Factura pasarDatosRegistroAUnaFactura(Registro_Factura a)
+{
+    Factura dato;
 
+    strcpy(dato.numComprobante,a.nro_comprobante);
+    dato.tipo=a.tipo;
+    strcpy(dato.puntoVenta,a.punto_venta);
+    strcpy(dato.comprobante,a.comprobante);
+    dato.fecha=a.fecha;
+    strcpy(dato.descripcion,a.descripcion);
+    dato.neto=a.neto;
+    dato.iva=a.iva;
+    dato.total=a.total;
+    dato.activa=a.activa_fact;
+    dato.id_interno=a.id_interno_factura;
 
+    return dato;
+}
+
+Empresa pasarDatosRegistroAUnaEmpresa(Registro_Factura a)
+{
+  Empresa dato;
+
+  strcpy(dato.nombre,a.nombreEmpresa);
+  strcpy(dato.cuit,a.cuit);
+  dato.activa_emp=a.activa_emp;
+
+  return dato;
+}

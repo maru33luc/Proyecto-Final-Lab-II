@@ -1,6 +1,8 @@
 #ifndef EMPRESA_H_INCLUDED
 #define EMPRESA_H_INCLUDED
 
+
+
 typedef struct Empresa
 {
     char nombre[50];
@@ -10,8 +12,15 @@ typedef struct Empresa
 
 
 
+
+
+
+
 void mostrarUnaEmpresa(Empresa a);
 Empresa crearEmpresa(char nombre[],char cuit[]);
 void TestLibreriaEmpresa();
+
+
+
 
 #endif // EMPRESA_H_INCLUDED
