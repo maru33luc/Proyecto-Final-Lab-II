@@ -18,5 +18,8 @@ nodoDobleFactura *borrarnodoDobleFacturaXNumComprobante (nodoDobleFactura *lista
 nodoDobleFactura *insertarOrdenadoDobleXNumComprob (nodoDobleFactura *lista,nodoDobleFactura *nuevo);
 nodoDobleFactura *buscarFacturaDobleXNumComprob (nodoDobleFactura *lista,char numComprob[]);
 
+int retornarSiFecha1EsMayor (Fecha dato1, Fecha dato2);
+nodoDobleFactura *insertarOrdenadoDobleXFecha (nodoDobleFactura *lista,nodoDobleFactura *nuevo);
+
 
 #endif // NODODOBLEFACTURA_H_INCLUDED

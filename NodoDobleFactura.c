@@ -133,6 +133,63 @@ nodoDobleFactura *insertarOrdenadoDobleXNumComprob (nodoDobleFactura *lista,nodo
     return lista;
 }
 
+
+nodoDobleFactura *insertarOrdenadoDobleXFecha (nodoDobleFactura *lista,nodoDobleFactura *nuevo)
+{
+    int rta=0;
+
+    if(lista==NULL)
+        lista=nuevo;
+    else
+    {
+        nodoDobleFactura *seg=lista;
+        rta=retornarSiFecha1EsMayor(lista->dato.fecha,nuevo->dato.fecha);
+        if(rta==1)
+            lista=agregarAlPrincipioDoble(lista,nuevo);
+        else
+        {
+            while(seg!=NULL&&rta==0)
+            {
+                rta=retornarSiFecha1EsMayor(seg->dato.fecha,nuevo->dato.fecha);
+                seg=seg->sig;
+            }
+            if(seg==NULL)
+                lista=agregarAlFinalDoble(lista,nuevo);
+            else
+            {
+                nuevo->sig=seg;
+                nuevo->ante=seg->ante;
+                (seg->ante)->sig=nuevo;
+                seg->ante=nuevo;
+            }
+        }
+    }
+    return lista;
+}
+
+int retornarSiFecha1EsMayor (Fecha dato1, Fecha dato2)
+{
+    int rta=1; /// RETORNA 1 SI ES MAYOR, 0 SI ES MENOR
+
+    if(dato1.anio<dato2.anio)
+        rta=0;
+    else if(dato1.anio==dato2.anio)
+    {
+        if(dato1.mes<dato2.mes)
+            rta=0;
+        else if (dato1.mes==dato2.mes)
+        {
+            if(dato1.dia<dato2.dia)
+                rta=0;
+        }
+    }
+    return rta;
+}
+
+
+
+
+
 nodoDobleFactura *buscarFacturaDobleXNumComprob (nodoDobleFactura *lista,char numComprob[])
 {
     nodoDobleFactura *seg=lista;

@@ -8,11 +8,13 @@
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
 #include "NodoSimpleCP.h"
-
+#include <time.h>
 int main()
 {
 
-printf("El proyecto compila correctamente.");
+
+
+    printf("El proyecto compila correctamente.");
 
 //TestLibreriaEmpresa();
 
@@ -20,8 +22,66 @@ printf("El proyecto compila correctamente.");
 //TestLibreriaFactura();
 
 TestPersistenciaYDespersistenciaEnTDA();
+    /*
+    Fecha dato1;
+
+    dato1.anio=2021;
+    dato1.mes=8;
+    dato1.dia=10;
+
+    Fecha dato2;
+
+    dato2.anio=2022;
+    dato2.mes=3;
+    dato2.dia=10;
 
 
+    int rta=retornarSiFecha1EsMayor(dato1,dato2);
+    if(rta==1)
+        printf("\nEl dato1 es mayor\n");
+    else
+        printf("\nEl dato2 es mayor\n");
+    system("pause");
+
+
+    Fecha dato;
+    dato.anio=2022;
+    dato.mes=5;
+    dato.dia=10;
+
+    Fecha dato1;
+    dato1.anio=2022;
+    dato1.mes=10;
+    dato1.dia=20;
+
+    Fecha dato2;
+    dato2.anio=2021;
+    dato2.mes=5;
+    dato2.dia=10;
+
+    nodoDobleFactura *listaF=inicListaDoble();
+
+    Registro_Factura a=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,dato,"",0,0,0,0,"MarinaCli",'c',"28");
+
+    Factura dato4=pasarDatosRegistroAUnaFactura(a);
+
+    listaF=insertarOrdenadoDobleXFecha(listaF,crearNodoDoble(dato4));
+
+    Registro_Factura b=cargarUnRegistroFactura("Pepsi","13",0,"a","0","0","0",1,dato1,"",0,0,0,0,"MarinaCli",'c',"30");
+
+    Factura dato5=pasarDatosRegistroAUnaFactura(b);
+
+    listaF=insertarOrdenadoDobleXFecha(listaF,crearNodoDoble(dato5));
+
+    Registro_Factura c=cargarUnRegistroFactura("Malboro","14",0,"a","0","0","0",1,dato2,"",0,0,0,0,"MarinaCli",'c',"32");
+
+    Factura dato6=pasarDatosRegistroAUnaFactura(c);
+
+    listaF=insertarOrdenadoDobleXFecha(listaF,crearNodoDoble(dato6));
+
+    mostrarListaDoble(listaF);
+    system("pause");
+*/
 
     return 0;
 }

@@ -171,13 +171,13 @@ nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Pr
         {
             ult->cli=agregarNodoAlPrincipioSimpleCP(ult->cli,aux);
             ult->cli->fact=inicListaDoble();
-            ult->cli->fact=agregarAlPrincipioDoble(ult->cli->fact,aux1);
+            ult->cli->fact=insertarOrdenadoDobleXFecha(ult->cli->fact,aux1);
         }
         else
         {
             ult->prov=agregarNodoAlPrincipioSimpleCP(ult->prov,aux);
             ult->prov->fact=inicListaDoble();
-            ult->prov->fact=agregarAlPrincipioDoble(ult->prov->fact,aux1);
+            ult->prov->fact=insertarOrdenadoDobleXFecha(ult->prov->fact,aux1);
         }
     }
     else
@@ -191,10 +191,10 @@ nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Pr
             {
                 busq->cli=agregarNodoAlPrincipioSimpleCP(busq->cli,aux);
                 busq->cli->fact=inicListaDoble();
-                busq->cli->fact=agregarAlPrincipioDoble(busq->cli->fact,aux1);
+                busq->cli->fact=insertarOrdenadoDobleXFecha(busq->cli->fact,aux1);
             }
             else
-                busq2->fact=agregarAlPrincipioDoble(busq2->fact,aux1);
+                busq2->fact=insertarOrdenadoDobleXFecha(busq2->fact,aux1);
         }
         else
         {
@@ -203,10 +203,10 @@ nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Pr
             {
                 busq->prov=agregarNodoAlPrincipioSimpleCP(busq->prov,aux);
                 busq->prov->fact=inicListaDoble();
-                busq->prov->fact=agregarAlPrincipioDoble(busq->prov->fact,aux1);
+                busq->prov->fact=insertarOrdenadoDobleXFecha(busq->prov->fact,aux1);
             }
             else
-                busq2->fact=agregarAlPrincipioDoble(busq2->fact,aux1);
+                busq2->fact=insertarOrdenadoDobleXFecha(busq2->fact,aux1);
         }
     }
     return lista;
@@ -243,15 +243,26 @@ void TestPersistenciaYDespersistenciaEnTDA()
     dato.mes=5;
     dato.dia=10;
 
+    Fecha dato1;
+    dato1.anio=2022;
+    dato1.mes=10;
+    dato1.dia=20;
+
+    Fecha dato2;
+    dato2.anio=2021;
+    dato2.mes=5;
+    dato2.dia=10;
+
+
     Registro_Factura a=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,dato,"",0,0,0,0,"MarinaCli",'c',"28");
 
     persistirRegistrosFactura("ArchivoFacturas",a);
 
-    Registro_Factura b=cargarUnRegistroFactura("Pepsi","13",0,"a","0","0","0",1,dato,"",0,0,0,0,"LopezProv",'p',"30");
+    Registro_Factura b=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,dato1,"",0,0,0,0,"MarinaCli",'c',"28");
 
     persistirRegistrosFactura("ArchivoFacturas",b);
 
-    Registro_Factura c=cargarUnRegistroFactura("Malboro","14",0,"a","0","0","0",1,dato,"",0,0,0,0,"SanchezProv",'p',"32");
+    Registro_Factura c=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,dato2,"",0,0,0,0,"MarinaCli",'c',"28");
 
     persistirRegistrosFactura("ArchivoFacturas",c);
 
