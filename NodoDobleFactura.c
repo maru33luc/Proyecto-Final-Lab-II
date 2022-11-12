@@ -205,8 +205,6 @@ int retornarSiFecha1EsMenor (Fecha dato1, Fecha dato2)
     return rta;
 }
 
-
-
 nodoDobleFactura *buscarFacturaDobleXNumComprob (nodoDobleFactura *lista,char numComprob[])
 {
     nodoDobleFactura *seg=lista;
@@ -216,7 +214,6 @@ nodoDobleFactura *buscarFacturaDobleXNumComprob (nodoDobleFactura *lista,char nu
 
     return seg;
 }
-
 
 void TestLibreriaFactura()
 {
@@ -242,6 +239,6 @@ void TestLibreriaFactura()
     system("cls");
     printf("*******************************\n");
     printf("\nBuscando ultimo - Se espera: cuit 44444444\n");
-//    printf("Se encontro: %s\n",buscarUltimoDoble(lista)->dato.cuit_cliente_proveedor);
+//    printf("Se encontro: %s\n",buscarUltimoDoble(lista)->dato.cuit_cliente_proveedor); // COMENTADO X CAMPO INEX
 
 }

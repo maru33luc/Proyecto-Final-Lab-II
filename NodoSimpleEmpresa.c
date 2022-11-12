@@ -131,7 +131,7 @@ nodoSimpleEmpresa* agregarOrdenadoXNombreSimpleEmpresa(nodoSimpleEmpresa*lista,n
             nodoSimpleEmpresa* ante= lista;
             while(seg && strcmpi(seg->dato.nombre,nuevoNodo->dato.nombre)<0)
             {
-               printf("\n Comparando: ----  %s  ----   CON ---- %s ----    ",seg->dato.nombre,nuevoNodo->dato.nombre);
+                printf("\n Comparando: ----  %s  ----   CON ---- %s ----    ",seg->dato.nombre,nuevoNodo->dato.nombre); // SE PUEDE BORRAR?
                 ante = seg;
                 seg = seg->sig;
             }
@@ -195,6 +195,7 @@ nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEm
         }
         fclose(buf);
     }
+
     return lista;
 }
 
@@ -252,76 +253,139 @@ nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Pr
                 busq2->fact=insertarOrdenadoDobleXFecha(busq2->fact,aux1);
         }
     }
+
     return lista;
 }
 
 
 void mostrarTDACompleto (nodoSimpleEmpresa *lista)
 {
-    while(lista!=NULL)
+
+    nodoSimpleEmpresa *segLista=lista;
+    while(segLista!=NULL)
     {
-        mostrarUnaEmpresa(lista->dato);
+        mostrarUnaEmpresa(segLista->dato);
         printf("\n-----------Lista de Clientes:----------------\n");
-        while(lista->cli!=NULL)
+        nodoSimpleCP *segCli=segLista->cli;
+        while(segCli!=NULL)
         {
-            mostrarUnCP(lista->cli->dato_cp);
-            mostrarListaDoble(lista->cli->fact);
-            lista->cli=lista->cli->sig;
+            mostrarUnCP(segCli->dato_cp);
+
+            mostrarListaDoble(segCli->fact);
+            segCli=segCli->sig;
         }
         printf("\n-----------Lista de Proveedores:----------------\n");
-        while(lista->prov!=NULL)
+        nodoSimpleCP *segProv=segLista->prov;
+        while(segProv!=NULL)
         {
-            mostrarUnCP(lista->prov->dato_cp);
-            mostrarListaDoble(lista->prov->fact);
-            lista->prov=lista->prov->sig;
+            mostrarUnCP(segProv->dato_cp);
+            mostrarListaDoble(segProv->fact);
+            segProv=segProv->sig;
         }
-        lista=lista->sig;
+        segLista=segLista->sig;
     }
 }
 
 void TestPersistenciaYDespersistenciaEnTDA()
 {
-    Fecha dato;
-    dato.anio=2022;
-    dato.mes=5;
-    dato.dia=10;
-
-    Fecha dato1;
-    dato1.anio=2022;
-    dato1.mes=10;
-    dato1.dia=20;
-
-    Fecha dato2;
-    dato2.anio=2021;
-    dato2.mes=5;
-    dato2.dia=10;
-
-
-    Registro_Factura a=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,dato,"",0,0,0,0,"MarinaCli",'c',"28");
+    Registro_Factura a=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(10,3,2020),"",0,0,0,0,"MarinaCli",'c',"28");
 
     persistirRegistrosFactura("ArchivoFacturas",a);
 
-    Registro_Factura b=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,dato1,"",0,0,0,0,"MarinaCli",'c',"28");
+    Registro_Factura b=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(3,11,2019),"",0,0,0,0,"SanchezProv",'p',"30");
 
     persistirRegistrosFactura("ArchivoFacturas",b);
 
-    Registro_Factura c=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,dato2,"",0,0,0,0,"MarinaCli",'c',"28");
+    Registro_Factura c=cargarUnRegistroFactura("Lacteos Amanecer","14",0,"a","0","0","0",1,crearFecha(20,4,2020),"",0,0,0,0,"SanchezProv",'p',"30");
 
     persistirRegistrosFactura("ArchivoFacturas",c);
 
+    Registro_Factura d=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(10,8,2020),"",0,0,0,0,"SanchezProv",'p',"30");
+
+    persistirRegistrosFactura("ArchivoFacturas",d);
+
+    Registro_Factura e=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(30,10,2022),"",0,0,0,0,"MarinaCli",'c',"28");
+
+    persistirRegistrosFactura("ArchivoFacturas",e);
+
+    Registro_Factura f=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(20,5,2021),"",0,0,0,0,"CeramicosMdP",'p',"32");
+
+    persistirRegistrosFactura("ArchivoFacturas",f);
+
     printf("Persiste todo");
-    mostrarArchivoRegistros("ArchivoFacturas");
+    //mostrarArchivoRegistros("ArchivoFacturas");
 
     nodoSimpleEmpresa *lista=inicListaSimpleEmpresa();
     lista=pasarDatosArchivoFacturasATDA("ArchivoFacturas",lista);
     printf("\n-------------TDA Completo-----------------------------\n\n");
     mostrarTDACompleto(lista);
+    system("pause");
+    printf("Mostrando por segunda vez");
 
+    mostrarTDACompleto(lista);
 
+   /* char nombreArch2[30]="ArchPruebaPersEnTDA";
+
+    persistirTDAEnArchivo(nombreArch2,lista);
+    system("pause");
+    printf("\nMostrando el nuevo Archivo una vez persistido el TDA\n");
+    mostrarArchivoRegistros(nombreArch2);
+*/
 }
 
+void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista)
+{
+    FILE *buf=fopen(nombreArch,"wb");
 
+    Registro_Factura a;
 
+    if(buf)
+    {
+        while(lista!=NULL)
+        {
+
+            while(lista->cli!=NULL)
+            {
+                while(lista->cli->fact)
+                {
+                    a= pasarDatosNodoEmpresaAUnRegistro(lista->dato);
+                    a=pasarDatosNodoClienteProveedorARegistro(lista->cli->dato_cp);
+                    a=pasarDatosNodoFacturaAUnRegistro(lista->cli->fact->dato);
+
+                    fwrite(&a,sizeof(Registro_Factura),1,buf);
+                    lista->cli->fact=lista->cli->fact->sig;
+                }
+                lista->cli=lista->cli->sig;
+            }
+            while(lista->prov)
+            {
+                while(lista->prov->fact)
+                {
+                    a= pasarDatosNodoEmpresaAUnRegistro(lista->dato);
+                    a=pasarDatosNodoClienteProveedorARegistro(lista->prov->dato_cp);
+                    a=pasarDatosNodoFacturaAUnRegistro(lista->prov->fact->dato);
+                    fwrite(&a,sizeof(Registro_Factura),1,buf);
+                    lista->prov->fact=lista->prov->fact->sig;
+                }
+                lista->prov=lista->prov->sig;
+            }
+            lista=lista->sig;
+        }
+        fclose(buf);
+    }
+    printf("---------SALIO-----");
+}
+
+Fecha crearFecha (int dia, int mes, int anio)
+{
+    Fecha a;
+
+    a.dia=dia;
+    a.mes=mes;
+    a.anio=anio;
+
+    return a;
+}
 
 
 

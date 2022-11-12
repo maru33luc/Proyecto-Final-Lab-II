@@ -39,6 +39,16 @@ Cliente_Proveedor pasarDatosRegistroAUnClienteProveedor(Registro_Factura a)
     return dato;
 }
 
+Registro_Factura pasarDatosNodoClienteProveedorARegistro(Cliente_Proveedor a)
+{
+    Registro_Factura dato;
+
+    strcpy(dato.nombre_cliente_proveedor,a.nombre);
+    strcpy(dato.cuit_cliente_proveedor,a.cuit_cliente_proveedor);
+    dato.cp=a.cp;
+
+    return dato;
+}
 
 
 

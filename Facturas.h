@@ -58,6 +58,8 @@ Factura pasarDatosRegistroAUnaFactura(Registro_Factura a);
 void mostrarArchivoRegistros (char nombreArch[]);
 
 Empresa pasarDatosRegistroAUnaEmpresa(Registro_Factura a);
+Registro_Factura pasarDatosNodoFacturaAUnRegistro(Factura a);
+Registro_Factura pasarDatosNodoEmpresaAUnRegistro(Empresa a);
 
 //Factura cargarUnaFactura (Factura a);
 //void mostrarUnaFactura (Factura a);

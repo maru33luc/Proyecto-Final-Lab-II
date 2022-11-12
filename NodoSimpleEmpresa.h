@@ -21,12 +21,15 @@ nodoSimpleEmpresa* buscarNodoXCuitSimpleEmpresa(nodoSimpleEmpresa* lista,char cu
 nodoSimpleEmpresa* agregarNodoAlFinalSimpleEmpresa(nodoSimpleEmpresa* lista,nodoSimpleEmpresa* nuevoNodo);
 nodoSimpleEmpresa* borrarXCuitSimpleEmpresa(nodoSimpleEmpresa* lista, char cuit[]);
 void mostrarListaSimpleEmpresa(nodoSimpleEmpresa*);
+nodoSimpleEmpresa* agregarOrdenadoXNombreSimpleEmpresa(nodoSimpleEmpresa*lista,nodoSimpleEmpresa* nuevoNodo);
 
 nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista);
 nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Proveedor cliProv, Empresa emp);
-
+void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
 
 void mostrarTDACompleto (nodoSimpleEmpresa *lista);
+
+Fecha crearFecha (int dia, int mes, int anio);
 
 
 

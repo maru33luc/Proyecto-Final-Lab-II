@@ -13,5 +13,7 @@ typedef struct Cliente_Proveedor
 Cliente_Proveedor crearCP(char nombre[],char cuit_cp[],char cp);
 void mostrarUnCP(Cliente_Proveedor dato);
 Cliente_Proveedor pasarDatosRegistroAUnClienteProveedor(Registro_Factura a);
+Registro_Factura pasarDatosNodoClienteProveedorARegistro(Cliente_Proveedor a);
+
 
 #endif // CLIENTE_PROVEEDOR_H_INCLUDED

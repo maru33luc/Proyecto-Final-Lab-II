@@ -150,3 +150,33 @@ Empresa pasarDatosRegistroAUnaEmpresa(Registro_Factura a)
 
   return dato;
 }
+
+Registro_Factura pasarDatosNodoFacturaAUnRegistro(Factura a)
+{
+    Registro_Factura dato;
+
+    strcpy(dato.nro_comprobante,a.numComprobante);
+    dato.tipo=a.tipo;
+    strcpy(dato.punto_venta,a.puntoVenta);
+    strcpy(dato.comprobante,a.comprobante);
+    dato.fecha=a.fecha;
+    strcpy(dato.descripcion,a.descripcion);
+    dato.neto=a.neto;
+    dato.iva=a.iva;
+    dato.total=a.total;
+    dato.activa_fact=a.activa;
+    dato.id_interno_factura=a.id_interno; /// ESTE CAMPO QUE HACEMOS AL FINAL?
+
+    return dato;
+}
+
+Registro_Factura pasarDatosNodoEmpresaAUnRegistro(Empresa a)
+{
+  Registro_Factura dato;
+
+  strcpy(dato.nombreEmpresa,a.nombre);
+  strcpy(dato.cuit,a.cuit);
+  dato.activa_emp=a.activa_emp;
+
+  return dato;
+}
