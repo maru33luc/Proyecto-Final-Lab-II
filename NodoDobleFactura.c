@@ -503,3 +503,42 @@ nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Pr
     return lista;
 }
 
+nodoDobleFactura* buscarFacturaenTDA(nodoSimpleEmpresa*lista,char nombre_empresa[],char cp,char cuit_cp[],char nro_comprobante[],char punto_venta[])
+{
+    nodoDobleFactura* nodoEncontrado = NULL;
+
+    nodoSimpleEmpresa* segEmpresa = lista;
+    while(segEmpresa && strcmpi(segEmpresa->dato.nombre,nombre_empresa)!= 0)
+    {
+        segEmpresa = segEmpresa->sig;
+    }
+    if(segEmpresa)
+    {
+        nodoSimpleCP* segCP = NULL;
+        if(cp == 'c' || cp == 'C')
+        {
+            segCP = segEmpresa->cli;
+        }
+        else
+        {
+            segCP = segEmpresa->prov;
+        }
+        while(segCP && strcmp(segCP->dato_cp.cuit_cliente_proveedor,cuit_cp)!=0)
+        {
+            segCP = segCP->sig;
+        }
+        if(segCP)
+        {
+            nodoDobleFactura* segFactura = segCP->fact;
+            while(segFactura && strcmp(segFactura->dato.numComprobante,nro_comprobante)!=0 && strcmp(segFactura->dato.puntoVenta,punto_venta)!=0)
+            {
+                segFactura = segFactura->sig;
+            }
+            if(segFactura)
+            {
+                nodoEncontrado = segFactura;
+            }
+        }
+    }
+    return nodoEncontrado;
+}
