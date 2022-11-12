@@ -1,11 +1,6 @@
 #ifndef NODOSIMPLECP_H_INCLUDED
 #define NODOSIMPLECP_H_INCLUDED
 
-
-
-
-
-
 typedef struct nodoSimpleCP{
 Cliente_Proveedor dato_cp;
 struct nodoDobleFactura* fact;

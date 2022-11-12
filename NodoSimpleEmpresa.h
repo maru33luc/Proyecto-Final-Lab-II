@@ -11,8 +11,6 @@ struct nodoSimpleEmpresa* sig;
 }nodoSimpleEmpresa;
 
 
-
-
 nodoSimpleEmpresa* inicListaSimpleEmpresa();
 nodoSimpleEmpresa* crearNodoSimpleEmpresa(Empresa e);
 nodoSimpleEmpresa* agregarNodoAlPrincipioSimpleEmpresa(nodoSimpleEmpresa* lista, nodoSimpleEmpresa* nuevoNodo);
@@ -30,7 +28,6 @@ void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
 void mostrarTDACompleto (nodoSimpleEmpresa *lista);
 
 Fecha crearFecha (int dia, int mes, int anio);
-
 
 
 #endif

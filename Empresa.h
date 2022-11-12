@@ -11,16 +11,8 @@ typedef struct Empresa
 } Empresa;
 
 
-
-
-
-
-
 void mostrarUnaEmpresa(Empresa a);
 Empresa crearEmpresa(char nombre[],char cuit[]);
 void TestLibreriaEmpresa();
-
-
-
 
 #endif // EMPRESA_H_INCLUDED

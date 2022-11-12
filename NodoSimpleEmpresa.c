@@ -270,7 +270,6 @@ void mostrarTDACompleto (nodoSimpleEmpresa *lista)
         while(segCli!=NULL)
         {
             mostrarUnCP(segCli->dato_cp);
-
             mostrarListaDoble(segCli->fact);
             segCli=segCli->sig;
         }
@@ -319,18 +318,18 @@ void TestPersistenciaYDespersistenciaEnTDA()
     lista=pasarDatosArchivoFacturasATDA("ArchivoFacturas",lista);
     printf("\n-------------TDA Completo-----------------------------\n\n");
     mostrarTDACompleto(lista);
-    system("pause");
-    printf("Mostrando por segunda vez");
 
-    mostrarTDACompleto(lista);
+    printf("\n-----LISTANDO FACTURAS POR PERIODO DEL 11/3/2020 AL 21/5/2021----------\n");
+    listarFacturasDetEmpresaXPeriodo(lista,"12",crearFecha(11,3,2020),crearFecha(21,5,2021));
 
-   /* char nombreArch2[30]="ArchPruebaPersEnTDA";
+    /*
 
+    char nombreArch2[30]="ArchPruebaPersEnTDA";
     persistirTDAEnArchivo(nombreArch2,lista);
     system("pause");
     printf("\nMostrando el nuevo Archivo una vez persistido el TDA\n");
     mostrarArchivoRegistros(nombreArch2);
-*/
+    */
 }
 
 void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista)
@@ -341,39 +340,41 @@ void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista)
 
     if(buf)
     {
-        while(lista!=NULL)
+        nodoSimpleEmpresa *segEmp=lista;
+        while(segEmp!=NULL)
         {
-
-            while(lista->cli!=NULL)
+            nodoSimpleCP *segCli=segEmp->cli;
+            while(segCli!=NULL)
             {
-                while(lista->cli->fact)
+                nodoDobleFactura *segFact=segCli->fact;
+                while(segFact)
                 {
-                    a= pasarDatosNodoEmpresaAUnRegistro(lista->dato);
-                    a=pasarDatosNodoClienteProveedorARegistro(lista->cli->dato_cp);
-                    a=pasarDatosNodoFacturaAUnRegistro(lista->cli->fact->dato);
-
+                    a= pasarDatosNodoEmpresaAUnRegistro(segEmp->dato);
+                    a=pasarDatosNodoClienteProveedorARegistro(segCli->dato_cp);
+                    a=pasarDatosNodoFacturaAUnRegistro(segFact->dato);
                     fwrite(&a,sizeof(Registro_Factura),1,buf);
-                    lista->cli->fact=lista->cli->fact->sig;
+                    segFact=segFact->sig;
                 }
-                lista->cli=lista->cli->sig;
+                segCli=segCli->sig;
             }
-            while(lista->prov)
+            nodoSimpleCP *segProv=segEmp->prov;
+            while(segProv)
             {
-                while(lista->prov->fact)
+                nodoDobleFactura *segFactProv=segProv->fact;
+                while(segFactProv)
                 {
-                    a= pasarDatosNodoEmpresaAUnRegistro(lista->dato);
-                    a=pasarDatosNodoClienteProveedorARegistro(lista->prov->dato_cp);
-                    a=pasarDatosNodoFacturaAUnRegistro(lista->prov->fact->dato);
+                    a= pasarDatosNodoEmpresaAUnRegistro(segEmp->dato);
+                    a=pasarDatosNodoClienteProveedorARegistro(segProv->dato_cp);
+                    a=pasarDatosNodoFacturaAUnRegistro(segFactProv->dato);
                     fwrite(&a,sizeof(Registro_Factura),1,buf);
-                    lista->prov->fact=lista->prov->fact->sig;
+                    segFactProv=segFactProv->sig;
                 }
-                lista->prov=lista->prov->sig;
+                segProv=segProv->sig;
             }
-            lista=lista->sig;
+            segEmp=segEmp->sig;
         }
         fclose(buf);
     }
-    printf("---------SALIO-----");
 }
 
 Fecha crearFecha (int dia, int mes, int anio)
@@ -386,6 +387,8 @@ Fecha crearFecha (int dia, int mes, int anio)
 
     return a;
 }
+
+
 
 
 

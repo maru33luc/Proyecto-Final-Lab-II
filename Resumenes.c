@@ -31,3 +31,49 @@ void listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
         lista=lista->sig;
     }
 }
+
+void listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char cuit[],Fecha fechaInicio,Fecha fechaFinal)
+{
+
+    nodoSimpleEmpresa *empresa=buscarNodoXCuitSimpleEmpresa(lista,cuit);
+    mostrarUnaEmpresa(empresa->dato);
+
+
+        printf("\n-----------Facturas de Clientes:----------------\n");
+        nodoSimpleCP *segCli=empresa->cli;
+        while(segCli!=NULL)
+        {
+            mostrarUnCP(segCli->dato_cp);
+            nodoDobleFactura *segFactCli=segCli->fact;
+            while(segFactCli)
+            {
+                if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactCli->dato.fecha,fechaInicio,fechaFinal))
+                mostrarUnaFactura(segFactCli->dato);
+                segFactCli=segFactCli->sig;
+            }
+            segCli=segCli->sig;
+        }
+        printf("\n-----------Facturas de Proveedores:----------------\n");
+        nodoSimpleCP *segProv=empresa->prov;
+        while(segProv!=NULL)
+        {
+            mostrarUnCP(segProv->dato_cp);
+            nodoDobleFactura *segFactProv=segProv->fact;
+            while(segFactProv)
+            {
+                if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactProv->dato.fecha,fechaInicio,fechaFinal)==1)
+                mostrarUnaFactura(segFactProv->dato);
+                segFactProv=segFactProv->sig;
+            }
+            segProv=segProv->sig;
+        }
+
+}
+
+int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha limSup)
+{
+    if(retornarSiFecha1EsMayor(dato,limInf)&&retornarSiFecha1EsMenor(dato,limSup))
+        return 1;
+    else
+        return 0;
+}
