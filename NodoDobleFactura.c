@@ -186,7 +186,24 @@ int retornarSiFecha1EsMayor (Fecha dato1, Fecha dato2)
     return rta;
 }
 
+int retornarSiFecha1EsMenor (Fecha dato1, Fecha dato2)
+{
+    int rta=1; /// RETORNA 1 SI ES MENOR, 0 SI ES MAYOR
 
+    if(dato1.anio>dato2.anio)
+        rta=0;
+    else if(dato1.anio==dato2.anio)
+    {
+        if(dato1.mes>dato2.mes)
+            rta=0;
+        else if (dato1.mes==dato2.mes)
+        {
+            if(dato1.dia>dato2.dia)
+                rta=0;
+        }
+    }
+    return rta;
+}
 
 
 

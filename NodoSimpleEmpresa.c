@@ -113,6 +113,35 @@ void mostrarListaSimpleEmpresa(nodoSimpleEmpresa* lista)
     }
 }
 
+nodoSimpleEmpresa* agregarOrdenadoXNombreSimpleEmpresa(nodoSimpleEmpresa*lista,nodoSimpleEmpresa* nuevoNodo)
+{
+    if(!lista)
+    {
+        lista = nuevoNodo;
+    }
+    else
+    {
+        if(strcmpi(lista->dato.nombre,nuevoNodo->dato.nombre)>0)
+        {
+            lista = agregarNodoAlPrincipioSimpleEmpresa(lista, nuevoNodo);
+        }
+        else
+        {
+            nodoSimpleEmpresa* seg = lista->sig;
+            nodoSimpleEmpresa* ante= lista;
+            while(seg && strcmpi(seg->dato.nombre,nuevoNodo->dato.nombre)<0)
+            {
+               printf("\n Comparando: ----  %s  ----   CON ---- %s ----    ",seg->dato.nombre,nuevoNodo->dato.nombre);
+                ante = seg;
+                seg = seg->sig;
+            }
+            nuevoNodo->sig = seg;
+            ante->sig = nuevoNodo;
+        }
+    }
+    return lista;
+}
+
 void TestLibreriaEmpresa()
 {
     nodoSimpleEmpresa* lista = inicListaSimpleEmpresa();
@@ -134,6 +163,20 @@ void TestLibreriaEmpresa()
     printf("\nBuscando ultimo - Se espera: CUATRO CABEZAS\n");
     printf("Se encontro: %s\n",buscarUltimoSimpleEmpresa(lista)->dato.nombre);
 
+    system("pause");
+    system("cls");
+    printf("Probando carga ordenada por Nombre de empresa.\n");
+    nodoSimpleEmpresa* listaOrdenada = inicListaSimpleEmpresa();
+
+    //TEST Agregar Ordenado
+    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Coca Cola","45459875674")));
+    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Pepsi","46459875674")));
+    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Manaos","47459875674")));
+    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Chori Champion","42459875674")));
+    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Cuatro Cabezas","42455555554")));
+    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("ChOri CHaMpInIoN","42455555554")));
+
+    mostrarListaSimpleEmpresa(listaOrdenada);
 }
 
 nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista)
