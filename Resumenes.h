@@ -1,6 +1,7 @@
 #ifndef RESUMENES_H_INCLUDED
 #define RESUMENES_H_INCLUDED
 
+#include "NodoDobleFactura.h"
 #include "NodoSimpleEmpresa.h"
 
 void listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista);

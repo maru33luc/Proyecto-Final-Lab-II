@@ -31,18 +31,6 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
-		<Unit filename="Cliente_Proveedor.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Cliente_Proveedor.h" />
-		<Unit filename="Empresa.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Empresa.h" />
-		<Unit filename="Facturas.c">
-			<Option compilerVar="CC" />
-		</Unit>
-		<Unit filename="Facturas.h" />
 		<Unit filename="NodoDobleFactura.c">
 			<Option compilerVar="CC" />
 		</Unit>

@@ -1,11 +1,29 @@
 #ifndef NODOSIMPLECP_H_INCLUDED
 #define NODOSIMPLECP_H_INCLUDED
 
+
+#include "NodoDobleFactura.h"
+#include "NodoSimpleEmpresa.h"
+
+typedef struct Cliente_Proveedor
+{
+  char nombre[50];
+  char cuit_cliente_proveedor[12];
+  char cp;
+}Cliente_Proveedor;
+
 typedef struct nodoSimpleCP{
 Cliente_Proveedor dato_cp;
 struct nodoDobleFactura* fact;
 struct nodoSimpleCP* sig;
 }nodoSimpleCP;
+
+
+Cliente_Proveedor crearCP(char nombre[],char cuit_cp[],char cp);
+void mostrarUnCP(Cliente_Proveedor dato);
+
+
+///------------------LIBRERIA LISTA SIMPLE CLIENTE/PROVEEDOR--------------------------------------------------
 
 nodoSimpleCP* inicListaSimpleCP();
 nodoSimpleCP* crearNodoSimpleCP(Cliente_Proveedor CP);

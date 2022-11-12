@@ -1,13 +1,30 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Empresa.h"
-#include "Facturas.h"
 #include "Resumenes.h"
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
-#include "Cliente_Proveedor.h"
 #include "NodoSimpleCP.h"
+
+void mostrarUnaEmpresa(Empresa a)
+{
+
+    printf("\n---------------------------------------------------------\n");
+    printf("\nNombre de la empresa: %s\n", a.nombre);
+    printf("\nNumero de CUIT de la Empresa: %s\n", a.cuit);
+    printf("\nEstado de la Empresa (0 activa; 1 inactiva: %d\n",a.activa_emp);
+    printf("\n---------------------------------------------------------\n");
+}
+
+Empresa crearEmpresa(char nombre[],char cuit[]){
+  Empresa emp;
+  strcpy(emp.nombre,nombre);
+  strcpy(emp.cuit,cuit);
+  emp.activa_emp = 1;
+  return emp;
+}
+
+///-------------- LIBRERIA DE LISTA SIMPLE EMPRESAS----------------------------------
 
 nodoSimpleEmpresa* inicListaSimpleEmpresa()
 {
@@ -199,65 +216,6 @@ nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEm
     return lista;
 }
 
-nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Proveedor cliProv, Empresa emp)
-{
-    nodoSimpleCP *aux=crearNodoSimpleCP(cliProv);
-    nodoSimpleEmpresa *busq=buscarNodoXCuitSimpleEmpresa(lista,emp.cuit);
-
-    if(busq==NULL)
-    {
-        lista=agregarNodoAlFinalSimpleEmpresa(lista,crearNodoSimpleEmpresa(emp));
-        nodoSimpleEmpresa *ult=buscarUltimoSimpleEmpresa(lista);
-        nodoDobleFactura *aux1=crearNodoDoble(fact);
-        ult->cli=inicListaSimpleCP();
-        ult->prov=inicListaSimpleCP();
-        if(cliProv.cp=='c')
-        {
-            ult->cli=agregarNodoAlPrincipioSimpleCP(ult->cli,aux);
-            ult->cli->fact=inicListaDoble();
-            ult->cli->fact=insertarOrdenadoDobleXFecha(ult->cli->fact,aux1);
-        }
-        else
-        {
-            ult->prov=agregarNodoAlPrincipioSimpleCP(ult->prov,aux);
-            ult->prov->fact=inicListaDoble();
-            ult->prov->fact=insertarOrdenadoDobleXFecha(ult->prov->fact,aux1);
-        }
-    }
-    else
-    {
-        nodoDobleFactura *aux1=crearNodoDoble(fact);
-
-        if(cliProv.cp=='c')
-        {
-            nodoSimpleCP *busq2=buscarNodoXCuitSimpleCP(busq->cli,cliProv.cuit_cliente_proveedor);
-            if(busq2==NULL)
-            {
-                busq->cli=agregarNodoAlPrincipioSimpleCP(busq->cli,aux);
-                busq->cli->fact=inicListaDoble();
-                busq->cli->fact=insertarOrdenadoDobleXFecha(busq->cli->fact,aux1);
-            }
-            else
-                busq2->fact=insertarOrdenadoDobleXFecha(busq2->fact,aux1);
-        }
-        else
-        {
-            nodoSimpleCP *busq2=buscarNodoXCuitSimpleCP(busq->prov,cliProv.cuit_cliente_proveedor);
-            if(busq2==NULL)
-            {
-                busq->prov=agregarNodoAlPrincipioSimpleCP(busq->prov,aux);
-                busq->prov->fact=inicListaDoble();
-                busq->prov->fact=insertarOrdenadoDobleXFecha(busq->prov->fact,aux1);
-            }
-            else
-                busq2->fact=insertarOrdenadoDobleXFecha(busq2->fact,aux1);
-        }
-    }
-
-    return lista;
-}
-
-
 void mostrarTDACompleto (nodoSimpleEmpresa *lista)
 {
 
@@ -376,28 +334,4 @@ void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista)
         fclose(buf);
     }
 }
-
-Fecha crearFecha (int dia, int mes, int anio)
-{
-    Fecha a;
-
-    a.dia=dia;
-    a.mes=mes;
-    a.anio=anio;
-
-    return a;
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
