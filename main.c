@@ -11,18 +11,16 @@
 #include <time.h>
 int main()
 {
-
-
-
-    printf("El proyecto compila correctamente.");
+    printf("El proyecto compila correctamente.\n");
 
 //TestLibreriaEmpresa();
 
 
 //TestLibreriaFactura();
 
-TestPersistenciaYDespersistenciaEnTDA();
-    /*
+//TestPersistenciaYDespersistenciaEnTDA();
+
+/*
     Fecha dato1;
 
     dato1.anio=2021;
