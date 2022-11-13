@@ -5,7 +5,229 @@
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
 #include "NodoSimpleCP.h"
+#include <windows.h>
 
+int validarLetras (char Nombre[]) /// Funcion para validar la carga de datos que sean letras con formato char
+{
+    int i=0;
+    int flag=0;
+    int esLetra;
+
+    while (i<strlen(Nombre)&& flag==0)
+    {
+        esLetra=isalpha(Nombre[i]) || isspace(Nombre[i]);
+        if (esLetra!=0)
+        {
+            i++;
+        }
+        else
+        {
+            printf("\nError de carga de datos\n");
+            flag=1;
+        }
+    }
+    return flag;
+}
+
+int validarNumString (char Nombre[]) /// Funcion para validar la carga de datos que sean numeros con formato char
+{
+    int i=0;
+    int flag=0;
+    int esNum;
+
+    while (i<strlen(Nombre)&& flag==0)
+    {
+        esNum=isdigit(Nombre[i]);
+        if (esNum!=0)
+        {
+            i++;
+        }
+        else
+        {
+            printf("\nError de carga de datos\n");
+            flag=1;
+        }
+    }
+    return flag;
+}
+
+int validarFecha (Fecha a) /// Retorna 0 si es valida, 1 si no lo es
+{
+    int rta=0;
+
+    if(a.anio<1980 || a.anio>2030)
+        rta=1;
+    else if(a.mes<1 || a.mes>12)
+        rta=1;
+    else if(a.dia<1 ||a.dia>31)
+        rta=1;
+    else if (a.mes==4 ||a.mes==6||a.mes==9||a.mes==11)
+    {
+        if(a.dia>30)
+            rta=1;
+    }
+    else if (a.mes==4 ||a.mes==6||a.mes==9||a.mes==11)
+    {
+        if(a.dia>30)
+            rta=1;
+    }
+    else if (a.anio%4==0 && a.mes==2 && a.dia>29)
+        rta=1;
+    else if (a.anio%4!=0 && a.mes==2 && a.dia>28)
+        rta= 1;
+    return rta;
+}
+
+Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa *lista)
+{
+    int flag=0;
+
+    do
+    {
+        printf("\nIngrese el nombre de la Empresa o presione Enter para salir\n");
+        fflush(stdin);
+        gets(a.nombreEmpresa);
+        if(strlen(a.nombreEmpresa)==0)
+            return;
+        else
+            flag= validarLetras(a.nombreEmpresa);
+    }
+    while(flag==1);
+
+    do
+    {
+        printf("\nIngrese si es una compra ('p') o una venta ('c'): (A/B/C)\n");
+        fflush(stdin);
+        flag=scanf("%c",&a.cp);
+    }
+    while(flag==0);
+
+    do
+    {
+        printf("\nIngrese el Numero de CUIT del Cliente/Proveedor:\n");
+        fflush(stdin);
+        gets(a.cuit_cliente_proveedor);
+        flag= validarNumString(a.cuit_cliente_proveedor);
+    }
+    while(flag==1);
+
+    do
+    {
+        printf("\nIngrese el punto de venta de la Factura: \n");
+        fflush(stdin);
+        gets(a.punto_venta);
+        flag=validarNumString(a.punto_venta);
+    }
+    while(flag==1);
+
+    do
+    {
+        printf("\nIngrese el numero de Factura: \n");
+        fflush(stdin);
+        gets(a.nro_comprobante);
+        flag=validarNumString(a.nro_comprobante);
+    }
+    while(flag==1);
+
+    nodoDobleFactura *aux=buscarFacturaenTDA(lista,a.nombreEmpresa,a.cp,a.cuit_cliente_proveedor,a.nro_comprobante,a.punto_venta);
+    if(aux!=NULL)
+    {
+        printf("\nLa Factura ya se encuentra en la base de datos\n");
+        return;
+    }
+    else
+    {
+        do
+        {
+            printf("\nIngrese el Numero de CUIT de la Empresa\n");
+            fflush(stdin);
+            gets(a.cuit);
+            flag= validarNumString(a.cuit);
+        }
+        while(flag==1);
+
+        do
+        {
+            printf("\nIngrese el tipo de Factura: (A/B/C)\n");
+            fflush(stdin);
+            flag=scanf("%c",&a.tipo);
+        }
+        while(flag==0);
+
+        do
+        {
+            printf("\nIngrese si la factura es Recibo/Factura/Nota Credito: \n");
+            fflush(stdin);
+            gets(a.comprobante);
+            flag=validarLetras(a.comprobante);
+        }
+        while(flag==1);
+
+        do
+        {
+            printf("\nIngrese el año de la Factura: (1980-2030)\n");
+            fflush(stdin);
+            scanf("%d",&a.fecha.anio);
+            printf("\nIngrese el mes de la Factura: (1-12)\n");
+            fflush(stdin);
+            scanf("%d",&a.fecha.mes);
+            printf("\nIngrese el dia de la Factura: (1-30/31)\n");
+            fflush(stdin);
+            scanf("%d",&a.fecha.dia);
+            flag=validarFecha(a.fecha);
+            if(flag==1)
+                printf("\nFormato de Fecha no valido intente nuevamente\n");
+        }
+        while(flag==1);
+
+        do
+        {
+            printf("\nIngrese la descripcion de la Factura: \n");
+            fflush(stdin);
+            gets(a.descripcion);
+            flag=validarLetras(a.descripcion);
+        }
+        while(flag==1);
+
+        do
+        {
+            printf("\nIngrese el valor neto: \n");
+            flag=scanf("%f",&a.neto);
+        }
+        while(flag==0);
+
+        do
+        {
+            printf("\nIngrese el porcentaje de IVA: \n");
+            flag=scanf("%f",&a.iva);
+        }
+        while(flag==0);
+
+        do
+        {
+            printf("\nIngrese el valor total: \n");
+            flag=scanf("%f",&a.total);
+        }
+        while(flag==0);
+
+        do
+        {
+            printf("\nIngrese el nombre del Cliente/Proveedor: \n");
+            fflush(stdin);
+            gets(a.nombre_cliente_proveedor);
+            flag=validarLetras(a.nombre_cliente_proveedor);
+        }
+        while(flag==1);
+
+
+    }
+    a.activa_fact=0;
+    a.activa_emp=0;
+
+    return a;
+}
+
+/*
 Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int activaEmp,char tipo,char comprobante[],char puntoVenta[],char numComprob[],int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact,char nombreCliProv[],char cp,char cuitCliProv[])
 {
     Registro_Factura a;
@@ -29,7 +251,7 @@ Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int ac
     strcpy(a.cuit_cliente_proveedor,cuitCliProv);
 
     return a;
-}
+}*/
 
 void mostrarUnRegistroFactura (Registro_Factura a)
 {
@@ -54,6 +276,30 @@ void mostrarUnRegistroFactura (Registro_Factura a)
     printf("\n------------------------------------------------------\n");
 }
 
+nodoSimpleEmpresa *persistirRegistrosFactura (char nombreArch[],nodoSimpleEmpresa *lista)
+{
+    FILE *buf=fopen(nombreArch,"a+b");
+    char control='s';
+    Registro_Factura dato;
+
+    if(buf)
+    {
+        while(control=='s')
+        {
+            dato=cargarUnRegistroFactura(dato,lista);
+            fwrite(&dato,sizeof(Registro_Factura),1,buf);
+            fseek(buf,sizeof(Registro_Factura)*(-1),SEEK_CUR);
+            lista=pasarDatosArchivoFacturasATDA(buf,lista);
+            printf("\nDesea seguir ingresando Facturas? s/n\n");
+            fflush(stdin);
+            scanf("%c",&control);
+        }
+        fclose(buf);
+    }
+    return lista;
+}
+
+/*
 void persistirRegistrosFactura (char nombreArch[],Registro_Factura a)
 {
     FILE *buf=fopen(nombreArch,"ab");
@@ -64,6 +310,8 @@ void persistirRegistrosFactura (char nombreArch[],Registro_Factura a)
         fclose(buf);
     }
 }
+*/
+
 
 void mostrarArchivoRegistros (char nombreArch[])
 {
@@ -81,7 +329,7 @@ void mostrarArchivoRegistros (char nombreArch[])
 
 Factura cargarUnaFactura (char cuitCliProv[],char comprobante[],char numComprob[],char puntoVenta[],char tipo,int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact)
 {
-Factura a;
+    Factura a;
 
     //strcpy(a.cuit_cliente_proveedor,cuitCliProv); // REVISAR SI QUEDA O NO ESTE CAMPO
     strcpy(a.comprobante,comprobante);
@@ -138,13 +386,13 @@ Factura pasarDatosRegistroAUnaFactura(Registro_Factura a)
 
 Empresa pasarDatosRegistroAUnaEmpresa(Registro_Factura a)
 {
-  Empresa dato;
+    Empresa dato;
 
-  strcpy(dato.nombre,a.nombreEmpresa);
-  strcpy(dato.cuit,a.cuit);
-  dato.activa_emp=a.activa_emp;
+    strcpy(dato.nombre,a.nombreEmpresa);
+    strcpy(dato.cuit,a.cuit);
+    dato.activa_emp=a.activa_emp;
 
-  return dato;
+    return dato;
 }
 
 Registro_Factura pasarDatosNodoFacturaAUnRegistro(Factura a)
@@ -168,13 +416,13 @@ Registro_Factura pasarDatosNodoFacturaAUnRegistro(Factura a)
 
 Registro_Factura pasarDatosNodoEmpresaAUnRegistro(Empresa a)
 {
-  Registro_Factura dato;
+    Registro_Factura dato;
 
-  strcpy(dato.nombreEmpresa,a.nombre);
-  strcpy(dato.cuit,a.cuit);
-  dato.activa_emp=a.activa_emp;
+    strcpy(dato.nombreEmpresa,a.nombre);
+    strcpy(dato.cuit,a.cuit);
+    dato.activa_emp=a.activa_emp;
 
-  return dato;
+    return dato;
 }
 
 Cliente_Proveedor pasarDatosRegistroAUnClienteProveedor(Registro_Factura a)

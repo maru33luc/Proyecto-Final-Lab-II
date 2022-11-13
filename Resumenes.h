@@ -1,8 +1,10 @@
 #ifndef RESUMENES_H_INCLUDED
 #define RESUMENES_H_INCLUDED
 
+
 #include "NodoDobleFactura.h"
 #include "NodoSimpleEmpresa.h"
+
 
 typedef struct NodoListarFacturas{
     char nombreEmpresa [30];
@@ -30,5 +32,10 @@ NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista);
 NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
 NodoListarFacturas* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
 int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha limSup);
+
+
+void gotoxy (int x, int y);
+void mostrarFacturasGo(NodoListarFacturas* lista);
+
 
 #endif // RESUMENES_H_INCLUDED

@@ -29,12 +29,15 @@ typedef struct NodoPalabra
 }NodoPalabra;
 
 void mostrarUnaEmpresa(Empresa a);
-Empresa crearEmpresa(char nombre[],char cuit[]);
+void mostrarArchivoDeEmpresas (char nombreArch[]);
+Empresa cargarUnaEmpresa (Empresa e);
+//Empresa crearEmpresa(char nombre[],char cuit[]);
 void TestLibreriaEmpresa();
 
 ///------------ARCHIVO DE EMPRESAS--------------------------------------------------
 
-void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a);
+void persistirEmpresasEnArchivo (char nombreArch[]);
+//void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a);
 NodoPalabra *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[]);
 int buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char cuit[]);
 
@@ -53,7 +56,7 @@ nodoSimpleEmpresa* buscarNodoXNombreSimpleEmpresa(nodoSimpleEmpresa* lista,char 
 
 ///-------------TDA COMPUESTA-----------------------------------------------
 
-nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista);
+nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (FILE *buf,nodoSimpleEmpresa *lista);
 
 void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
 

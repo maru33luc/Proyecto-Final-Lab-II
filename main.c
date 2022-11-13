@@ -5,7 +5,7 @@
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
 #include "NodoSimpleCP.h"
-
+#include <windows.h>
 
 int main()
 {

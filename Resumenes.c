@@ -5,6 +5,8 @@
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
 #include "NodoSimpleCP.h"
+#include <windows.h>
+
 
 /// ------------LISTADOS FACTURAS-----------------------------------------
 
@@ -247,3 +249,52 @@ void mostrarUnNodoListarFacturas (NodoListarFacturas *nodo)
     printf("\nCP: %c",nodo->cp);
 }
 
+void mostrarFacturasGo(NodoListarFacturas* lista)
+{
+    printf("\n  EMPRESA: %s",lista->nombreEmpresa);
+    int t=6;
+    Factura facturaActual = lista->dato;
+    gotoxy(2,3); printf("|COMPROBANTE");
+    gotoxy(15,3); printf("|TIPO");
+    gotoxy(21,3); printf("|P VENTA");
+    gotoxy(30,3); printf("|N COMP");
+    gotoxy(40,3); printf("|FECHA");
+    gotoxy(52,3); printf("|DESCRIPCION");
+    gotoxy(65,3); printf("|NETO");
+    gotoxy(76,3); printf("|IVA");
+    gotoxy(81,3); printf("|TOTAL");
+    gotoxy(93,3); printf("|ESTADO");
+    gotoxy(104,3); printf("|NOMBRE C/P");
+
+    gotoxy(0,4);printf("\n----------------------------------------------------------------------------------------------------------------------\n");
+
+    while(lista)
+    {
+    facturaActual = lista->dato;
+    gotoxy(2,t); printf("| %s",facturaActual.comprobante );
+    gotoxy(15,t); printf("| %c",facturaActual.tipo);
+    gotoxy(21,t);printf("| %s",facturaActual.puntoVenta );
+    gotoxy(30,t);printf("| %s", facturaActual.numComprobante);
+    gotoxy(40,t);printf("| %i/%i/%i",facturaActual.fecha.dia,facturaActual.fecha.mes,facturaActual.fecha.anio );
+    gotoxy(52,t);printf("| %s", facturaActual.descripcion);
+    gotoxy(65,t);printf("| %.1f", facturaActual.neto);
+    gotoxy(76,t);printf("| %.1f", facturaActual.iva);
+    gotoxy(81,t);printf("| %.1f", facturaActual.total);
+    gotoxy(93,t);facturaActual.activa == 1? printf("| ACTIVA"):printf("| INACTIVA");
+    gotoxy(104,t); printf("| %s",lista->nombreClienteProveedor);
+    t++;
+
+    lista = lista->sig;
+    }
+    printf("\n------------------------------------------------------------------------------------------------------------------------\n");
+}
+
+void gotoxy (int x, int y){
+
+    HANDLE manipulador;
+    COORD coordenadas;
+    manipulador = GetStdHandle (STD_OUTPUT_HANDLE);
+    coordenadas.X = x;
+    coordenadas.Y = y;
+    SetConsoleCursorPosition (manipulador, coordenadas);
+}

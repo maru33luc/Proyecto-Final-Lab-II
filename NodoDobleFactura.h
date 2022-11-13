@@ -60,10 +60,15 @@ struct nodoDobleFactura* ante;
 }nodoDobleFactura;
 
 
+int validarLetras (char Nombre[]);
+int validarNumString (char Nombre[]);
+int validarFecha (Fecha dato);
 
-Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int activaEmp,char tipo,char comprobante[],char puntoVenta[],char numComprob[],int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact,char nombreCliProv[],char cp,char cuitCliProv[]);
+Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa *lista);
+nodoSimpleEmpresa *persistirRegistrosFactura (char nombreArch[],nodoSimpleEmpresa *lista);
+/*Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int activaEmp,char tipo,char comprobante[],char puntoVenta[],char numComprob[],int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact,char nombreCliProv[],char cp,char cuitCliProv[]);*/
 void mostrarUnRegistroFactura (Registro_Factura a);
-void persistirRegistrosFactura (char nombreArch[],Registro_Factura a);
+//void persistirRegistrosFactura (char nombreArch[],Registro_Factura a);
 Factura cargarUnaFactura (char cuitCliProv[],char comprobante[],char numComprob[],char puntoVenta[],char tipo,int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact);
 void mostrarUnaFactura (Factura a);
 Factura pasarDatosRegistroAUnaFactura(Registro_Factura a);

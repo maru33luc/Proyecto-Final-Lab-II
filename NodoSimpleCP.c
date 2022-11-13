@@ -5,6 +5,7 @@
 #include "NodoSimpleEmpresa.h"
 #include "NodoDobleFactura.h"
 #include "NodoSimpleCP.h"
+#include <windows.h>
 
 Cliente_Proveedor crearCP(char nombre[],char cuit_cp[],char cp)
 {
