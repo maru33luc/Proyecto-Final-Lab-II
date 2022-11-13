@@ -392,14 +392,18 @@ void TestPersistenciaYDespersistenciaEnTDA()
     printf("\n-------------TDA Completo-----------------------------\n\n");
     mostrarTDACompleto(lista);
 
-    printf("\n----PROBANDO LISTADOS FACTURAS COMPLETO-----------------");
+    printf("\n----PROBANDO LISTADOS FACTURAS  COCAAAAAAAAAA COMPRAS COMPLETO-----------------");
 
     NodoListarFacturas *listaFact=inicListaSimpleListarFacturas();
-    listaFact=listarTodasFacturasXOrdenFecha(lista);
+//    listaFact=listarTodasFacturasXOrdenFecha(lista);
+listaFact = listarComprasDetEmpresaXPeriodo(lista,"Coca",crearFecha(11,3,2020),crearFecha(21,5,2021));
     mostrarNodoListarFacturas(listaFact);
 
 
-    /*printf("\n-----LISTANDO FACTURAS POR PERIODO DEL 11/3/2020 AL 21/5/2021----------\n");
+    printf("\n-----LISTANDO FACTURAS POR PERIODO DEL 11/3/2020 AL 21/5/2021----------\n");
+
+
+    /*
     listarFacturasDetEmpresaXPeriodo(lista,"12",crearFecha(11,3,2020),crearFecha(21,5,2021));
 
     printf("\nPROBANDO FUNCION BUSQUEDA FACTURA\n");

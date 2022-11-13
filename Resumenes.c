@@ -80,9 +80,9 @@ NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,c
     return listarFacturas;
 }
 
-nodoDobleFactura* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
+NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
 {
-    nodoDobleFactura* destino = inicListaDoble();
+    NodoListarFacturas* destino =  inicListaSimpleListarFacturas();
     nodoSimpleEmpresa *empresaEncontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
     if(empresaEncontrada)
     {
@@ -94,7 +94,7 @@ nodoDobleFactura* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char 
             {
                 if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactCli->dato.fecha,fechaInicio,fechaFinal))
                 {
-                    destino = agregarAlFinalDoble(destino,segFactCli);
+                    destino = agregarNodoAlFinalNodoListarFacturas(destino,crearNodoListarFacturas(nombre_empresa,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp));
                 }
                 segFactCli=segFactCli->sig;
             }
@@ -104,9 +104,9 @@ nodoDobleFactura* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char 
     return destino;
 }
 
-nodoDobleFactura* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
+NodoListarFacturas* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
 {
-    nodoDobleFactura* destino = inicListaDoble();
+    NodoListarFacturas* destino = inicListaSimpleListarFacturas();
     nodoSimpleEmpresa *empresaEncontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
     if(empresaEncontrada)
     {
@@ -118,7 +118,7 @@ nodoDobleFactura* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char
             {
                 if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactPro->dato.fecha,fechaInicio,fechaFinal))
                 {
-                    destino = agregarAlFinalDoble(destino,segFactPro);
+                    destino = agregarNodoAlFinalNodoListarFacturas(destino,crearNodoListarFacturas(nombre_empresa,segFactPro->dato,segPro->dato_cp.nombre,segPro->dato_cp.cp));
                 }
                 segFactPro=segFactPro->sig;
             }
