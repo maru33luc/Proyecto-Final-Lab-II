@@ -16,12 +16,13 @@ void mostrarUnaEmpresa(Empresa a)
     printf("\n---------------------------------------------------------\n");
 }
 
-Empresa crearEmpresa(char nombre[],char cuit[]){
-  Empresa emp;
-  strcpy(emp.nombre,nombre);
-  strcpy(emp.cuit,cuit);
-  emp.activa_emp = 1;
-  return emp;
+Empresa crearEmpresa(char nombre[],char cuit[])
+{
+    Empresa emp;
+    strcpy(emp.nombre,nombre);
+    strcpy(emp.cuit,cuit);
+    emp.activa_emp = 1;
+    return emp;
 }
 
 void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a)
@@ -35,7 +36,7 @@ void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a)
     }
 }
 
-nodoSimpleEmpresa *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[])
+NodoPalabra *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[])
 {
     NodoPalabra *lista=IniciarListaPalabras();
 
@@ -45,7 +46,7 @@ nodoSimpleEmpresa *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[
     if(buf)
     {
         while(fread(&a,sizeof(Empresa),1,buf)>0)
-            lista=AgregarNodoPalabraAlfabeticamente(lista,CrearNodoPalabra(a));
+            lista=AgregarNodoPalabraAlfabeticamente(lista,a.nombre);
 
         fclose(buf);
     }
@@ -55,9 +56,9 @@ nodoSimpleEmpresa *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[
 
 ///--------------LIBRERIA DE LISTAS NODOPALABRAS-------------------------
 
-void IniciarListaPalabras(NodoPalabra** listaPalabras)
+NodoPalabra *IniciarListaPalabras()
 {
-    *listaPalabras = NULL;
+    return NULL;
 }
 
 NodoPalabra* CrearNodoPalabra(char palabra[])
@@ -65,30 +66,28 @@ NodoPalabra* CrearNodoPalabra(char palabra[])
     NodoPalabra* aux = malloc(sizeof(NodoPalabra));
     strcpy(aux->palabra, palabra);
     aux->siguiente = NULL;
-    aux->anterior = NULL;
 
     return aux;
 }
 
-void AgregarNodoPalabraAlfabeticamente(NodoPalabra** listaPalabras, char palabra[])
+NodoPalabra *AgregarNodoPalabraAlfabeticamente(NodoPalabra* listaPalabras, char palabra[])
 {
     NodoPalabra* nuevoNodo = CrearNodoPalabra(palabra);
 
-    if((*listaPalabras) == NULL)
-        (*listaPalabras) = nuevoNodo;
+    if(listaPalabras== NULL)
+        listaPalabras = nuevoNodo;
     else
     {
-        if(strcmpi((*listaPalabras)->palabra, palabra) > 0)
+        if(strcmpi(listaPalabras->palabra, palabra) > 0)
         {
-            nuevoNodo->siguiente = (*listaPalabras);
-            (*listaPalabras)->anterior = nuevoNodo;
-            (*listaPalabras) = nuevoNodo;
-
+            nuevoNodo->siguiente = listaPalabras;
+            listaPalabras->anterior = nuevoNodo;
+            listaPalabras = nuevoNodo;
         }
         else
         {
-            NodoPalabra* seg = (*listaPalabras)->siguiente;
-            NodoPalabra* ant = (*listaPalabras);
+            NodoPalabra* seg = listaPalabras->siguiente;
+            NodoPalabra* ant = listaPalabras;
 
             while(seg != NULL && strcmpi(seg->palabra, palabra) < 0)
             {
@@ -98,20 +97,35 @@ void AgregarNodoPalabraAlfabeticamente(NodoPalabra** listaPalabras, char palabra
             if(seg != NULL)
             {
                 ant->siguiente = nuevoNodo;
-                nuevoNodo->anterior = ant;
                 nuevoNodo->siguiente = seg;
-                seg->anterior = nuevoNodo;
             }
             else
-            {
                 ant->siguiente = nuevoNodo;
-                nuevoNodo->anterior = ant;
-            }
         }
+    }
+    return listaPalabras;
+}
 
+void mostrarListaNodoPalabras (NodoPalabra *lista)
+{
+    while(lista)
+    {
+        printf("Palabra: %s\n",lista->palabra);
+        lista=lista->siguiente;
     }
 }
 
+void TestNodoPalabra ()
+{
+    NodoPalabra *lista=IniciarListaPalabras();
+
+    lista=AgregarNodoPalabraAlfabeticamente(lista,"Marina");
+    lista=AgregarNodoPalabraAlfabeticamente(lista,"Arnaldo");
+    lista=AgregarNodoPalabraAlfabeticamente(lista,"Carlos");
+    lista=AgregarNodoPalabraAlfabeticamente(lista,"Josefa");
+
+    mostrarListaNodoPalabras(lista);
+}
 
 
 ///-------------- LIBRERIA DE LISTA SIMPLE EMPRESAS----------------------------------
@@ -218,6 +232,17 @@ void mostrarListaSimpleEmpresa(nodoSimpleEmpresa* lista)
         mostrarUnaEmpresa(lista->dato);
         lista = lista->sig;
     }
+}
+
+nodoSimpleEmpresa* buscarNodoXNombreSimpleEmpresa(nodoSimpleEmpresa* lista,char nombre[])
+{
+    nodoSimpleEmpresa* seg;
+    seg = lista;
+    while(seg !=NULL && strcmp(seg->dato.nombre,nombre) != 0)
+    {
+        seg = seg->sig;
+    }
+    return seg;
 }
 
 nodoSimpleEmpresa* agregarOrdenadoXNombreSimpleEmpresa(nodoSimpleEmpresa*lista,nodoSimpleEmpresa* nuevoNodo)

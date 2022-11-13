@@ -16,13 +16,13 @@ typedef struct NodoListarFacturas{
 ///--------------LIBRERIA LISTA SIMPLE LISTADOS FACTURAS-------------
 
 NodoListarFacturas* inicListaSimpleListarFacturas();
-NodoListarFacturas* crearNodoListarFacturas(char nombreEmp[],Factura a, char nombreCliProv[],char cp;
+NodoListarFacturas* crearNodoListarFacturas(char nombreEmp[],Factura a, char nombreCliProv[],char cp);
 NodoListarFacturas* agregarNodoListarFactAlPrincipio(NodoListarFacturas* lista, NodoListarFacturas* nuevoNodo);
 
 
-void listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista);
+NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
 
-nodoDobleFactura *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
+void listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista);
 
 nodoDobleFactura* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
 

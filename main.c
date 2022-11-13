@@ -15,9 +15,9 @@ int main()
 
 //TestLibreriaFactura();
 
-TestPersistenciaYDespersistenciaEnTDA();
+//TestPersistenciaYDespersistenciaEnTDA();
 
-
+TestNodoPalabra();
 
 
     return 0;

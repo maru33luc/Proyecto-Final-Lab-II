@@ -43,14 +43,18 @@ nodoSimpleEmpresa* agregarNodoAlFinalSimpleEmpresa(nodoSimpleEmpresa* lista,nodo
 nodoSimpleEmpresa* borrarXCuitSimpleEmpresa(nodoSimpleEmpresa* lista, char cuit[]);
 void mostrarListaSimpleEmpresa(nodoSimpleEmpresa*);
 nodoSimpleEmpresa* agregarOrdenadoXNombreSimpleEmpresa(nodoSimpleEmpresa*lista,nodoSimpleEmpresa* nuevoNodo);
+nodoSimpleEmpresa* buscarNodoXNombreSimpleEmpresa(nodoSimpleEmpresa* lista,char nombre[]);
 
 nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista);
 
 void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
 
+void TestPersistenciaYDespersistenciaEnTDA();
 void mostrarTDACompleto (nodoSimpleEmpresa *lista);
 
 
-
+NodoPalabra *IniciarListaPalabras();
+NodoPalabra* CrearNodoPalabra(char palabra[]);
+NodoPalabra *AgregarNodoPalabraAlfabeticamente(NodoPalabra* listaPalabras, char palabra[]);
 
 #endif
