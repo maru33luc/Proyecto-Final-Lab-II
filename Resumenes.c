@@ -6,6 +6,8 @@
 #include "NodoDobleFactura.h"
 #include "NodoSimpleCP.h"
 
+/// ------------LISTADOS FACTURAS-----------------------------------------
+
 NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
 {
     NodoListarFacturas *listaFact=inicListaSimpleListarFacturas();

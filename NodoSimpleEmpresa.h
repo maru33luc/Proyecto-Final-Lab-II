@@ -32,6 +32,12 @@ void mostrarUnaEmpresa(Empresa a);
 Empresa crearEmpresa(char nombre[],char cuit[]);
 void TestLibreriaEmpresa();
 
+///------------ARCHIVO DE EMPRESAS--------------------------------------------------
+
+void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a);
+NodoPalabra *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[]);
+int buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char cuit[]);
+
 ///------------ LIBRERIA DE LISTA SIMPLE EMPRESAS----------------------------
 
 nodoSimpleEmpresa* inicListaSimpleEmpresa();
@@ -45,6 +51,8 @@ void mostrarListaSimpleEmpresa(nodoSimpleEmpresa*);
 nodoSimpleEmpresa* agregarOrdenadoXNombreSimpleEmpresa(nodoSimpleEmpresa*lista,nodoSimpleEmpresa* nuevoNodo);
 nodoSimpleEmpresa* buscarNodoXNombreSimpleEmpresa(nodoSimpleEmpresa* lista,char nombre[]);
 
+///-------------TDA COMPUESTA-----------------------------------------------
+
 nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista);
 
 void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
@@ -52,9 +60,12 @@ void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
 void TestPersistenciaYDespersistenciaEnTDA();
 void mostrarTDACompleto (nodoSimpleEmpresa *lista);
 
+///-----------------LIBRERIA NODOPALABRAS (PARA LA INTERFAZ)------------------------
 
 NodoPalabra *IniciarListaPalabras();
 NodoPalabra* CrearNodoPalabra(char palabra[]);
 NodoPalabra *AgregarNodoPalabraAlfabeticamente(NodoPalabra* listaPalabras, char palabra[]);
+void mostrarListaNodoPalabras (NodoPalabra *lista);
+void TestNodoPalabra ();
 
 #endif

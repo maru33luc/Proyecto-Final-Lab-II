@@ -98,6 +98,8 @@ int retornarSiFecha1EsMayor (Fecha dato1, Fecha dato2);
 int retornarSiFecha1EsMenor (Fecha dato1, Fecha dato2);
 nodoDobleFactura *insertarOrdenadoDobleXFecha (nodoDobleFactura *lista,nodoDobleFactura *nuevo);
 
+///---------------TDA COMPUESTA ---------------------------------------------------------
+
 nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Proveedor cliProv, Empresa emp);
 nodoDobleFactura* buscarFacturaenTDA(nodoSimpleEmpresa*lista,char nombre_empresa[],char cp,char cuit_cp[],char nro_comprobante[],char punto_venta[]);
 

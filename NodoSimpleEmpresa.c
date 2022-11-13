@@ -6,6 +6,8 @@
 #include "NodoDobleFactura.h"
 #include "NodoSimpleCP.h"
 
+///---------------- ARCHIVO DE EMPRESAS----------------------------------
+
 void mostrarUnaEmpresa(Empresa a)
 {
 
@@ -52,6 +54,25 @@ NodoPalabra *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[])
     }
 
     return lista;
+}
+
+int buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char cuit[])
+{
+    FILE *buf=fopen(nombreArchEmpresas,"rb");
+    Empresa a;
+    int num=0;
+
+    if(buf)
+    {
+        while(fread(&a,sizeof(Empresa),1,buf)>0)
+        {
+            if(strcmpi(a.cuit,cuit)==0)
+                num= ftell(buf)/sizeof(Empresa);
+        }
+    fclose(buf);
+    }
+
+    return num;
 }
 
 ///--------------LIBRERIA DE LISTAS NODOPALABRAS-------------------------
@@ -263,7 +284,6 @@ nodoSimpleEmpresa* agregarOrdenadoXNombreSimpleEmpresa(nodoSimpleEmpresa*lista,n
             nodoSimpleEmpresa* ante= lista;
             while(seg && strcmpi(seg->dato.nombre,nuevoNodo->dato.nombre)<0)
             {
-                printf("\n Comparando: ----  %s  ----   CON ---- %s ----    ",seg->dato.nombre,nuevoNodo->dato.nombre); // SE PUEDE BORRAR?
                 ante = seg;
                 seg = seg->sig;
             }
@@ -310,6 +330,8 @@ void TestLibreriaEmpresa()
 
     mostrarListaSimpleEmpresa(listaOrdenada);
 }
+
+///------------------------- TDA COMPUESTA---------------------------------
 
 nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista)
 {
