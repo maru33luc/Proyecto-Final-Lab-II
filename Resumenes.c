@@ -298,3 +298,86 @@ void gotoxy (int x, int y){
     coordenadas.Y = y;
     SetConsoleCursorPosition (manipulador, coordenadas);
 }
+
+void listarCPDeEmpresa(nodoSimpleEmpresa* lista)
+{
+    char nombre_empresa[50];
+    int flag = 0;
+    do
+    {
+        printf("Ingrese el nombre de la empresa: \n");
+        fflush(stdin);
+        scanf("%s",&nombre_empresa);
+        if(strlen(nombre_empresa)<50)
+        {
+            flag = 1;
+        }
+    }
+    while(flag == 0);
+
+    nodoSimpleCP* listaCP = listarTodosCPXEmpresa(lista,nombre_empresa);
+    if(listaCP)
+    {
+        mostrarClientesProveedoresGo(lista,nombre_empresa);
+    }
+    else
+    {
+        printf("Empresa no encontrada.\n");
+    }
+
+}
+
+nodoSimpleCP* listarTodosCPXEmpresa(nodoSimpleEmpresa* lista,char nombre_empresa[])
+{
+    nodoSimpleCP* listaCP = inicListaSimpleCP();
+    nodoSimpleEmpresa* empresaEncontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
+    if(empresaEncontrada)
+    {
+        nodoSimpleCP* segCli = empresaEncontrada->cli;
+        nodoSimpleCP* segProv= empresaEncontrada->prov;
+        while(segCli)
+        {
+            listaCP = agregarNodoAlFinalSimpleCP(listaCP,crearNodoSimpleCP(segCli->dato_cp));
+            segCli = segCli->sig;
+        }
+        while(segProv)
+        {
+            listaCP = agregarNodoAlFinalSimpleCP(listaCP,crearNodoSimpleCP(segProv->dato_cp));
+            segProv = segProv->sig;
+        }
+    }
+    return listaCP;
+}
+
+void mostrarClientesProveedoresGo(nodoSimpleCP* lista,char nombreEmpresa[])
+{
+    printf("\n  EMPRESA: %s",nombreEmpresa);
+    int t=6;
+    Cliente_Proveedor cpActual = lista->dato_cp;
+    gotoxy(2,3);
+    printf("|NOMBRE");
+    gotoxy(20,3);
+    printf("|CUIT");
+    gotoxy(33,3);
+    printf("|CP");
+    gotoxy(0,4);
+    printf("\n----------------------------------------------------------------------------------------------------------------------\n");
+
+    while(lista)
+    {
+        cpActual = lista->dato_cp;
+        gotoxy(2,t);
+        printf("| %s",cpActual.nombre );
+        gotoxy(20,t);
+        printf("| %s",cpActual.cuit_cliente_proveedor);
+        gotoxy(33,t);
+        if(cpActual.cp == 'c'||cpActual.cp =='C')
+            printf("| CLIENTE");
+        else
+            printf("| PROVEEDOR");
+        t++;
+
+        lista = lista->sig;
+    }
+    printf("\n----------------------------------------------------------------------------------------------------------------------\n");
+}

@@ -36,6 +36,9 @@ int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha 
 
 void gotoxy (int x, int y);
 void mostrarFacturasGo(NodoListarFacturas* lista);
+void mostrarClientesProveedoresGo(nodoSimpleCP* lista,char nombreEmpresa[]);
+nodoSimpleCP* listarTodosCPXEmpresa(nodoSimpleEmpresa* lista,char nombre_empresa[]);
+void listarCPDeEmpresa(nodoSimpleEmpresa* lista);
 
 
 #endif // RESUMENES_H_INCLUDED
