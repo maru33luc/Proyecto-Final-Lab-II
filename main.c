@@ -15,9 +15,11 @@ int main()
 
 //TestLibreriaFactura();
 
-//TestPersistenciaYDespersistenciaEnTDA();
+TestPersistenciaYDespersistenciaEnTDA();
 
-TestNodoPalabra();
+//TestNodoPalabra();
+
+
 
 
     return 0;

@@ -392,7 +392,14 @@ void TestPersistenciaYDespersistenciaEnTDA()
     printf("\n-------------TDA Completo-----------------------------\n\n");
     mostrarTDACompleto(lista);
 
-    printf("\n-----LISTANDO FACTURAS POR PERIODO DEL 11/3/2020 AL 21/5/2021----------\n");
+    printf("\n----PROBANDO LISTADOS FACTURAS COMPLETO-----------------");
+
+    NodoListarFacturas *listaFact=inicListaSimpleListarFacturas();
+    listaFact=listarTodasFacturasXOrdenFecha(lista);
+    mostrarNodoListarFacturas(listaFact);
+
+
+    /*printf("\n-----LISTANDO FACTURAS POR PERIODO DEL 11/3/2020 AL 21/5/2021----------\n");
     listarFacturasDetEmpresaXPeriodo(lista,"12",crearFecha(11,3,2020),crearFecha(21,5,2021));
 
     printf("\nPROBANDO FUNCION BUSQUEDA FACTURA\n");
@@ -402,7 +409,7 @@ void TestPersistenciaYDespersistenciaEnTDA()
     else
         printf("\nNo se encontro esa factura\n");
 
-    /*
+
 
     char nombreArch2[30]="ArchPruebaPersEnTDA";
     persistirTDAEnArchivo(nombreArch2,lista);

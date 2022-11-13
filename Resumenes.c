@@ -6,27 +6,38 @@
 #include "NodoDobleFactura.h"
 #include "NodoSimpleCP.h"
 
-void listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
+NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
 {
-    while(lista!=NULL)
+    NodoListarFacturas *listaFact=inicListaSimpleListarFacturas();
+
+    nodoSimpleEmpresa *segLista=lista;
+    while(segLista!=NULL)
     {
-        mostrarUnaEmpresa(lista->dato);
-        printf("\n-----------Lista de Clientes:----------------\n");
-        while(lista->cli!=NULL)
+        nodoSimpleCP *segCli=segLista->cli;
+        while(segCli!=NULL)
         {
-            mostrarUnCP(lista->cli->dato_cp);
-            mostrarListaDoble(lista->cli->fact);
-            lista->cli=lista->cli->sig;
+            nodoDobleFactura *segCliFact=segCli->fact;
+            while(segCliFact)
+            {
+                listaFact=agregarNodoAlFinalNodoListarFacturas(listaFact,crearNodoListarFacturas(segLista->dato.nombre,segCliFact->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp));
+                segCliFact=segCliFact->sig;
+            }
+            segCli=segCli->sig;
         }
-        printf("\n-----------Lista de Proveedores:----------------\n");
-        while(lista->prov!=NULL)
+        nodoSimpleCP *segProv=segLista->prov;
+        while(segProv!=NULL)
         {
-            mostrarUnCP(lista->prov->dato_cp);
-            mostrarListaDoble(lista->prov->fact);
-            lista->prov=lista->prov->sig;
+            nodoDobleFactura *segProvFact=segProv->fact;
+            while(segProvFact)
+            {
+                listaFact=agregarNodoAlFinalNodoListarFacturas(listaFact,crearNodoListarFacturas(segLista->dato.nombre,segProvFact->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp));
+                segProvFact=segProvFact->sig;
+            }
+            segProv=segProv->sig;
         }
-        lista=lista->sig;
+        segLista=segLista->sig;
     }
+    return listaFact;
 }
 
 NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
@@ -117,41 +128,86 @@ nodoDobleFactura* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char
     return destino;
 }
 
-    int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha limSup)
-    {
-        if(retornarSiFecha1EsMayor(dato,limInf)&&retornarSiFecha1EsMenor(dato,limSup))
-            return 1;
-        else
-            return 0;
-    }
+int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha limSup)
+{
+    if(retornarSiFecha1EsMayor(dato,limInf)&&retornarSiFecha1EsMenor(dato,limSup))
+        return 1;
+    else
+        return 0;
+}
 
 //-----------LIBRERIA LISTA SIMPLE NODOSLISTARFACTURAS-------------------------
 
-    NodoListarFacturas* inicListaSimpleListarFacturas()
+NodoListarFacturas* inicListaSimpleListarFacturas()
+{
+    return NULL;
+}
+
+NodoListarFacturas* crearNodoListarFacturas(char nombreEmp[],Factura a, char nombreCliProv[],char cp)
+{
+    NodoListarFacturas* aux = malloc(sizeof(NodoListarFacturas));
+    aux->dato=a;
+    aux->cp=cp;
+    strcpy(aux->nombreEmpresa,nombreEmp);
+    strcpy(aux->nombreClienteProveedor,nombreCliProv);
+    aux->sig = NULL;
+
+    return aux;
+}
+
+NodoListarFacturas* agregarNodoListarFactAlPrincipio(NodoListarFacturas* lista, NodoListarFacturas* nuevoNodo)
+{
+    if(lista != NULL)
     {
-        return NULL;
+        nuevoNodo->sig = lista;
     }
+    lista = nuevoNodo;
 
-    NodoListarFacturas* crearNodoListarFacturas(char nombreEmp[],Factura a, char nombreCliProv[],char cp)
+    return lista;
+}
+
+NodoListarFacturas* buscarUltimoNodoListarFacturas(NodoListarFacturas* lista)
+{
+    NodoListarFacturas* seg = lista;
+
+    if(seg !=NULL)
     {
-        NodoListarFacturas* aux = malloc(sizeof(NodoListarFacturas));
-        aux->dato=a;
-        aux->cp=cp;
-        strcpy(aux->nombreEmpresa,nombreEmp);
-        strcpy(aux->nombreClienteProveedor,nombreCliProv);
-        aux->sig = NULL;
-
-        return aux;
-    }
-
-    NodoListarFacturas* agregarNodoListarFactAlPrincipio(NodoListarFacturas* lista, NodoListarFacturas* nuevoNodo)
-    {
-        if(lista != NULL)
+        while(seg->sig != NULL)
         {
-            nuevoNodo->sig = lista;
+            seg = seg->sig;
         }
-        lista = nuevoNodo;
-
-        return lista;
     }
+    return seg;
+}
+
+NodoListarFacturas* agregarNodoAlFinalNodoListarFacturas(NodoListarFacturas* lista,NodoListarFacturas* nuevoNodo)
+{
+    if(lista != NULL)
+    {
+        NodoListarFacturas* ultimo = buscarUltimoNodoListarFacturas(lista);
+        ultimo->sig = nuevoNodo;
+    }
+    else
+    {
+        lista = nuevoNodo;
+    }
+    return lista;
+}
+
+void mostrarNodoListarFacturas (NodoListarFacturas *lista)
+{
+    while(lista)
+    {
+        mostrarUnNodoListarFacturas(lista);
+        lista=lista->sig;
+    }
+}
+
+void mostrarUnNodoListarFacturas (NodoListarFacturas *nodo)
+{
+    printf("\nNombre Empresa: %s",nodo->nombreEmpresa);
+    mostrarUnaFactura(nodo->dato);
+    printf("Nombre Cliente/Proveedor: %s",nodo->nombreClienteProveedor);
+    printf("\nCP: %c",nodo->cp);
+}
 

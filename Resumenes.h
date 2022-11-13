@@ -18,11 +18,13 @@ typedef struct NodoListarFacturas{
 NodoListarFacturas* inicListaSimpleListarFacturas();
 NodoListarFacturas* crearNodoListarFacturas(char nombreEmp[],Factura a, char nombreCliProv[],char cp);
 NodoListarFacturas* agregarNodoListarFactAlPrincipio(NodoListarFacturas* lista, NodoListarFacturas* nuevoNodo);
+NodoListarFacturas* buscarUltimoNodoListarFacturas(NodoListarFacturas* lista);
+NodoListarFacturas* agregarNodoAlFinalNodoListarFacturas(NodoListarFacturas* lista,NodoListarFacturas* nuevoNodo);
 
 
 NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
 
-void listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista);
+NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista);
 
 nodoDobleFactura* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
 
