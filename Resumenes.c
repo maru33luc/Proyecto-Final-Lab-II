@@ -29,43 +29,84 @@ void listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
     }
 }
 
-void listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char cuit[],Fecha fechaInicio,Fecha fechaFinal)
+nodoDobleFactura *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
 {
+    NodoListarFacturas *listarFacturas=inicListaSimpleCP();
 
-    nodoSimpleEmpresa *empresa=buscarNodoXCuitSimpleEmpresa(lista,cuit);
-    mostrarUnaEmpresa(empresa->dato);
+    nodoSimpleEmpresa *empresa=buscarNodoXNombreSimpleEmpresa(lista,nombre);
 
-
-        printf("\n-----------Facturas de Clientes:----------------\n");
         nodoSimpleCP *segCli=empresa->cli;
         while(segCli!=NULL)
         {
-            mostrarUnCP(segCli->dato_cp);
             nodoDobleFactura *segFactCli=segCli->fact;
             while(segFactCli)
             {
                 if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactCli->dato.fecha,fechaInicio,fechaFinal))
-                mostrarUnaFactura(segFactCli->dato);
+                NodoListarFacturas *aux=crearNodoListarFacturas(lista->dato.nombre,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp);
+                listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
                 segFactCli=segFactCli->sig;
             }
             segCli=segCli->sig;
         }
-        printf("\n-----------Facturas de Proveedores:----------------\n");
+
         nodoSimpleCP *segProv=empresa->prov;
         while(segProv!=NULL)
         {
-            mostrarUnCP(segProv->dato_cp);
             nodoDobleFactura *segFactProv=segProv->fact;
             while(segFactProv)
             {
                 if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactProv->dato.fecha,fechaInicio,fechaFinal)==1)
-                mostrarUnaFactura(segFactProv->dato);
+                NodoListarFacturas *aux2=crearNodoListarFacturas(lista->dato.nombre,segFactProv->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp);
+                listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
                 segFactProv=segFactProv->sig;
             }
             segProv=segProv->sig;
         }
-
+    return listarFacturas;
 }
+
+nodoDobleFactura* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
+{
+    nodoDobleFactura* destino = inicListaDoble();
+    nodoSimpleEmpresa *empresaEncontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre);
+    if(empresaEncontrada){
+        nodoSimpleCP *segCli=empresaEncontrada->cli;
+        while(segCli!=NULL)
+        {
+            nodoDobleFactura *segFactCli=segCli->fact;
+            while(segFactCli)
+            {
+                if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactCli->dato.fecha,fechaInicio,fechaFinal)){
+                  destino = agregarAlFinalDoble(destino,segFactCli->dato);
+                }
+                segFactCli=segFactCli->sig;
+            }
+            segCli=segCli->sig;
+        }
+    }
+  return destino;
+}
+
+nodoDobleFactura* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
+{
+    nodoDobleFactura* destino = inicListaDoble();
+    nodoSimpleEmpresa *empresaEncontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre);
+    if(empresaEncontrada){
+        nodoSimpleCP *segPro=empresaEncontrada->prov;
+        while(segPro!=NULL)
+        {
+            nodoDobleFactura *segFactPro=segPro->fact;
+            while(segFactPro)
+            {
+                if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactPro->dato.fecha,fechaInicio,fechaFinal)){
+                  destino = agregarAlFinalDoble(destino,segFact->dato);
+                }
+                segFactPro=segFactPro->sig;
+            }
+            segPro=segPro->sig;
+        }
+    }
+  return destino;
 
 int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha limSup)
 {
@@ -73,4 +114,34 @@ int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha 
         return 1;
     else
         return 0;
+}
+
+//-----------LIBRERIA LISTA SIMPLE NODOSLISTARFACTURAS-------------------------
+
+NodoListarFacturas* inicListaSimpleListarFacturas()
+{
+    return NULL;
+}
+
+NodoListarFacturas* crearNodoListarFacturas(char nombreEmp[],Factura a, char nombreCliProv[],char cp)
+{
+    NodoListarFacturas* aux = malloc(sizeof(NodoListarFacturas));
+    aux->dato=a;
+    aux->cp=cp;
+    strcpy(aux->nombreEmpresa,nombreEmp);
+    strcpy(aux->nombreClienteProveedor,nombreCliProv);
+    aux->sig = NULL;
+
+    return aux;
+}
+
+NodoListarFacturas* agregarNodoListarFactAlPrincipio(NodoListarFacturas* lista, NodoListarFacturas* nuevoNodo)
+{
+    if(lista != NULL)
+    {
+        nuevoNodo->sig = lista;
+    }
+    lista = nuevoNodo;
+
+    return lista;
 }

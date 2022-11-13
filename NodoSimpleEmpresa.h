@@ -21,6 +21,13 @@ struct nodoSimpleCP* cli;
 struct nodoSimpleEmpresa* sig;
 }nodoSimpleEmpresa;
 
+typedef struct NodoPalabra
+{
+    char palabra[50];
+    struct NodoPalabra* siguiente;
+    struct NodoPalabra* anterior;
+}NodoPalabra;
+
 void mostrarUnaEmpresa(Empresa a);
 Empresa crearEmpresa(char nombre[],char cuit[]);
 void TestLibreriaEmpresa();

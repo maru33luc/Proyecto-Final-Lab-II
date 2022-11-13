@@ -10,10 +10,10 @@
 int main()
 {
 
-TestLibreriaEmpresa();
+//TestLibreriaEmpresa();
 
 
-TestLibreriaFactura();
+//TestLibreriaFactura();
 
 TestPersistenciaYDespersistenciaEnTDA();
 

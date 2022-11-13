@@ -24,6 +24,96 @@ Empresa crearEmpresa(char nombre[],char cuit[]){
   return emp;
 }
 
+void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a)
+{
+    FILE *buf=fopen(nombreArchEmpresas,"ab");
+    Empresa e=a;
+    if(buf)
+    {
+        fwrite(&e,sizeof(Empresa),1,buf);
+        fclose(buf);
+    }
+}
+
+nodoSimpleEmpresa *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[])
+{
+    NodoPalabra *lista=IniciarListaPalabras();
+
+    FILE *buf=fopen(nombreArchEmpresas,"rb");
+    Empresa a;
+
+    if(buf)
+    {
+        while(fread(&a,sizeof(Empresa),1,buf)>0)
+            lista=AgregarNodoPalabraAlfabeticamente(lista,CrearNodoPalabra(a));
+
+        fclose(buf);
+    }
+
+    return lista;
+}
+
+///--------------LIBRERIA DE LISTAS NODOPALABRAS-------------------------
+
+void IniciarListaPalabras(NodoPalabra** listaPalabras)
+{
+    *listaPalabras = NULL;
+}
+
+NodoPalabra* CrearNodoPalabra(char palabra[])
+{
+    NodoPalabra* aux = malloc(sizeof(NodoPalabra));
+    strcpy(aux->palabra, palabra);
+    aux->siguiente = NULL;
+    aux->anterior = NULL;
+
+    return aux;
+}
+
+void AgregarNodoPalabraAlfabeticamente(NodoPalabra** listaPalabras, char palabra[])
+{
+    NodoPalabra* nuevoNodo = CrearNodoPalabra(palabra);
+
+    if((*listaPalabras) == NULL)
+        (*listaPalabras) = nuevoNodo;
+    else
+    {
+        if(strcmpi((*listaPalabras)->palabra, palabra) > 0)
+        {
+            nuevoNodo->siguiente = (*listaPalabras);
+            (*listaPalabras)->anterior = nuevoNodo;
+            (*listaPalabras) = nuevoNodo;
+
+        }
+        else
+        {
+            NodoPalabra* seg = (*listaPalabras)->siguiente;
+            NodoPalabra* ant = (*listaPalabras);
+
+            while(seg != NULL && strcmpi(seg->palabra, palabra) < 0)
+            {
+                ant = seg;
+                seg = seg->siguiente;
+            }
+            if(seg != NULL)
+            {
+                ant->siguiente = nuevoNodo;
+                nuevoNodo->anterior = ant;
+                nuevoNodo->siguiente = seg;
+                seg->anterior = nuevoNodo;
+            }
+            else
+            {
+                ant->siguiente = nuevoNodo;
+                nuevoNodo->anterior = ant;
+            }
+        }
+
+    }
+}
+
+
+
 ///-------------- LIBRERIA DE LISTA SIMPLE EMPRESAS----------------------------------
 
 nodoSimpleEmpresa* inicListaSimpleEmpresa()
@@ -257,7 +347,7 @@ void TestPersistenciaYDespersistenciaEnTDA()
 
     persistirRegistrosFactura("ArchivoFacturas",c);
 
-    Registro_Factura d=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(10,8,2020),"",0,0,0,0,"SanchezProv",'p',"30");
+    Registro_Factura d=cargarUnRegistroFactura("Coca","12",0,"a","0","12","120",1,crearFecha(10,8,2020),"",0,0,0,0,"SanchezProv",'p',"30");
 
     persistirRegistrosFactura("ArchivoFacturas",d);
 
@@ -279,6 +369,13 @@ void TestPersistenciaYDespersistenciaEnTDA()
 
     printf("\n-----LISTANDO FACTURAS POR PERIODO DEL 11/3/2020 AL 21/5/2021----------\n");
     listarFacturasDetEmpresaXPeriodo(lista,"12",crearFecha(11,3,2020),crearFecha(21,5,2021));
+
+    printf("\nPROBANDO FUNCION BUSQUEDA FACTURA\n");
+    nodoDobleFactura *nodo=buscarFacturaenTDA(lista,"Coca",'p',"30","120","12");
+    if(nodo)
+        mostrarUnaFactura(nodo->dato);
+    else
+        printf("\nNo se encontro esa factura\n");
 
     /*
 
