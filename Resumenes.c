@@ -136,6 +136,40 @@ int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha 
         return 0;
 }
 
+NodoListarFacturas *listarFacturasDetEmpresa (nodoSimpleEmpresa *lista,char nombre_empresa[])
+{
+    NodoListarFacturas *listarFacturas=inicListaSimpleListarFacturas();
+
+    nodoSimpleEmpresa *empresa=buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
+
+    nodoSimpleCP *segCli=empresa->cli;
+    while(segCli!=NULL)
+    {
+        nodoDobleFactura *segFactCli=segCli->fact;
+        while(segFactCli)
+        {
+            NodoListarFacturas *aux=crearNodoListarFacturas(lista->dato.nombre,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp);
+            listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
+            segFactCli=segFactCli->sig;
+        }
+        segCli=segCli->sig;
+    }
+    nodoSimpleCP *segProv=empresa->prov;
+    while(segProv!=NULL)
+    {
+        nodoDobleFactura *segFactProv=segProv->fact;
+        while(segFactProv)
+        {
+            NodoListarFacturas *aux2=crearNodoListarFacturas(lista->dato.nombre,segFactProv->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp);
+            listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
+            segFactProv=segFactProv->sig;
+        }
+        segProv=segProv->sig;
+    }
+    return listarFacturas;
+}
+
+
 //-----------LIBRERIA LISTA SIMPLE NODOSLISTARFACTURAS-------------------------
 
 NodoListarFacturas* inicListaSimpleListarFacturas()

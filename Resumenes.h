@@ -24,6 +24,8 @@ NodoListarFacturas* agregarNodoAlFinalNodoListarFacturas(NodoListarFacturas* lis
 
 NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
 
+NodoListarFacturas *listarFacturasDetEmpresa (nodoSimpleEmpresa *lista,char nombre_empresa[]);
+
 NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista);
 
 NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
