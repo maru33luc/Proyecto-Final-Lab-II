@@ -11,10 +11,8 @@ int main()
 {
 //TestPersistenciaYDespersistenciaEnTDA();
 
-
-
-char nombreArchEmpresas="ArchivoEmpresas";
-char nombreArchFacturas="ArchivoFacturas";
+char nombreArchEmpresas[30]="ArchivoEmpresas";
+char nombreArchFacturas[30]="ArchivoFacturas";
 
 nodoSimpleEmpresa *lista=inicListaSimpleEmpresa();
 
@@ -64,18 +62,17 @@ int opcion1;
                 case 2: /// FALTA DESARROLLAR ----------------------------
                         system("cls");
                         break;
-                        }
+
                 case 3: /// FALTA DESARROLLAR ----------------------------
 
                         system("cls");
 
                         break;
-                        }
+
                 case 4:
                         system("cls");
                         printf("\n%sIngrese la opcion deseada\n \n[1]-Lista Empresas ordenados alfabeticamente\n\n[2]-Lista Una Empresa Por Nombre\n[0]-Salir\n\n%s", azul, normal);
                         scanf("%d", &opcion1);
-                        validos=pasarArchivoClientesAarreglo(nombreArch,f,100);
 
                         switch(opcion1)
                         {
@@ -83,15 +80,13 @@ int opcion1;
                                 system("cls");
                                 printf("\nMOSTRANDO ARCHIVO DE EMPRESAS\n");
                                 mostrarArchivoDeEmpresas("ArchivoEmpresas");
+                                system("pause");
                                 break;
                         case 2:
                                 system("cls");
-                                char nombreEmp[30];
-                                printf("\nIngrese el nombre de la Empresa a buscar:")
-                                fflush(stdin);
-                                gets(nombreEmp);
                                 nodoSimpleEmpresa *aux=buscarNodoXNombreSimpleEmpresa(lista,nombreEmp);
                                 verUnaEmpresa(aux);
+                                system("pause");
                                 break;
                         }
                         break;
@@ -119,7 +114,6 @@ int opcion1;
                         system("cls");
 
                         break;
-                        }
 
                 case 4:
                         system("cls");
@@ -157,9 +151,9 @@ int opcion1;
                                 break;
 
                         }
-                }
-                break;
 }
+
+
 system("cls");
 printf("\n%sDesea seguir en el sistema? s/n\n\n%s", azul, normal);
 fflush(stdin);
