@@ -86,9 +86,10 @@ Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa 
     {
         printf("\nIngrese el nombre de la Empresa o presione Enter para salir\n");
         fflush(stdin);
+
         gets(a.nombreEmpresa);
         if(strlen(a.nombreEmpresa)==0)
-            return;
+            return a;
         else
             flag= validarLetras(a.nombreEmpresa);
     }
@@ -276,7 +277,10 @@ void mostrarUnRegistroFactura (Registro_Factura a)
     printf("\n------------------------------------------------------\n");
 }
 
-nodoSimpleEmpresa *persistirRegistrosFactura (char nombreArch[],nodoSimpleEmpresa *lista)
+
+
+
+nodoSimpleEmpresa *persistirRegistrosFactura (char nombreArch[],nodoSimpleEmpresa *lista) /// ESTA NO SIRVE
 {
     FILE *buf=fopen(nombreArch,"a+b");
     char control='s';
@@ -287,14 +291,19 @@ nodoSimpleEmpresa *persistirRegistrosFactura (char nombreArch[],nodoSimpleEmpres
         while(control=='s')
         {
             dato=cargarUnRegistroFactura(dato,lista);
-            fwrite(&dato,sizeof(Registro_Factura),1,buf);
-            fseek(buf,sizeof(Registro_Factura)*(-1),SEEK_CUR);
-            lista=pasarDatosArchivoFacturasATDA(buf,lista);
+            if(strcmpi(dato.nombreEmpresa,"")==0)
+                fclose(buf);
+            else
+            {
+                fwrite(&dato,sizeof(Registro_Factura),1,buf);
+                fseek(buf,sizeof(Registro_Factura)*(-1),SEEK_CUR);
+                lista=pasarDatosArchivoFacturasATDA(buf,lista);
+                fclose(buf);
+            }
             printf("\nDesea seguir ingresando Facturas? s/n\n");
             fflush(stdin);
             scanf("%c",&control);
         }
-        fclose(buf);
     }
     return lista;
 }
@@ -694,8 +703,16 @@ void TestLibreriaFactura()
 //    printf("Se encontro: %s\n",buscarUltimoDoble(lista)->dato.cuit_cliente_proveedor); // COMENTADO X CAMPO INEX
 }
 
-nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Proveedor cliProv, Empresa emp)
+nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Registro_Factura dato)
 {
+    Empresa emp;
+    Cliente_Proveedor cliProv;
+    Factura fact;
+
+    emp=pasarDatosRegistroAUnaEmpresa(dato);
+    cliProv=pasarDatosRegistroAUnClienteProveedor(dato);
+    fact=pasarDatosRegistroAUnaFactura(dato);
+
     nodoSimpleCP *aux=crearNodoSimpleCP(cliProv);
     nodoSimpleEmpresa *busq=buscarNodoXCuitSimpleEmpresa(lista,emp.cuit);
 

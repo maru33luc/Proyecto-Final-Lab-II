@@ -40,6 +40,7 @@ void persistirEmpresasEnArchivo (char nombreArch[]);
 //void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a);
 NodoPalabra *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[]);
 int buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char cuit[]);
+void verUnaEmpresa(nodoSimpleEmpresa* lista);
 
 ///------------ LIBRERIA DE LISTA SIMPLE EMPRESAS----------------------------
 
@@ -56,7 +57,7 @@ nodoSimpleEmpresa* buscarNodoXNombreSimpleEmpresa(nodoSimpleEmpresa* lista,char 
 
 ///-------------TDA COMPUESTA-----------------------------------------------
 
-nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (FILE *buf,nodoSimpleEmpresa *lista);
+//nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (FILE *buf,nodoSimpleEmpresa *lista);//no va
 
 void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
 

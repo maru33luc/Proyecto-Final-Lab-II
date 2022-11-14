@@ -105,7 +105,7 @@ nodoDobleFactura *insertarOrdenadoDobleXFecha (nodoDobleFactura *lista,nodoDoble
 
 ///---------------TDA COMPUESTA ---------------------------------------------------------
 
-nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Factura fact,Cliente_Proveedor cliProv, Empresa emp);
+nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Registro_Factura dato);
 nodoDobleFactura* buscarFacturaenTDA(nodoSimpleEmpresa*lista,char nombre_empresa[],char cp,char cuit_cp[],char nro_comprobante[],char punto_venta[]);
 
 #endif // NODODOBLEFACTURA_H_INCLUDED

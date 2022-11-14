@@ -20,6 +20,33 @@ void mostrarUnaEmpresa(Empresa e)
     printf("\n---------------------------------------------------------\n");
 }
 
+void verUnaEmpresa(nodoSimpleEmpresa* lista)
+{
+    char nombre_empresa[50];
+    int flag = 0;
+    while(!flag)
+    {
+        printf("Ingrese el nombre de la empresa(Max. 50 caracteres): \n");
+        fflush(stdin);
+        gets(nombre_empresa);
+        if(strlen(nombre_empresa)<50)
+        {
+            flag = 1;
+        }
+    }
+
+    nodoSimpleEmpresa* encontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
+    if(encontrada)
+    {
+        mostrarUnaEmpresa(encontrada->dato);
+    }
+    else
+    {
+        printf("La empresa ingresada no se encuentra en la base de datos.\n");
+    }
+    system("pause");
+}
+
 Empresa cargarUnaEmpresa (Empresa e)
 {
     int flag=0;
@@ -30,7 +57,7 @@ Empresa cargarUnaEmpresa (Empresa e)
         fflush(stdin);
         gets(e.nombre);
         if(strlen(e.nombre)==0)
-            return;
+            return e;
         else
             flag= validarLetras(e.nombre);
     }
@@ -81,11 +108,20 @@ void persistirEmpresasEnArchivo (char nombreArch[])
         while(control=='s')
         {
             dato=cargarUnaEmpresa(dato);
-            int bus=buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro(nombreArch,dato.cuit);
-            if(bus==-1)
-                fwrite(&dato,sizeof(Empresa),1,buf);
-            else
-                printf("\nLa Empresa ya se encuentra en la base de datos\n");
+            if(strlen(dato.nombre)!=0)
+            {
+                int bus=buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro(nombreArch,dato.cuit);
+                if(bus==-1)
+                    {
+                        Empresa dato2;
+                        dato2=dato;
+                        fwrite(&dato2,sizeof(Empresa),1,buf);
+                    }
+
+                else
+                    printf("\nLa Empresa ya se encuentra en la base de datos\n");
+
+            }
             printf("\nDesea seguir ingresando Empresas? s/n\n");
             fflush(stdin);
             scanf("%c",&control);
@@ -402,7 +438,7 @@ void TestLibreriaEmpresa()
 
 ///------------------------- TDA COMPUESTA---------------------------------
 
-nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (FILE *buf,nodoSimpleEmpresa *lista)
+nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (FILE *buf,nodoSimpleEmpresa *lista) // NO SIRVE
 {
     Registro_Factura a;
 
@@ -410,7 +446,7 @@ nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (FILE *buf,nodoSimpleEmpresa *l
     Empresa emp=pasarDatosRegistroAUnaEmpresa(a);
     Cliente_Proveedor cliProv=pasarDatosRegistroAUnClienteProveedor(a);
     Factura fact=pasarDatosRegistroAUnaFactura(a);
-    lista=altaFacturas(lista,fact,cliProv,emp);
+    lista=altaFacturas(lista,a);
 
     return lista;
 }
@@ -482,13 +518,36 @@ void TestPersistenciaYDespersistenciaEnTDA()
     printf("\nMOSTRANDO ARCHIVO DE EMPRESAS\n");
     mostrarArchivoDeEmpresas("ArchivoEmpresas");
 
-    lista=persistirRegistrosFactura("ArchivoFacturas",lista);
-    printf("\nMOSTRANDO ARCHIVO DE FACTURAS\n");
-    mostrarArchivoRegistros("ArchivoFacturas");
+    Registro_Factura reg;
+    char control='s';
+    while (control=='s')
+    {
+        reg=cargarUnRegistroFactura(reg,lista);
+        if(strlen(reg.nombreEmpresa)!=0)
+        {
+            Registro_Factura dato;
+            dato=reg;
+            lista=altaFacturas(lista,dato);
+        }
+
+
+        printf("Desea seguir?");
+        fflush(stdin);
+        scanf("%c",&control);
+    }
+
+
+
+    //lista=persistirRegistrosFactura("ArchivoFacturas",lista);
 
     printf("\n-------------TDA Completo-----------------------------\n\n");
     mostrarTDACompleto(lista);
     system("pause");
+
+    persistirTDAEnArchivo("ArchivoFacturas",lista);
+
+    printf("\nMOSTRANDO ARCHIVO DE FACTURAS\n");
+    mostrarArchivoRegistros("ArchivoFacturas");
 
     /*
     printf("\n----PROBANDO LISTADOS FACTURAS POR EMPRESA -----------------");
