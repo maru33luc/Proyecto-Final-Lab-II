@@ -31,15 +31,13 @@ typedef struct NodoPalabra
 void mostrarUnaEmpresa(Empresa a);
 void mostrarArchivoDeEmpresas (char nombreArch[]);
 Empresa cargarUnaEmpresa (Empresa e);
-//Empresa crearEmpresa(char nombre[],char cuit[]);
-void TestLibreriaEmpresa();
 
 ///------------ARCHIVO DE EMPRESAS--------------------------------------------------
 
 void persistirEmpresasEnArchivo (char nombreArch[]);
-//void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a);
-NodoPalabra *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[]);
+nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista);
 int buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char cuit[]);
+int buscarUnaEmpresaXNombreEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char nombre[]);
 void verUnaEmpresa(nodoSimpleEmpresa* lista);
 
 ///------------ LIBRERIA DE LISTA SIMPLE EMPRESAS----------------------------
@@ -64,12 +62,5 @@ void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
 void TestPersistenciaYDespersistenciaEnTDA();
 void mostrarTDACompleto (nodoSimpleEmpresa *lista);
 
-///-----------------LIBRERIA NODOPALABRAS (PARA LA INTERFAZ)------------------------
-
-NodoPalabra *IniciarListaPalabras();
-NodoPalabra* CrearNodoPalabra(char palabra[]);
-NodoPalabra *AgregarNodoPalabraAlfabeticamente(NodoPalabra* listaPalabras, char palabra[]);
-void mostrarListaNodoPalabras (NodoPalabra *lista);
-void TestNodoPalabra ();
 
 #endif

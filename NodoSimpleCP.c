@@ -7,16 +7,6 @@
 #include "NodoSimpleCP.h"
 #include <windows.h>
 
-Cliente_Proveedor crearCP(char nombre[],char cuit_cp[],char cp)
-{
-    Cliente_Proveedor nuevo_cp;
-    strcpy(nuevo_cp.nombre,nombre);
-    strcpy(nuevo_cp.cuit_cliente_proveedor,cuit_cp);
-    nuevo_cp.cp = cp;
-
-    return nuevo_cp;
-}
-
 void mostrarUnCP(Cliente_Proveedor CP)
 {
     printf("----------------------------\n");

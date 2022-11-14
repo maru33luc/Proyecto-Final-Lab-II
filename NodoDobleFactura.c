@@ -99,7 +99,11 @@ Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa 
     {
         printf("\nIngrese si es una compra ('p') o una venta ('c'): (A/B/C)\n");
         fflush(stdin);
-        flag=scanf("%c",&a.cp);
+        scanf("%c",&a.cp);
+        if(a.cp=='c'||a.cp=='C'||a.cp=='p'||a.cp=='P')
+            flag=1;
+        else
+            flag=0;
     }
     while(flag==0);
 
@@ -151,7 +155,11 @@ Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa 
         {
             printf("\nIngrese el tipo de Factura: (A/B/C)\n");
             fflush(stdin);
-            flag=scanf("%c",&a.tipo);
+            scanf("%c",&a.tipo);
+            if(a.tipo=='c'||a.tipo=='C'||a.tipo=='A'||a.tipo=='a'||a.tipo=='B'||a.tipo=='b')
+            flag=1;
+        else
+            flag=0;
         }
         while(flag==0);
 
@@ -228,32 +236,6 @@ Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa 
     return a;
 }
 
-/*
-Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int activaEmp,char tipo,char comprobante[],char puntoVenta[],char numComprob[],int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact,char nombreCliProv[],char cp,char cuitCliProv[])
-{
-    Registro_Factura a;
-
-    strcpy(a.nombreEmpresa,nombreEmp);
-    strcpy(a.cuit,cuitEmp);
-    a.activa_emp=activaEmp;
-    a.tipo=tipo;
-    strcpy(a.comprobante,comprobante);
-    strcpy(a.punto_venta,puntoVenta);
-    strcpy(a.nro_comprobante,numComprob);
-    a.id_interno_factura=idInterno;
-    a.fecha=fecha;
-    strcpy(a.descripcion,descripcion);
-    a.neto=neto;
-    a.iva=iva;
-    a.total=total;
-    a.activa_fact=activaFact;
-    strcpy(a.nombre_cliente_proveedor,nombreCliProv);
-    a.cp=cp;
-    strcpy(a.cuit_cliente_proveedor,cuitCliProv);
-
-    return a;
-}*/
-
 void mostrarUnRegistroFactura (Registro_Factura a)
 {
     printf("\n------------------------------------------------------\n");
@@ -267,7 +249,6 @@ void mostrarUnRegistroFactura (Registro_Factura a)
     printf("\nNumero de comprobante: %s\n",a.nro_comprobante);
     printf("\nPunto de venta: %s\n",a.punto_venta);
     printf("\nTipo de comprobante a/b/c: %c\n",a.tipo);
-    printf("\nId de la Factura: %d\n",a.id_interno_factura);
     printf("\nFecha de contabilizacion: %d/%d/%d\n",a.fecha.dia,a.fecha.mes,a.fecha.anio);
     printf("\nDescripcion de la Factura: %s\n",a.descripcion);
     printf("\nValor neto: %.2f\n",a.neto);
@@ -276,51 +257,6 @@ void mostrarUnRegistroFactura (Registro_Factura a)
     printf("\nEstado de la Factura: activa (1) o inactiva (0): %d\n",a.activa_fact);
     printf("\n------------------------------------------------------\n");
 }
-
-
-
-
-nodoSimpleEmpresa *persistirRegistrosFactura (char nombreArch[],nodoSimpleEmpresa *lista) /// ESTA NO SIRVE
-{
-    FILE *buf=fopen(nombreArch,"a+b");
-    char control='s';
-    Registro_Factura dato;
-
-    if(buf)
-    {
-        while(control=='s')
-        {
-            dato=cargarUnRegistroFactura(dato,lista);
-            if(strcmpi(dato.nombreEmpresa,"")==0)
-                fclose(buf);
-            else
-            {
-                fwrite(&dato,sizeof(Registro_Factura),1,buf);
-                fseek(buf,sizeof(Registro_Factura)*(-1),SEEK_CUR);
-                lista=pasarDatosArchivoFacturasATDA(buf,lista);
-                fclose(buf);
-            }
-            printf("\nDesea seguir ingresando Facturas? s/n\n");
-            fflush(stdin);
-            scanf("%c",&control);
-        }
-    }
-    return lista;
-}
-
-/*
-void persistirRegistrosFactura (char nombreArch[],Registro_Factura a)
-{
-    FILE *buf=fopen(nombreArch,"ab");
-
-    if(buf)
-    {
-        fwrite(&a,sizeof(Registro_Factura),1,buf);
-        fclose(buf);
-    }
-}
-*/
-
 
 void mostrarArchivoRegistros (char nombreArch[])
 {
@@ -336,30 +272,10 @@ void mostrarArchivoRegistros (char nombreArch[])
     }
 }
 
-Factura cargarUnaFactura (char cuitCliProv[],char comprobante[],char numComprob[],char puntoVenta[],char tipo,int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact)
-{
-    Factura a;
-
-    //strcpy(a.cuit_cliente_proveedor,cuitCliProv); // REVISAR SI QUEDA O NO ESTE CAMPO
-    strcpy(a.comprobante,comprobante);
-    strcpy(a.numComprobante,numComprob);
-    strcpy(a.puntoVenta,puntoVenta);
-    a.tipo=tipo;
-    a.id_interno=idInterno;
-    a.fecha=fecha;
-    strcpy(a.descripcion,descripcion);
-    a.neto=neto;
-    a.iva=iva;
-    a.total=total;
-    a.activa=activaFact;
-
-    return a;
-}
-
 void mostrarUnaFactura (Factura a)
 {
     printf("\n-----------------FACTURA NUMERO %s--------------------\n",a.numComprobante);
-//    printf("\nCUIT del cliente/proveedor: %s\n",a.cuit_cliente_proveedor);
+    //printf("\nCUIT del cliente/proveedor: %s\n",a.cuit_cliente_proveedor);
     printf("\nTipo de comprobante: %s\n",a.comprobante);
     printf("\nNumero de comprobante: %s\n",a.numComprobante);
     printf("\nPunto de venta: %s\n",a.puntoVenta);
@@ -388,7 +304,6 @@ Factura pasarDatosRegistroAUnaFactura(Registro_Factura a)
     dato.iva=a.iva;
     dato.total=a.total;
     dato.activa=a.activa_fact;
-    dato.id_interno=a.id_interno_factura;
 
     return dato;
 }
@@ -418,7 +333,6 @@ Registro_Factura pasarDatosNodoFacturaAUnRegistro(Factura a)
     dato.iva=a.iva;
     dato.total=a.total;
     dato.activa_fact=a.activa;
-    dato.id_interno_factura=a.id_interno; /// ESTE CAMPO QUE HACEMOS AL FINAL?
 
     return dato;
 }
@@ -468,7 +382,7 @@ Fecha crearFecha (int dia, int mes, int anio)
 }
 
 
-///------------------ LIBRERIA DE LISTA DOBLE FACTURAS----------------------------------------------------
+///------------------ LIBRERIA DE LISTA DOBLE FACTURAS----------------------------------------
 
 nodoDobleFactura *inicListaDoble ()
 {
@@ -676,31 +590,26 @@ nodoDobleFactura *buscarFacturaDobleXNumComprob (nodoDobleFactura *lista,char nu
     return seg;
 }
 
-void TestLibreriaFactura()
+///--------------- ESTRUCTURA COMPUESTA ------------------------------------------
+
+nodoSimpleEmpresa *cargarRegistrosFacturaEnTDA(nodoSimpleEmpresa *lista)
 {
-    Fecha dato;
-    dato.anio=2022;
-    dato.mes=5;
-    dato.dia=10;
-
-    nodoDobleFactura* lista = inicListaDoble();
-    lista = agregarAlPrincipioDoble(lista,crearNodoDoble(cargarUnaFactura("1111111","0","1","0","a",0,dato,"",0,0,0,0)));
-    lista = agregarAlPrincipioDoble(lista,crearNodoDoble(cargarUnaFactura("2222222","0","2","0","a",0,dato,"",0,0,0,0)));
-    lista = agregarAlPrincipioDoble(lista,crearNodoDoble(cargarUnaFactura("3333333","0","3","0","a",0,dato,"",0,0,0,0)));
-    lista = agregarAlFinalDoble(lista,crearNodoDoble(cargarUnaFactura("4444444","0","4","0","a",0,dato,"",0,0,0,0)));
-
-    mostrarListaDoble(lista);
-
-    lista = borrarnodoDobleFacturaXNumComprobante(lista,"1");
-    printf("Eliminando Factura con el numero de comprob '1' y cuit 11111111\n");
-    system("pause");
-    system("cls");
-    mostrarListaDoble(lista);
-    system("pause");
-    system("cls");
-    printf("*******************************\n");
-    printf("\nBuscando ultimo - Se espera: cuit 44444444\n");
-//    printf("Se encontro: %s\n",buscarUltimoDoble(lista)->dato.cuit_cliente_proveedor); // COMENTADO X CAMPO INEX
+    Registro_Factura reg;
+    char control='s';
+    while (control=='s')
+    {
+        reg=cargarUnRegistroFactura(reg,lista);
+        if(strlen(reg.nombreEmpresa)!=0)
+        {
+            Registro_Factura dato;
+            dato=reg;
+            lista=altaFacturas(lista,dato);
+        }
+        printf("Desea seguir?");
+        fflush(stdin);
+        scanf("%c",&control);
+    }
+    return lista;
 }
 
 nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Registro_Factura dato)

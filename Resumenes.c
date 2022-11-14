@@ -143,32 +143,42 @@ int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha 
 NodoListarFacturas *listarFacturasDetEmpresa (nodoSimpleEmpresa *lista,char nombre_empresa[])
 {
     NodoListarFacturas *listarFacturas=inicListaSimpleListarFacturas();
-
+mostrarListaSimpleEmpresa(lista);
+system("pause");
     nodoSimpleEmpresa *empresa=buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
+    if(empresa==NULL)
+        printf("EL NODO ES NULO");
 
-    nodoSimpleCP *segCli=empresa->cli;
-    while(segCli!=NULL)
+    if(empresa)
     {
-        nodoDobleFactura *segFactCli=segCli->fact;
-        while(segFactCli)
+        nodoSimpleCP *segCli=empresa->cli;
+        while(segCli!=NULL)
         {
-            NodoListarFacturas *aux=crearNodoListarFacturas(lista->dato.nombre,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp);
-            listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
-            segFactCli=segFactCli->sig;
+            nodoDobleFactura *segFactCli=segCli->fact;
+            while(segFactCli)
+            {
+                NodoListarFacturas *aux=crearNodoListarFacturas(lista->dato.nombre,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp);
+                listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
+                segFactCli=segFactCli->sig;
+            }
+            segCli=segCli->sig;
         }
-        segCli=segCli->sig;
-    }
-    nodoSimpleCP *segProv=empresa->prov;
-    while(segProv!=NULL)
-    {
-        nodoDobleFactura *segFactProv=segProv->fact;
-        while(segFactProv)
+        nodoSimpleCP *segProv=empresa->prov;
+        while(segProv!=NULL)
         {
-            NodoListarFacturas *aux2=crearNodoListarFacturas(lista->dato.nombre,segFactProv->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp);
-            listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
-            segFactProv=segFactProv->sig;
+            nodoDobleFactura *segFactProv=segProv->fact;
+            while(segFactProv)
+            {
+                NodoListarFacturas *aux2=crearNodoListarFacturas(lista->dato.nombre,segFactProv->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp);
+                listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
+                segFactProv=segFactProv->sig;
+            }
+            segProv=segProv->sig;
+
+
+
         }
-        segProv=segProv->sig;
+
     }
     return listarFacturas;
 }
@@ -254,42 +264,66 @@ void mostrarFacturasGo(NodoListarFacturas* lista)
     printf("\n  EMPRESA: %s",lista->nombreEmpresa);
     int t=6;
     Factura facturaActual = lista->dato;
-    gotoxy(2,3); printf("|COMPROBANTE");
-    gotoxy(15,3); printf("|TIPO");
-    gotoxy(21,3); printf("|P VENTA");
-    gotoxy(30,3); printf("|N COMP");
-    gotoxy(40,3); printf("|FECHA");
-    gotoxy(52,3); printf("|DESCRIPCION");
-    gotoxy(65,3); printf("|NETO");
-    gotoxy(76,3); printf("|IVA");
-    gotoxy(81,3); printf("|TOTAL");
-    gotoxy(93,3); printf("|ESTADO");
-    gotoxy(104,3); printf("|NOMBRE C/P");
+    gotoxy(2,3);
+    printf("|COMPROBANTE");
+    gotoxy(15,3);
+    printf("|TIPO");
+    gotoxy(21,3);
+    printf("|P VENTA");
+    gotoxy(30,3);
+    printf("|N COMP");
+    gotoxy(40,3);
+    printf("|FECHA");
+    gotoxy(52,3);
+    printf("|DESCRIPCION");
+    gotoxy(65,3);
+    printf("|NETO");
+    gotoxy(76,3);
+    printf("|IVA");
+    gotoxy(81,3);
+    printf("|TOTAL");
+    gotoxy(93,3);
+    printf("|ESTADO");
+    gotoxy(104,3);
+    printf("|NOMBRE C/P");
 
-    gotoxy(0,4);printf("\n----------------------------------------------------------------------------------------------------------------------\n");
+    gotoxy(0,4);
+    printf("\n----------------------------------------------------------------------------------------------------------------------\n");
 
     while(lista)
     {
-    facturaActual = lista->dato;
-    gotoxy(2,t); printf("| %s",facturaActual.comprobante );
-    gotoxy(15,t); printf("| %c",facturaActual.tipo);
-    gotoxy(21,t);printf("| %s",facturaActual.puntoVenta );
-    gotoxy(30,t);printf("| %s", facturaActual.numComprobante);
-    gotoxy(40,t);printf("| %i/%i/%i",facturaActual.fecha.dia,facturaActual.fecha.mes,facturaActual.fecha.anio );
-    gotoxy(52,t);printf("| %s", facturaActual.descripcion);
-    gotoxy(65,t);printf("| %.1f", facturaActual.neto);
-    gotoxy(76,t);printf("| %.1f", facturaActual.iva);
-    gotoxy(81,t);printf("| %.1f", facturaActual.total);
-    gotoxy(93,t);facturaActual.activa == 1? printf("| ACTIVA"):printf("| INACTIVA");
-    gotoxy(104,t); printf("| %s",lista->nombreClienteProveedor);
-    t++;
+        facturaActual = lista->dato;
+        gotoxy(2,t);
+        printf("| %s",facturaActual.comprobante );
+        gotoxy(15,t);
+        printf("| %c",facturaActual.tipo);
+        gotoxy(21,t);
+        printf("| %s",facturaActual.puntoVenta );
+        gotoxy(30,t);
+        printf("| %s", facturaActual.numComprobante);
+        gotoxy(40,t);
+        printf("| %i/%i/%i",facturaActual.fecha.dia,facturaActual.fecha.mes,facturaActual.fecha.anio );
+        gotoxy(52,t);
+        printf("| %s", facturaActual.descripcion);
+        gotoxy(65,t);
+        printf("| %.1f", facturaActual.neto);
+        gotoxy(76,t);
+        printf("| %.1f", facturaActual.iva);
+        gotoxy(81,t);
+        printf("| %.1f", facturaActual.total);
+        gotoxy(93,t);
+        facturaActual.activa == 1? printf("| ACTIVA"):printf("| INACTIVA");
+        gotoxy(104,t);
+        printf("| %s",lista->nombreClienteProveedor);
+        t++;
 
-    lista = lista->sig;
+        lista = lista->sig;
     }
     printf("\n------------------------------------------------------------------------------------------------------------------------\n");
 }
 
-void gotoxy (int x, int y){
+void gotoxy (int x, int y)
+{
 
     HANDLE manipulador;
     COORD coordenadas;

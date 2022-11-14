@@ -21,7 +21,6 @@ char tipo;// A B o C
 char comprobante[30]; // Factura, Recibo, Nota Credito
 char punto_venta[5]; //Número de 5cifras rellenado con 0 al principio
 char nro_comprobante[10];
-int id_interno_factura; //Autoincremental , posicion
 Fecha fecha;
 char descripcion[100];
 float neto;
@@ -65,11 +64,8 @@ int validarNumString (char Nombre[]);
 int validarFecha (Fecha dato);
 
 Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa *lista);
-nodoSimpleEmpresa *persistirRegistrosFactura (char nombreArch[],nodoSimpleEmpresa *lista);
-/*Registro_Factura cargarUnRegistroFactura (char nombreEmp[],char cuitEmp[],int activaEmp,char tipo,char comprobante[],char puntoVenta[],char numComprob[],int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact,char nombreCliProv[],char cp,char cuitCliProv[]);*/
 void mostrarUnRegistroFactura (Registro_Factura a);
-//void persistirRegistrosFactura (char nombreArch[],Registro_Factura a);
-Factura cargarUnaFactura (char cuitCliProv[],char comprobante[],char numComprob[],char puntoVenta[],char tipo,int idInterno,Fecha fecha,char descripcion[],float neto,float iva,float total,int activaFact);
+
 void mostrarUnaFactura (Factura a);
 Factura pasarDatosRegistroAUnaFactura(Registro_Factura a);
 void mostrarArchivoRegistros (char nombreArch[]);
@@ -77,10 +73,6 @@ void mostrarArchivoRegistros (char nombreArch[]);
 Empresa pasarDatosRegistroAUnaEmpresa(Registro_Factura a);
 Registro_Factura pasarDatosNodoFacturaAUnRegistro(Factura a);
 Registro_Factura pasarDatosNodoEmpresaAUnRegistro(Empresa a);
-
-//Factura cargarUnaFactura (Factura a);
-//void mostrarUnaFactura (Factura a);
-
 Cliente_Proveedor pasarDatosRegistroAUnClienteProveedor(Registro_Factura a);
 Registro_Factura pasarDatosNodoClienteProveedorARegistro(Cliente_Proveedor a);
 Fecha crearFecha (int dia, int mes, int anio);
@@ -105,6 +97,7 @@ nodoDobleFactura *insertarOrdenadoDobleXFecha (nodoDobleFactura *lista,nodoDoble
 
 ///---------------TDA COMPUESTA ---------------------------------------------------------
 
+nodoSimpleEmpresa *cargarRegistrosFacturaEnTDA(nodoSimpleEmpresa *lista);
 nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Registro_Factura dato);
 nodoDobleFactura* buscarFacturaenTDA(nodoSimpleEmpresa*lista,char nombre_empresa[],char cp,char cuit_cp[],char nro_comprobante[],char punto_venta[]);
 

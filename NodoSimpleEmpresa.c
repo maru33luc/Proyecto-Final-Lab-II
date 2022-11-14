@@ -8,7 +8,7 @@
 #include <windows.h>
 
 
-///---------------- ARCHIVO DE EMPRESAS----------------------------------
+///---------------- CARGA Y MUESTRA EMPRESAS----------------------------------
 
 void mostrarUnaEmpresa(Empresa e)
 {
@@ -34,7 +34,6 @@ void verUnaEmpresa(nodoSimpleEmpresa* lista)
             flag = 1;
         }
     }
-
     nodoSimpleEmpresa* encontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
     if(encontrada)
     {
@@ -65,7 +64,7 @@ Empresa cargarUnaEmpresa (Empresa e)
 
     do
     {
-        printf("\nIngrese el CUIT del cliente\n");
+        printf("\nIngrese el CUIT de la Empresa\n");
         fflush(stdin);
         gets(e.cuit);
         flag= validarNumString(e.cuit);
@@ -75,34 +74,12 @@ Empresa cargarUnaEmpresa (Empresa e)
     return e;
 }
 
-Empresa crearEmpresa(char nombre[],char cuit[])
-{
-    Empresa emp;
-    strcpy(emp.nombre,nombre);
-    strcpy(emp.cuit,cuit);
-    emp.activa_emp = 1;
-    return emp;
-}
-
-/*
-void persistirUnaEmpresaEnArchivo (char nombreArchEmpresas[],Empresa a)
-{
-    FILE *buf=fopen(nombreArchEmpresas,"ab");
-    Empresa e=a;
-    if(buf)
-    {
-        fwrite(&e,sizeof(Empresa),1,buf);
-        fclose(buf);
-    }
-}
-*/
-
 void persistirEmpresasEnArchivo (char nombreArch[])
 {
     FILE *buf=fopen(nombreArch,"ab");
     char control='s';
     Empresa dato;
-
+    nodoSimpleEmpresa* listaEmpresasTemp = inicListaSimpleEmpresa();
     if(buf)
     {
         while(control=='s')
@@ -110,13 +87,18 @@ void persistirEmpresasEnArchivo (char nombreArch[])
             dato=cargarUnaEmpresa(dato);
             if(strlen(dato.nombre)!=0)
             {
-                int bus=buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro(nombreArch,dato.cuit);
-                if(bus==-1)
-                    {
-                        Empresa dato2;
-                        dato2=dato;
-                        fwrite(&dato2,sizeof(Empresa),1,buf);
-                    }
+                int busNombre = buscarUnaEmpresaXNombreEnArchivoYRetornaPosicionRegistro(nombreArch,dato.nombre);
+                int bus = buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro(nombreArch,dato.cuit);
+                nodoSimpleEmpresa* encontradoNombre = buscarNodoXNombreSimpleEmpresa(listaEmpresasTemp,dato.nombre);
+                nodoSimpleEmpresa* encontradoCuit = buscarNodoXCuitSimpleEmpresa(listaEmpresasTemp,dato.cuit);
+
+                if(bus==-1 && busNombre == -1 && !encontradoCuit && !encontradoNombre)
+                {
+                    Empresa dato2;
+                    dato2=dato;
+                    listaEmpresasTemp = agregarNodoAlPrincipioSimpleEmpresa(listaEmpresasTemp,crearNodoSimpleEmpresa(dato2));
+                    fwrite(&dato2,sizeof(Empresa),1,buf);
+                }
 
                 else
                     printf("\nLa Empresa ya se encuentra en la base de datos\n");
@@ -143,24 +125,6 @@ void mostrarArchivoDeEmpresas (char nombreArch[])
     }
 }
 
-NodoPalabra *pasarEmpresasDelArchivoAListaSimple (char nombreArchEmpresas[])
-{
-    NodoPalabra *lista=IniciarListaPalabras();
-
-    FILE *buf=fopen(nombreArchEmpresas,"rb");
-    Empresa a;
-
-    if(buf)
-    {
-        while(fread(&a,sizeof(Empresa),1,buf)>0)
-            lista=AgregarNodoPalabraAlfabeticamente(lista,a.nombre);
-
-        fclose(buf);
-    }
-
-    return lista;
-}
-
 int buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char cuit[])
 {
     FILE *buf=fopen(nombreArchEmpresas,"rb");
@@ -180,79 +144,24 @@ int buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro (char nombreArchEmpre
     return num;
 }
 
-///--------------LIBRERIA DE LISTAS NODOPALABRAS-------------------------
-
-NodoPalabra *IniciarListaPalabras()
+int buscarUnaEmpresaXNombreEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char nombre[])
 {
-    return NULL;
-}
+    FILE *buf=fopen(nombreArchEmpresas,"rb");
+    Empresa a;
+    int num=-1;
 
-NodoPalabra* CrearNodoPalabra(char palabra[])
-{
-    NodoPalabra* aux = malloc(sizeof(NodoPalabra));
-    strcpy(aux->palabra, palabra);
-    aux->siguiente = NULL;
-
-    return aux;
-}
-
-NodoPalabra *AgregarNodoPalabraAlfabeticamente(NodoPalabra* listaPalabras, char palabra[])
-{
-    NodoPalabra* nuevoNodo = CrearNodoPalabra(palabra);
-
-    if(listaPalabras== NULL)
-        listaPalabras = nuevoNodo;
-    else
+    if(buf)
     {
-        if(strcmpi(listaPalabras->palabra, palabra) > 0)
+        while(fread(&a,sizeof(Empresa),1,buf)>0)
         {
-            nuevoNodo->siguiente = listaPalabras;
-            listaPalabras->anterior = nuevoNodo;
-            listaPalabras = nuevoNodo;
+            if(strcmpi(a.nombre,nombre)==0)
+                num= ftell(buf)/sizeof(Empresa);
         }
-        else
-        {
-            NodoPalabra* seg = listaPalabras->siguiente;
-            NodoPalabra* ant = listaPalabras;
-
-            while(seg != NULL && strcmpi(seg->palabra, palabra) < 0)
-            {
-                ant = seg;
-                seg = seg->siguiente;
-            }
-            if(seg != NULL)
-            {
-                ant->siguiente = nuevoNodo;
-                nuevoNodo->siguiente = seg;
-            }
-            else
-                ant->siguiente = nuevoNodo;
-        }
+        fclose(buf);
     }
-    return listaPalabras;
+
+    return num;
 }
-
-void mostrarListaNodoPalabras (NodoPalabra *lista)
-{
-    while(lista)
-    {
-        printf("Palabra: %s\n",lista->palabra);
-        lista=lista->siguiente;
-    }
-}
-
-void TestNodoPalabra ()
-{
-    NodoPalabra *lista=IniciarListaPalabras();
-
-    lista=AgregarNodoPalabraAlfabeticamente(lista,"Marina");
-    lista=AgregarNodoPalabraAlfabeticamente(lista,"Arnaldo");
-    lista=AgregarNodoPalabraAlfabeticamente(lista,"Carlos");
-    lista=AgregarNodoPalabraAlfabeticamente(lista,"Josefa");
-
-    mostrarListaNodoPalabras(lista);
-}
-
 
 ///-------------- LIBRERIA DE LISTA SIMPLE EMPRESAS----------------------------------
 
@@ -364,7 +273,7 @@ nodoSimpleEmpresa* buscarNodoXNombreSimpleEmpresa(nodoSimpleEmpresa* lista,char 
 {
     nodoSimpleEmpresa* seg;
     seg = lista;
-    while(seg !=NULL && strcmp(seg->dato.nombre,nombre) != 0)
+    while(seg !=NULL && strcmpi(seg->dato.nombre,nombre) != 0)
     {
         seg = seg->sig;
     }
@@ -399,54 +308,20 @@ nodoSimpleEmpresa* agregarOrdenadoXNombreSimpleEmpresa(nodoSimpleEmpresa*lista,n
     return lista;
 }
 
-void TestLibreriaEmpresa()
-{
-    nodoSimpleEmpresa* lista = inicListaSimpleEmpresa();
-    lista = agregarNodoAlPrincipioSimpleEmpresa(lista,crearNodoSimpleEmpresa(crearEmpresa("Coca Cola","45459875674")));
-    lista = agregarNodoAlPrincipioSimpleEmpresa(lista,crearNodoSimpleEmpresa(crearEmpresa("Pepsi","46459875674")));
-    lista = agregarNodoAlPrincipioSimpleEmpresa(lista,crearNodoSimpleEmpresa(crearEmpresa("Manaos","47459875674")));
-    lista = agregarNodoAlPrincipioSimpleEmpresa(lista,crearNodoSimpleEmpresa(crearEmpresa("Chori Champion","42459875674")));
-    lista = agregarNodoAlFinalSimpleEmpresa(lista,crearNodoSimpleEmpresa(crearEmpresa("Cuatro Cabezas","42455555554")));
-    mostrarListaSimpleEmpresa(lista);
-
-    lista = borrarXCuitSimpleEmpresa(lista,"42459875674");
-    printf("Eliminando empresa con el CUIT: 42459875674 - Nombre: Chori Champion\n");
-    system("pause");
-    system("cls");
-    mostrarListaSimpleEmpresa(lista);
-    system("pause");
-    system("cls");
-    printf("*******************************\n");
-    printf("\nBuscando ultimo - Se espera: CUATRO CABEZAS\n");
-    printf("Se encontro: %s\n",buscarUltimoSimpleEmpresa(lista)->dato.nombre);
-
-    system("pause");
-    system("cls");
-    printf("Probando carga ordenada por Nombre de empresa.\n");
-    nodoSimpleEmpresa* listaOrdenada = inicListaSimpleEmpresa();
-
-    //TEST Agregar Ordenado
-    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Coca Cola","45459875674")));
-    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Pepsi","46459875674")));
-    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Manaos","47459875674")));
-    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Chori Champion","42459875674")));
-    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("Cuatro Cabezas","42455555554")));
-    listaOrdenada = agregarOrdenadoXNombreSimpleEmpresa(listaOrdenada,crearNodoSimpleEmpresa(crearEmpresa("ChOri CHaMpInIoN","42455555554")));
-
-    mostrarListaSimpleEmpresa(listaOrdenada);
-}
-
 ///------------------------- TDA COMPUESTA---------------------------------
 
-nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (FILE *buf,nodoSimpleEmpresa *lista) // NO SIRVE
+nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista)
 {
+    FILE *buf=fopen(nombreArch,"rb");
     Registro_Factura a;
 
-    fread(&a,sizeof(Registro_Factura),1,buf);
-    Empresa emp=pasarDatosRegistroAUnaEmpresa(a);
-    Cliente_Proveedor cliProv=pasarDatosRegistroAUnClienteProveedor(a);
-    Factura fact=pasarDatosRegistroAUnaFactura(a);
-    lista=altaFacturas(lista,a);
+    if(buf)
+    {
+        while(fread(&a,sizeof(Registro_Factura),1,buf)>0)
+            lista=altaFacturas(lista,a);
+
+        fclose(buf);
+    }
 
     return lista;
 }
@@ -480,65 +355,16 @@ void mostrarTDACompleto (nodoSimpleEmpresa *lista)
 
 void TestPersistenciaYDespersistenciaEnTDA()
 {
-    /*Registro_Factura a=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(10,3,2020),"",0,0,0,0,"MarinaCli",'c',"28");
-
-    persistirRegistrosFactura("ArchivoFacturas",a);
-
-    Registro_Factura b=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(3,11,2019),"",0,0,0,0,"SanchezProv",'p',"30");
-
-    persistirRegistrosFactura("ArchivoFacturas",b);
-
-    Registro_Factura c=cargarUnRegistroFactura("Lacteos Amanecer","14",0,"a","0","0","0",1,crearFecha(20,4,2020),"",0,0,0,0,"SanchezProv",'p',"30");
-
-    persistirRegistrosFactura("ArchivoFacturas",c);
-
-    Registro_Factura d=cargarUnRegistroFactura("Coca","12",0,"a","0","12","120",1,crearFecha(10,8,2020),"",0,0,0,0,"SanchezProv",'p',"30");
-
-    persistirRegistrosFactura("ArchivoFacturas",d);
-
-    Registro_Factura e=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(30,10,2022),"",0,0,0,0,"MarinaCli",'c',"28");
-
-    persistirRegistrosFactura("ArchivoFacturas",e);
-
-    Registro_Factura f=cargarUnRegistroFactura("Coca","12",0,"a","0","0","0",1,crearFecha(20,5,2021),"",0,0,0,0,"CeramicosMdP",'p',"32");
-
-    persistirRegistrosFactura("ArchivoFacturas",f);
-    */
-    printf("Persiste todo");
-    //mostrarArchivoRegistros("ArchivoFacturas");
-
     nodoSimpleEmpresa *lista=inicListaSimpleEmpresa();
-    //lista=pasarDatosArchivoFacturasATDA("ArchivoFacturas",lista);
-    //printf("\n-------------TDA Completo-----------------------------\n\n");
-    //mostrarTDACompleto(lista);
-    system("pause");
 
+    lista=pasarDatosArchivoFacturasATDA("ArchivoFacturas",lista);
 
     persistirEmpresasEnArchivo("ArchivoEmpresas");
     printf("\nMOSTRANDO ARCHIVO DE EMPRESAS\n");
     mostrarArchivoDeEmpresas("ArchivoEmpresas");
 
-    Registro_Factura reg;
-    char control='s';
-    while (control=='s')
-    {
-        reg=cargarUnRegistroFactura(reg,lista);
-        if(strlen(reg.nombreEmpresa)!=0)
-        {
-            Registro_Factura dato;
-            dato=reg;
-            lista=altaFacturas(lista,dato);
-        }
+    lista=cargarRegistrosFacturaEnTDA(lista);
 
-
-        printf("Desea seguir?");
-        fflush(stdin);
-        scanf("%c",&control);
-    }
-
-
-
-    //lista=persistirRegistrosFactura("ArchivoFacturas",lista);
 
     printf("\n-------------TDA Completo-----------------------------\n\n");
     mostrarTDACompleto(lista);
@@ -549,36 +375,22 @@ void TestPersistenciaYDespersistenciaEnTDA()
     printf("\nMOSTRANDO ARCHIVO DE FACTURAS\n");
     mostrarArchivoRegistros("ArchivoFacturas");
 
-    /*
-    printf("\n----PROBANDO LISTADOS FACTURAS POR EMPRESA -----------------");
-
     NodoListarFacturas *listaFact=inicListaSimpleListarFacturas();
-    //    listaFact=listarTodasFacturasXOrdenFecha(lista);
+
+
+    printf("\n----PROBANDO LISTADOS FACTURAS POR EMPRESA -----------------");
     listaFact = listarFacturasDetEmpresa(lista,"Coca");
-    mostrarNodoListarFacturas(listaFact);
 
 
-    printf("\n-----LISTANDO FACTURAS POR PERIODO DEL 11/3/2020 AL 21/5/2021----------\n");
+    mostrarFacturasGo(listaFact);
 
-
-
-    listarFacturasDetEmpresaXPeriodo(lista,"12",crearFecha(11,3,2020),crearFecha(21,5,2021));
-
-    printf("\nPROBANDO FUNCION BUSQUEDA FACTURA\n");
-    nodoDobleFactura *nodo=buscarFacturaenTDA(lista,"Coca",'p',"30","120","12");
-    if(nodo)
-        mostrarUnaFactura(nodo->dato);
-    else
-        printf("\nNo se encontro esa factura\n");
-
-
-
-    char nombreArch2[30]="ArchPruebaPersEnTDA";
-    persistirTDAEnArchivo(nombreArch2,lista);
     system("pause");
-    printf("\nMostrando el nuevo Archivo una vez persistido el TDA\n");
-    mostrarArchivoRegistros(nombreArch2);
-    */
+
+    NodoListarFacturas *testlista =  inicListaSimpleListarFacturas();
+    testlista  = listarTodasFacturasXOrdenFecha(lista);
+    system("cls");
+    mostrarFacturasGo(testlista);
+
 }
 
 void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista)
@@ -625,4 +437,6 @@ void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista)
         fclose(buf);
     }
 }
+
+
 

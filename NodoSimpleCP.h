@@ -19,9 +19,7 @@ struct nodoSimpleCP* sig;
 }nodoSimpleCP;
 
 
-Cliente_Proveedor crearCP(char nombre[],char cuit_cp[],char cp);
 void mostrarUnCP(Cliente_Proveedor dato);
-
 
 ///------------------LIBRERIA LISTA SIMPLE CLIENTE/PROVEEDOR--------------------------------------------------
 
