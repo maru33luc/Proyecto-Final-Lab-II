@@ -26,11 +26,11 @@ NodoListarFacturas* agregarNodoAlFinalNodoListarFacturas(NodoListarFacturas* lis
 
 ///-----------LISTADOS FACTURAS--------------------------------------------
 
-NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
-NodoListarFacturas *listarFacturasDetEmpresa (nodoSimpleEmpresa *lista,char nombre_empresa[]);
-NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista);
-NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
-NodoListarFacturas* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal);
+NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal,int admin);
+NodoListarFacturas *listarFacturasDetEmpresa (nodoSimpleEmpresa *lista,char nombre_empresa[],int admin);
+NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista,int admin);
+NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal,int admin);
+NodoListarFacturas* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal,int admin);
 int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha limSup);
 
 
@@ -39,6 +39,6 @@ void mostrarFacturasGo(NodoListarFacturas* lista);
 void mostrarClientesProveedoresGo(nodoSimpleCP* lista,char nombreEmpresa[]);
 nodoSimpleCP* listarTodosCPXEmpresa(nodoSimpleEmpresa* lista,char nombre_empresa[]);
 void listarCPDeEmpresa(nodoSimpleEmpresa* lista);
-
+void mostrarFacturasGoAll(NodoListarFacturas* lista);
 
 #endif // RESUMENES_H_INCLUDED

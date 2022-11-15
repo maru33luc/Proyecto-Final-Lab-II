@@ -10,7 +10,7 @@
 
 /// ------------LISTADOS FACTURAS-----------------------------------------
 
-NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
+NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista,int admin)
 {
     NodoListarFacturas *listaFact=inicListaSimpleListarFacturas();
 
@@ -23,7 +23,14 @@ NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
             nodoDobleFactura *segCliFact=segCli->fact;
             while(segCliFact)
             {
-                listaFact=agregarNodoAlFinalNodoListarFacturas(listaFact,crearNodoListarFacturas(segLista->dato.nombre,segCliFact->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp));
+              if(!admin){
+                if(segCliFact->dato.activa){
+                  listaFact=agregarNodoAlFinalNodoListarFacturas(listaFact,crearNodoListarFacturas(segLista->dato.nombre,segCliFact->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp));
+                }
+              }else{
+               listaFact=agregarNodoAlFinalNodoListarFacturas(listaFact,crearNodoListarFacturas(segLista->dato.nombre,segCliFact->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp));
+              }
+
                 segCliFact=segCliFact->sig;
             }
             segCli=segCli->sig;
@@ -34,7 +41,14 @@ NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
             nodoDobleFactura *segProvFact=segProv->fact;
             while(segProvFact)
             {
-                listaFact=agregarNodoAlFinalNodoListarFacturas(listaFact,crearNodoListarFacturas(segLista->dato.nombre,segProvFact->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp));
+              if(!admin){
+                if(segProv->fact->dato.activa){
+                  listaFact=agregarNodoAlFinalNodoListarFacturas(listaFact,crearNodoListarFacturas(segLista->dato.nombre,segProvFact->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp));
+                }
+              }else{
+              listaFact=agregarNodoAlFinalNodoListarFacturas(listaFact,crearNodoListarFacturas(segLista->dato.nombre,segProvFact->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp));
+              }
+
                 segProvFact=segProvFact->sig;
             }
             segProv=segProv->sig;
@@ -44,47 +58,67 @@ NodoListarFacturas *listarTodasFacturasXOrdenFecha (nodoSimpleEmpresa *lista)
     return listaFact;
 }
 
-NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
+NodoListarFacturas *listarFacturasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal,int admin)
 {
     NodoListarFacturas *listarFacturas=inicListaSimpleListarFacturas();
 
     nodoSimpleEmpresa *empresa=buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
 
-    nodoSimpleCP *segCli=empresa->cli;
-    while(segCli!=NULL)
+    if(empresa)
     {
-        nodoDobleFactura *segFactCli=segCli->fact;
-        while(segFactCli)
+        nodoSimpleCP *segCli=empresa->cli;
+        while(segCli!=NULL)
         {
-            if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactCli->dato.fecha,fechaInicio,fechaFinal))
+            nodoDobleFactura *segFactCli=segCli->fact;
+            while(segFactCli)
             {
-                NodoListarFacturas *aux=crearNodoListarFacturas(lista->dato.nombre,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp);
-                listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
+                if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactCli->dato.fecha,fechaInicio,fechaFinal))
+                {
+                   NodoListarFacturas *aux=crearNodoListarFacturas(lista->dato.nombre,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp);
+
+                  if(!admin){
+                    if(segFactCli->dato.activa){
+                       listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
+                    }
+                  }else{
+                    listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
+                  }
+
+                }
+                segFactCli=segFactCli->sig;
             }
-            segFactCli=segFactCli->sig;
+            segCli=segCli->sig;
         }
-        segCli=segCli->sig;
+
+        nodoSimpleCP *segProv=empresa->prov;
+        while(segProv!=NULL)
+        {
+            nodoDobleFactura *segFactProv=segProv->fact;
+            while(segFactProv)
+            {
+                if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactProv->dato.fecha,fechaInicio,fechaFinal)==1)
+                {
+                    NodoListarFacturas *aux2=crearNodoListarFacturas(lista->dato.nombre,segFactProv->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp);
+
+                  if(admin==0){
+                    if(segFactProv->dato.activa){
+                      listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
+                    }
+                  }else{
+                  listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
+                  }
+
+                }
+                segFactProv=segFactProv->sig;
+            }
+            segProv=segProv->sig;
+        }
     }
 
-    nodoSimpleCP *segProv=empresa->prov;
-    while(segProv!=NULL)
-    {
-        nodoDobleFactura *segFactProv=segProv->fact;
-        while(segFactProv)
-        {
-            if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactProv->dato.fecha,fechaInicio,fechaFinal)==1)
-            {
-                NodoListarFacturas *aux2=crearNodoListarFacturas(lista->dato.nombre,segFactProv->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp);
-                listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
-            }
-            segFactProv=segFactProv->sig;
-        }
-        segProv=segProv->sig;
-    }
     return listarFacturas;
 }
 
-NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
+NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal,int admin)
 {
     NodoListarFacturas* destino =  inicListaSimpleListarFacturas();
     nodoSimpleEmpresa *empresaEncontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
@@ -98,7 +132,14 @@ NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,cha
             {
                 if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactCli->dato.fecha,fechaInicio,fechaFinal))
                 {
-                    destino = agregarNodoAlFinalNodoListarFacturas(destino,crearNodoListarFacturas(nombre_empresa,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp));
+                  if(!admin){
+                    if(segFactCli->dato.activa){
+                      destino = agregarNodoAlFinalNodoListarFacturas(destino,crearNodoListarFacturas(nombre_empresa,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp));
+                    }
+                  }else{
+                  destino = agregarNodoAlFinalNodoListarFacturas(destino,crearNodoListarFacturas(nombre_empresa,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp));
+                  }
+
                 }
                 segFactCli=segFactCli->sig;
             }
@@ -108,7 +149,7 @@ NodoListarFacturas* listarVentasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,cha
     return destino;
 }
 
-NodoListarFacturas* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal)
+NodoListarFacturas* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,char nombre_empresa[],Fecha fechaInicio,Fecha fechaFinal,int admin)
 {
     NodoListarFacturas* destino = inicListaSimpleListarFacturas();
     nodoSimpleEmpresa *empresaEncontrada = buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
@@ -122,7 +163,13 @@ NodoListarFacturas* listarComprasDetEmpresaXPeriodo (nodoSimpleEmpresa *lista,ch
             {
                 if(retornaSiFechaEstaComprendidaEnPeriodoDado(segFactPro->dato.fecha,fechaInicio,fechaFinal))
                 {
+                  if(!admin){
+                    if(segFactPro->dato.activa){
                     destino = agregarNodoAlFinalNodoListarFacturas(destino,crearNodoListarFacturas(nombre_empresa,segFactPro->dato,segPro->dato_cp.nombre,segPro->dato_cp.cp));
+                    }
+                  }else{
+                  destino = agregarNodoAlFinalNodoListarFacturas(destino,crearNodoListarFacturas(nombre_empresa,segFactPro->dato,segPro->dato_cp.nombre,segPro->dato_cp.cp));
+                  }
                 }
                 segFactPro=segFactPro->sig;
             }
@@ -140,14 +187,11 @@ int retornaSiFechaEstaComprendidaEnPeriodoDado (Fecha dato, Fecha limInf, Fecha 
         return 0;
 }
 
-NodoListarFacturas *listarFacturasDetEmpresa (nodoSimpleEmpresa *lista,char nombre_empresa[])
+NodoListarFacturas *listarFacturasDetEmpresa (nodoSimpleEmpresa *lista,char nombre_empresa[],int admin)
 {
     NodoListarFacturas *listarFacturas=inicListaSimpleListarFacturas();
-mostrarListaSimpleEmpresa(lista);
-system("pause");
+
     nodoSimpleEmpresa *empresa=buscarNodoXNombreSimpleEmpresa(lista,nombre_empresa);
-    if(empresa==NULL)
-        printf("EL NODO ES NULO");
 
     if(empresa)
     {
@@ -157,8 +201,15 @@ system("pause");
             nodoDobleFactura *segFactCli=segCli->fact;
             while(segFactCli)
             {
-                NodoListarFacturas *aux=crearNodoListarFacturas(lista->dato.nombre,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp);
-                listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
+               NodoListarFacturas *aux=crearNodoListarFacturas(lista->dato.nombre,segFactCli->dato,segCli->dato_cp.nombre,segCli->dato_cp.cp);
+              if(!admin){
+                if(segFactCli->dato.activa){
+                   listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
+                }
+              }else{
+               listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux);
+              }
+
                 segFactCli=segFactCli->sig;
             }
             segCli=segCli->sig;
@@ -170,13 +221,16 @@ system("pause");
             while(segFactProv)
             {
                 NodoListarFacturas *aux2=crearNodoListarFacturas(lista->dato.nombre,segFactProv->dato,segProv->dato_cp.nombre,segProv->dato_cp.cp);
+                if(!admin){
+                  if(segFactProv->dato.activa){
+                    listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
+                  }
+                }else{
                 listarFacturas=agregarNodoListarFactAlPrincipio(listarFacturas,aux2);
+                }
                 segFactProv=segFactProv->sig;
             }
             segProv=segProv->sig;
-
-
-
         }
 
     }
@@ -261,7 +315,6 @@ void mostrarUnNodoListarFacturas (NodoListarFacturas *nodo)
 
 void mostrarFacturasGo(NodoListarFacturas* lista)
 {
-    printf("\n  EMPRESA: %s",lista->nombreEmpresa);
     int t=6;
     Factura facturaActual = lista->dato;
     gotoxy(2,3);
@@ -286,9 +339,11 @@ void mostrarFacturasGo(NodoListarFacturas* lista)
     printf("|ESTADO");
     gotoxy(104,3);
     printf("|NOMBRE C/P");
+    gotoxy(112,3);
+    printf("|Compra/Venta");
 
     gotoxy(0,4);
-    printf("\n----------------------------------------------------------------------------------------------------------------------\n");
+    printf("\n-----------------------------------------------------------------------------------------------------------------------------\n");
 
     while(lista)
     {
@@ -315,11 +370,94 @@ void mostrarFacturasGo(NodoListarFacturas* lista)
         facturaActual.activa == 1? printf("| ACTIVA"):printf("| INACTIVA");
         gotoxy(104,t);
         printf("| %s",lista->nombreClienteProveedor);
+        gotoxy(112,t);
+        if(lista->cp =='c')
+        {
+            printf("| VENTA");
+        }
+        else
+            printf("| COMPRA");
         t++;
 
         lista = lista->sig;
     }
-    printf("\n------------------------------------------------------------------------------------------------------------------------\n");
+    printf("\n-----------------------------------------------------------------------------------------------------------------------------\n");
+}
+
+void mostrarFacturasGoAll(NodoListarFacturas* lista)
+{
+    int t=6;
+    Factura facturaActual = lista->dato;
+    gotoxy(1,3);
+    printf("|COMPROBANTE");
+    gotoxy(14,3);
+    printf("|TIPO");
+    gotoxy(20,3);
+    printf("|P VENTA");
+    gotoxy(29,3);
+    printf("|N COMP");
+    gotoxy(39,3);
+    printf("|FECHA");
+    gotoxy(51,3);
+    printf("|DESCRIPCION");
+    gotoxy(64,3);
+    printf("|NETO");
+    gotoxy(75,3);
+    printf("|IVA");
+    gotoxy(80,3);
+    printf("|TOTAL");
+    gotoxy(92,3);
+    printf("|ESTADO");
+    gotoxy(103,3);
+    printf("|NOM.C/P");
+    gotoxy(113,3);
+    printf("|C/V");
+    gotoxy(120,3);
+    printf("|EMPRESA");
+
+
+    gotoxy(0,4);
+    printf("\n----------------------------------------------------------------------------------------------------------------------------------\n");
+
+    while(lista)
+    {
+        facturaActual = lista->dato;
+        gotoxy(1,t);
+        printf("| %s",facturaActual.comprobante );
+        gotoxy(14,t);
+        printf("| %c",facturaActual.tipo);
+        gotoxy(20,t);
+        printf("| %s",facturaActual.puntoVenta );
+        gotoxy(29,t);
+        printf("| %s", facturaActual.numComprobante);
+        gotoxy(39,t);
+        printf("| %i/%i/%i",facturaActual.fecha.dia,facturaActual.fecha.mes,facturaActual.fecha.anio );
+        gotoxy(51,t);
+        printf("| %s", facturaActual.descripcion);
+        gotoxy(64,t);
+        printf("| %.1f", facturaActual.neto);
+        gotoxy(75,t);
+        printf("| %.1f", facturaActual.iva);
+        gotoxy(80,t);
+        printf("| %.1f", facturaActual.total);
+        gotoxy(92,t);
+        facturaActual.activa == 1? printf("| ACTIVA"):printf("| INACTIVA");
+        gotoxy(103,t);
+        printf("| %s",lista->nombreClienteProveedor);
+        gotoxy(113,t);
+        if(lista->cp=='p')
+        {
+            printf("| COMP.");
+        }
+        else
+            printf("| VENT.");
+        gotoxy(120,t);
+        printf("| %s",lista->nombreEmpresa);
+        t++;
+
+        lista = lista->sig;
+    }
+    printf("\n----------------------------------------------------------------------------------------------------------------------------------\n");
 }
 
 void gotoxy (int x, int y)
@@ -387,11 +525,11 @@ void mostrarClientesProveedoresGo(nodoSimpleCP* lista,char nombreEmpresa[])
 {
     printf("\n  EMPRESA: %s",nombreEmpresa);
     int t=6;
-    Cliente_Proveedor cpActual = lista->dato_cp;
+    Cliente_Proveedor cpActual;
     gotoxy(2,3);
     printf("|NOMBRE");
     gotoxy(20,3);
-    printf("|CUIT");
+    printf("|CUIT CLIENTE/PROV");
     gotoxy(33,3);
     printf("|CP");
     gotoxy(0,4);

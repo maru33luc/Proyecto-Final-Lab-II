@@ -10,7 +10,7 @@ typedef struct Empresa
 {
     char nombre[50];
     char cuit[12];
-    int activa_emp;
+    int activa_emp; // ACTIVAS:1   INACTIVAS:0
 } Empresa;
 
 
@@ -34,11 +34,13 @@ Empresa cargarUnaEmpresa (Empresa e);
 
 ///------------ARCHIVO DE EMPRESAS--------------------------------------------------
 
-void persistirEmpresasEnArchivo (char nombreArch[]);
+nodoSimpleEmpresa *persistirEmpresasEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
 nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEmpresa *lista);
+nodoSimpleEmpresa *pasarDatosArchivoEmpresasATDA (char nombreArch[],nodoSimpleEmpresa *lista);
 int buscarUnaEmpresaXCuitEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char cuit[]);
 int buscarUnaEmpresaXNombreEnArchivoYRetornaPosicionRegistro (char nombreArchEmpresas[],char nombre[]);
 void verUnaEmpresa(nodoSimpleEmpresa* lista);
+void bajaEmpresaEnArchivo (char nombreArch[],char empresa[]);
 
 ///------------ LIBRERIA DE LISTA SIMPLE EMPRESAS----------------------------
 
@@ -55,9 +57,8 @@ nodoSimpleEmpresa* buscarNodoXNombreSimpleEmpresa(nodoSimpleEmpresa* lista,char 
 
 ///-------------TDA COMPUESTA-----------------------------------------------
 
-//nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (FILE *buf,nodoSimpleEmpresa *lista);//no va
-
 void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista);
+nodoSimpleEmpresa *BajaEmpresa (char nombreArch[],nodoSimpleEmpresa *lista,char empresa[]);
 
 void TestPersistenciaYDespersistenciaEnTDA();
 void mostrarTDACompleto (nodoSimpleEmpresa *lista);

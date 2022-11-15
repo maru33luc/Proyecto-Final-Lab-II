@@ -71,10 +71,12 @@ Empresa cargarUnaEmpresa (Empresa e)
     }
     while(flag==1);
 
+    e.activa_emp=1;
+
     return e;
 }
 
-void persistirEmpresasEnArchivo (char nombreArch[])
+nodoSimpleEmpresa *persistirEmpresasEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista)
 {
     FILE *buf=fopen(nombreArch,"ab");
     char control='s';
@@ -98,6 +100,7 @@ void persistirEmpresasEnArchivo (char nombreArch[])
                     dato2=dato;
                     listaEmpresasTemp = agregarNodoAlPrincipioSimpleEmpresa(listaEmpresasTemp,crearNodoSimpleEmpresa(dato2));
                     fwrite(&dato2,sizeof(Empresa),1,buf);
+                    lista=agregarOrdenadoXNombreSimpleEmpresa(lista,crearNodoSimpleEmpresa(dato2));
                 }
 
                 else
@@ -110,6 +113,45 @@ void persistirEmpresasEnArchivo (char nombreArch[])
         }
         fclose(buf);
     }
+
+    return lista;
+}
+
+void bajaEmpresaEnArchivo (char nombreArch[],char empresa[])
+{
+    FILE *buf=fopen(nombreArch,"r+b");
+    Empresa a;
+    int pos=buscarUnaEmpresaXNombreEnArchivoYRetornaPosicionRegistro(nombreArch,empresa);
+    if(buf)
+    {
+        fseek(buf,sizeof(Empresa)*(pos-1),SEEK_SET);
+        fread(&a,sizeof(Empresa),1,buf);
+        a.activa_emp=0;
+        fseek(buf,sizeof(Empresa)*(-1),SEEK_CUR);
+        fwrite(&a,sizeof(Empresa),1,buf);
+        fclose(buf);
+    }
+}
+
+nodoSimpleEmpresa *BajaEmpresa (char nombreArch[],nodoSimpleEmpresa *lista,char empresa[])
+{
+    nodoSimpleEmpresa *aux=buscarNodoXNombreSimpleEmpresa(lista,empresa);
+    char control;
+    if(aux)
+    {
+        mostrarUnaEmpresa(aux->dato);
+        printf("\nDesea dar de baja a esta Empresa? Presione la tecla s para confirmar o cualquier otra para salir:\n");
+        scanf("%c",&control);
+        if(control=='s')
+            {
+                aux->dato.activa_emp=0;
+                bajaEmpresaEnArchivo(nombreArch,empresa);
+            }
+    }
+    else
+        printf("\nLa Empresa no se encuentra en la base de datos\n");
+
+    return lista;
 }
 
 void mostrarArchivoDeEmpresas (char nombreArch[])
@@ -326,6 +368,22 @@ nodoSimpleEmpresa *pasarDatosArchivoFacturasATDA (char nombreArch[],nodoSimpleEm
     return lista;
 }
 
+nodoSimpleEmpresa *pasarDatosArchivoEmpresasATDA (char nombreArch[],nodoSimpleEmpresa *lista)
+{
+    FILE *buf=fopen(nombreArch,"rb");
+    Empresa a;
+
+    if(buf)
+    {
+        while(fread(&a,sizeof(Empresa),1,buf)>0)
+            lista=agregarOrdenadoXNombreSimpleEmpresa(lista,crearNodoSimpleEmpresa(a));
+
+        fclose(buf);
+    }
+
+    return lista;
+}
+
 void mostrarTDACompleto (nodoSimpleEmpresa *lista)
 {
 
@@ -353,45 +411,6 @@ void mostrarTDACompleto (nodoSimpleEmpresa *lista)
     }
 }
 
-void TestPersistenciaYDespersistenciaEnTDA()
-{
-    nodoSimpleEmpresa *lista=inicListaSimpleEmpresa();
-
-    lista=pasarDatosArchivoFacturasATDA("ArchivoFacturas",lista);
-
-    persistirEmpresasEnArchivo("ArchivoEmpresas");
-    printf("\nMOSTRANDO ARCHIVO DE EMPRESAS\n");
-    mostrarArchivoDeEmpresas("ArchivoEmpresas");
-
-    lista=cargarRegistrosFacturaEnTDA(lista);
-
-
-    printf("\n-------------TDA Completo-----------------------------\n\n");
-    mostrarTDACompleto(lista);
-    system("pause");
-
-    persistirTDAEnArchivo("ArchivoFacturas",lista);
-
-    printf("\nMOSTRANDO ARCHIVO DE FACTURAS\n");
-    mostrarArchivoRegistros("ArchivoFacturas");
-
-    NodoListarFacturas *listaFact=inicListaSimpleListarFacturas();
-
-
-    printf("\n----PROBANDO LISTADOS FACTURAS POR EMPRESA -----------------");
-    listaFact = listarFacturasDetEmpresa(lista,"Coca");
-
-
-    mostrarFacturasGo(listaFact);
-
-    system("pause");
-
-    NodoListarFacturas *testlista =  inicListaSimpleListarFacturas();
-    testlista  = listarTodasFacturasXOrdenFecha(lista);
-    system("cls");
-    mostrarFacturasGo(testlista);
-
-}
 
 void persistirTDAEnArchivo (char nombreArch[],nodoSimpleEmpresa *lista)
 {

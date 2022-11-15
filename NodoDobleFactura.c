@@ -97,7 +97,7 @@ Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa 
 
     do
     {
-        printf("\nIngrese si es una compra ('p') o una venta ('c'): (A/B/C)\n");
+        printf("\nIngrese si es una compra ('p') o una venta ('c'):\n");
         fflush(stdin);
         scanf("%c",&a.cp);
         if(a.cp=='c'||a.cp=='C'||a.cp=='p'||a.cp=='P')
@@ -157,9 +157,9 @@ Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa 
             fflush(stdin);
             scanf("%c",&a.tipo);
             if(a.tipo=='c'||a.tipo=='C'||a.tipo=='A'||a.tipo=='a'||a.tipo=='B'||a.tipo=='b')
-            flag=1;
-        else
-            flag=0;
+                flag=1;
+            else
+                flag=0;
         }
         while(flag==0);
 
@@ -230,8 +230,8 @@ Registro_Factura cargarUnRegistroFactura (Registro_Factura a, nodoSimpleEmpresa 
 
 
     }
-    a.activa_fact=0;
-    a.activa_emp=0;
+    a.activa_fact=1;
+    a.activa_emp=1;
 
     return a;
 }
@@ -370,17 +370,28 @@ Registro_Factura pasarDatosNodoClienteProveedorARegistro(Cliente_Proveedor a)
     return dato;
 }
 
-Fecha crearFecha (int dia, int mes, int anio)
+Fecha cargarFecha (Fecha dato)
 {
-    Fecha a;
+    int salir=1;
+    do
+    {
+        printf("\nIngrese el dia:\n");
+        scanf("%d",&dato.dia);
+        printf("\nIngrese el mes:\n");
+        scanf("%d",&dato.mes);
+        printf("\nIngrese el año:\n");
+        scanf("%d",&dato.anio);
 
-    a.dia=dia;
-    a.mes=mes;
-    a.anio=anio;
+        int flag=validarFecha(dato);
+        if (flag==0)
+            salir=0;
+        else
+            printf("\nFormato de fecha no valido intente nuevamente\n");
+    }
+    while(salir==1);
 
-    return a;
+    return dato;
 }
-
 
 ///------------------ LIBRERIA DE LISTA DOBLE FACTURAS----------------------------------------
 
@@ -623,9 +634,10 @@ nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Registro_Factura dato)
     fact=pasarDatosRegistroAUnaFactura(dato);
 
     nodoSimpleCP *aux=crearNodoSimpleCP(cliProv);
-    nodoSimpleEmpresa *busq=buscarNodoXCuitSimpleEmpresa(lista,emp.cuit);
+    nodoSimpleEmpresa *busqC=buscarNodoXCuitSimpleEmpresa(lista,emp.cuit);
+    nodoSimpleEmpresa * buscN = buscarNodoXNombreSimpleEmpresa(lista,emp.nombre);
 
-    if(busq==NULL)
+    if(!busqC && !buscN)
     {
         lista=agregarNodoAlFinalSimpleEmpresa(lista,crearNodoSimpleEmpresa(emp));
         nodoSimpleEmpresa *ult=buscarUltimoSimpleEmpresa(lista);
@@ -651,24 +663,24 @@ nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Registro_Factura dato)
 
         if(cliProv.cp=='c')
         {
-            nodoSimpleCP *busq2=buscarNodoXCuitSimpleCP(busq->cli,cliProv.cuit_cliente_proveedor);
+            nodoSimpleCP *busq2=buscarNodoXCuitSimpleCP(buscN->cli,cliProv.cuit_cliente_proveedor);
             if(busq2==NULL)
             {
-                busq->cli=agregarNodoAlPrincipioSimpleCP(busq->cli,aux);
-                busq->cli->fact=inicListaDoble();
-                busq->cli->fact=insertarOrdenadoDobleXFecha(busq->cli->fact,aux1);
+                buscN->cli=agregarNodoAlPrincipioSimpleCP(buscN->cli,aux);
+                buscN->cli->fact=inicListaDoble();
+                buscN->cli->fact=insertarOrdenadoDobleXFecha(buscN->cli->fact,aux1);
             }
             else
                 busq2->fact=insertarOrdenadoDobleXFecha(busq2->fact,aux1);
         }
         else
         {
-            nodoSimpleCP *busq2=buscarNodoXCuitSimpleCP(busq->prov,cliProv.cuit_cliente_proveedor);
+            nodoSimpleCP *busq2=buscarNodoXCuitSimpleCP(buscN->prov,cliProv.cuit_cliente_proveedor);
             if(busq2==NULL)
             {
-                busq->prov=agregarNodoAlPrincipioSimpleCP(busq->prov,aux);
-                busq->prov->fact=inicListaDoble();
-                busq->prov->fact=insertarOrdenadoDobleXFecha(busq->prov->fact,aux1);
+                buscN->prov=agregarNodoAlPrincipioSimpleCP(buscN->prov,aux);
+                buscN->prov->fact=inicListaDoble();
+                buscN->prov->fact=insertarOrdenadoDobleXFecha(buscN->prov->fact,aux1);
             }
             else
                 busq2->fact=insertarOrdenadoDobleXFecha(busq2->fact,aux1);
@@ -716,3 +728,179 @@ nodoDobleFactura* buscarFacturaenTDA(nodoSimpleEmpresa*lista,char nombre_empresa
     }
     return nodoEncontrado;
 }
+
+nodoSimpleEmpresa *bajaFactura (nodoSimpleEmpresa *lista,char nombreEmp[],char cp,char cuit_cp[],char num_comprob[],char punto_venta[])
+{
+    nodoDobleFactura *fact=buscarFacturaenTDA(lista,nombreEmp,cp,cuit_cp,num_comprob,punto_venta);
+
+    if(fact)
+    {
+        printf("PRINTEANDO LA FACT ENCONTRADA");
+        mostrarUnaFactura(fact->dato);
+        system("pause");
+        fact->dato.activa=0;
+    }
+    else
+        printf("\nFactura no existente en la base de datos\n");
+
+    return lista;
+}
+
+void cargarBusquedaFactura(char nombreEmp[],char* cp,char cuit_cp[],char num_comprob[],char punto_venta[])
+{
+    int flag = 0;
+    do
+    {
+        printf("\nIngrese el nombre de la Empresa o presione Enter para salir\n");
+        fflush(stdin);
+
+        gets(nombreEmp);
+        if(strlen(nombreEmp)==0)
+            return;
+        else
+            flag= validarLetras(nombreEmp);
+    }
+    while(flag==1);
+
+    do
+    {
+        printf("\nIngrese si es una compra ('p') o una venta ('c'):\n");
+        fflush(stdin);
+        scanf("%c",cp);
+        if((*cp)=='c'||(*cp)=='C'||(*cp)=='p'||(*cp)=='P')
+            flag=1;
+        else
+            flag=0;
+    }
+    while(flag==0);
+
+    do
+    {
+        printf("\nIngrese el Numero de CUIT del Cliente/Proveedor:\n");
+        fflush(stdin);
+        gets(cuit_cp);
+        flag= validarNumString(cuit_cp);
+    }
+    while(flag==1);
+
+    do
+    {
+        printf("\nIngrese el punto de venta de la Factura: \n");
+        fflush(stdin);
+        gets(punto_venta);
+        flag=validarNumString(punto_venta);
+    }
+    while(flag==1);
+
+    do
+    {
+        printf("\nIngrese el numero de Factura: \n");
+        fflush(stdin);
+        gets(num_comprob);
+        flag=validarNumString(num_comprob);
+    }
+    while(flag==1);
+}
+
+nodoSimpleEmpresa *modificarFactura (nodoSimpleEmpresa *lista,char nombreEmp[],char cp,char cuit_cp[],char num_comprob[],char punto_venta[])
+{
+    int opcion;
+
+    nodoDobleFactura *fact=buscarFacturaenTDA(lista,nombreEmp,cp,cuit_cp,num_comprob,punto_venta);
+
+    if(fact)
+    {
+        printf("PRINTEANDO LA FACT ENCONTRADA");
+        mostrarUnaFactura(fact->dato);
+        system("pause");
+
+        printf("\nElija el campo que desea modificar\n\n[1]Fecha de la Factura-\n\n[2]-Descripcion\n \n[3]-Valor Neto\n \n[4]-Numero Comprobante\n\n[5]-Punto de Venta\n\n[6]-Alta de Factura\n\n[0]-salir\n\n");
+        scanf("%d",&opcion);
+
+        switch(opcion)
+        {
+            char controlN;
+            int flag=0;
+        case 1:
+
+            do
+            {
+                printf("\nIngrese el año de la Factura: (1980-2030)\n");
+                fflush(stdin);
+                scanf("%d",fact->dato.fecha.anio);
+                printf("\nIngrese el mes de la Factura: (1-12)\n");
+                fflush(stdin);
+                scanf("%d",fact->dato.fecha.mes);
+                printf("\nIngrese el dia de la Factura: (1-30/31)\n");
+                fflush(stdin);
+                scanf("%d",fact->dato.fecha.dia);
+                flag=validarFecha(fact->dato.fecha);
+                if(flag==1)
+                    printf("\nFormato de Fecha no valido intente nuevamente\n");
+            }
+            while(flag==1);
+            break;
+
+        case 2:
+
+            do
+            {
+                printf("\nIngrese la descripcion de la Factura: \n");
+                fflush(stdin);
+                gets(fact->dato.descripcion);
+                flag=validarLetras(fact->dato.descripcion);
+            }
+            while(flag==1);
+
+            break;
+
+        case 3:
+
+            do
+            {
+                printf("\nIngrese el valor neto: \n");
+                flag=scanf("%f",fact->dato.neto);
+            }
+            while(flag==0);
+
+            break;
+
+        case 4:
+            do
+            {
+                printf("\nIngrese el numero de Factura: \n");
+                fflush(stdin);
+                gets(fact->dato.numComprobante);
+                flag=validarNumString(fact->dato.numComprobante);
+            }
+            while(flag==1);
+            break;
+
+        case 5:
+
+            do
+            {
+                printf("\nIngrese el punto de venta de la Factura: \n");
+                fflush(stdin);
+                gets(fact->dato.puntoVenta);
+                flag=validarNumString(fact->dato.puntoVenta);
+            }
+            while(flag==1);
+            break;
+
+        case 6:
+
+            printf("\nDesea dar de alta esta factura? s/n\n");
+            fflush(stdin);
+            scanf("%c",&controlN);
+            if(controlN=='s')
+                fact->dato.activa=1;
+            break;
+        }
+
+    }
+
+    return lista;
+}
+
+

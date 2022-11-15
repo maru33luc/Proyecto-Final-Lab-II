@@ -75,7 +75,7 @@ Registro_Factura pasarDatosNodoFacturaAUnRegistro(Factura a);
 Registro_Factura pasarDatosNodoEmpresaAUnRegistro(Empresa a);
 Cliente_Proveedor pasarDatosRegistroAUnClienteProveedor(Registro_Factura a);
 Registro_Factura pasarDatosNodoClienteProveedorARegistro(Cliente_Proveedor a);
-Fecha crearFecha (int dia, int mes, int anio);
+Fecha cargarFecha (Fecha dato);
 
 
 ///------------------ LIBRERIA DE LISTA DOBLE FACTURAS----------------------------------------------------
@@ -99,6 +99,9 @@ nodoDobleFactura *insertarOrdenadoDobleXFecha (nodoDobleFactura *lista,nodoDoble
 
 nodoSimpleEmpresa *cargarRegistrosFacturaEnTDA(nodoSimpleEmpresa *lista);
 nodoSimpleEmpresa *altaFacturas(nodoSimpleEmpresa *lista,Registro_Factura dato);
+nodoSimpleEmpresa *bajaFactura (nodoSimpleEmpresa *lista,char nombreEmp[],char cp,char cuit_cp[],char num_comprob[],char punto_venta[]);
 nodoDobleFactura* buscarFacturaenTDA(nodoSimpleEmpresa*lista,char nombre_empresa[],char cp,char cuit_cp[],char nro_comprobante[],char punto_venta[]);
+void cargarBusquedaFactura(char nombreEmp[],char* cp,char cuit_cp[],char num_comprob[],char punto_venta[]);
 
+nodoSimpleEmpresa *modificarFactura (nodoSimpleEmpresa *lista,char nombreEmp[],char cp,char cuit_cp[],char num_comprob[],char punto_venta[]);
 #endif // NODODOBLEFACTURA_H_INCLUDED
