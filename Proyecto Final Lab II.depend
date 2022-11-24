@@ -1,0 +1,332 @@
+# depslib dependency file v1.0
+1668389260 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668389260 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\resumenes.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668394084 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\nododoblefactura.h
+	"NodoSimpleEmpresa.h"
+	"NodoSimpleCP.h"
+
+1668394084 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\nodosimpleempresa.h
+	"NodoSimpleCP.h"
+	"NodoDobleFactura.h"
+
+1668389136 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\nodosimplecp.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668389259 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\nodosimplecp.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668394138 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\nodosimpleempresa.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668389260 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\resumenes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668395387 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii\nododoblefactura.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668476582 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668476583 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\resumenes.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668453381 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\nododoblefactura.h
+	"NodoSimpleEmpresa.h"
+	"NodoSimpleCP.h"
+
+1668451362 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\nodosimpleempresa.h
+	"NodoSimpleCP.h"
+	"NodoDobleFactura.h"
+
+1668430717 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\nodosimplecp.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668430717 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\nodosimplecp.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668476584 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\resumenes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668451457 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\nodosimpleempresa.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668477133 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\nododoblefactura.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668454254 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668389260 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\resumenes.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668453381 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\nododoblefactura.h
+	"NodoSimpleEmpresa.h"
+	"NodoSimpleCP.h"
+
+1668451362 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\nodosimpleempresa.h
+	"NodoSimpleCP.h"
+	"NodoDobleFactura.h"
+
+1668430717 c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\nodosimplecp.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668454504 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\nododoblefactura.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668430717 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\nodosimplecp.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668451457 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\nodosimpleempresa.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668447881 source:c:\users\marina\desktop\utn\reparacion pc\proyecto-final-lab-ii - funcionando\proyecto-final-lab-ii - funcionando\resumenes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668475950 source:c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668389260 c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\resumenes.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668453381 c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\nododoblefactura.h
+	"NodoSimpleEmpresa.h"
+	"NodoSimpleCP.h"
+
+1668451362 c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\nodosimpleempresa.h
+	"NodoSimpleCP.h"
+	"NodoDobleFactura.h"
+
+1668430717 c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\nodosimplecp.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668454504 source:c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\nododoblefactura.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668430717 source:c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\nodosimplecp.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668451457 source:c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\nodosimpleempresa.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668447881 source:c:\users\marina\desktop\proyecto-final-lab-ii - funcionando\resumenes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668487161 source:c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\nodosimplecp.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668487161 c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\resumenes.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668487161 c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\nododoblefactura.h
+	"NodoSimpleEmpresa.h"
+	"NodoSimpleCP.h"
+
+1668487161 c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\nodosimpleempresa.h
+	"NodoSimpleCP.h"
+	"NodoDobleFactura.h"
+
+1668487161 c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\nodosimplecp.h
+	"NodoDobleFactura.h"
+	"NodoSimpleEmpresa.h"
+
+1668487161 source:c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\nodosimpleempresa.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668483602 source:c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\resumenes.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
+1668487161 source:c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+	<conio.h>
+
+1668483269 source:c:\users\marina\desktop\utn\reparacion pc\version lunes noche\proyecto-final-lab-ii - funcionando\nododoblefactura.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"Resumenes.h"
+	"NodoSimpleEmpresa.h"
+	"NodoDobleFactura.h"
+	"NodoSimpleCP.h"
+	<windows.h>
+
